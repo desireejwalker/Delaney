@@ -1,4 +1,1 @@
 res://scenes/world.tscn
-res://scripts/procedural/delaunay/delaunay.gd
-res://scripts/procedural/kruskal.gd
-res://scripts/procedural/floor_generator.gd
