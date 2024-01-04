@@ -12,6 +12,7 @@ script = ExtResource("1_gv2b7")
 [node name="Player" parent="." instance=ExtResource("1_w05cy")]
 
 [node name="floor" type="Sprite2D" parent="."]
+visible = false
 z_index = -10
 position = Vector2(-4.76837e-07, -4.76837e-07)
 scale = Vector2(18.5234, 18.5234)

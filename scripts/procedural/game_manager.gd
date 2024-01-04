@@ -7,4 +7,4 @@ func _ready():
 	add_child(floor_generator)
 	add_child(visualizer)
 	
-	floor_generator.run(40)
+	floor_generator.run(20)

@@ -50,9 +50,9 @@ func _init(point_a: Vector2, point_b: Vector2, point_c: Vector2):
 		Edge.new(self.point_a, self.point_c)
 	]
 	
-	var D = (point_a.x * (point_b.y - point_c.y) + point_b.x * (point_c.y - point_a.y) + point_c.x * (point_a.y - point_b.y)) * 2
-	var x = (point_a.x * point_a.x + point_a.y * point_a.y) * (point_b.y - point_c.y) + (point_b.x * point_b.x + point_b.y * point_b.y) * (point_c.y - point_a.y) +(point_c.x * point_c.x + point_c.y * point_c.y) * (point_a.y - point_b.y)
-	var y = (point_a.x * point_a.x + point_a.y * point_a.y) * (point_c.x - point_b.x) + (point_b.x * point_b.x + point_b.y * point_b.y) * (point_a.x - point_c.x) +(point_c.x * point_c.x + point_c.y * point_c.y) * (point_b.x - point_a.x)
+	var D = (self.point_a.x * (self.point_b.y - self.point_c.y) + self.point_b.x * (self.point_c.y - self.point_a.y) + self.point_c.x * (self.point_a.y - self.point_b.y)) * 2
+	var x = (self.point_a.x * self.point_a.x + self.point_a.y * self.point_a.y) * (self.point_b.y - self.point_c.y) + (self.point_b.x * self.point_b.x + self.point_b.y * self.point_b.y) * (self.point_c.y - self.point_a.y) + (self.point_c.x * self.point_c.x + self.point_c.y * self.point_c.y) * (self.point_a.y - self.point_b.y)
+	var y = (self.point_a.x * self.point_a.x + self.point_a.y * self.point_a.y) * (self.point_c.x - self.point_b.x) + (self.point_b.x * self.point_b.x + self.point_b.y * self.point_b.y) * (self.point_a.x - self.point_c.x) + (self.point_c.x * self.point_c.x + self.point_c.y * self.point_c.y) * (self.point_b.x - self.point_a.x)
 	
 	circum_center_x = x / D
 	circum_center_y = y / D

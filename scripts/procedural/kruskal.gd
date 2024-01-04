@@ -1,6 +1,6 @@
 class_name Kruskal extends Resource
 
-var minimum_spanning_tree
+var minimum_spanning_tree: Array[Edge]
 var edges
 var points
 
@@ -13,7 +13,7 @@ func _init():
 	
 	parents = {}
 	
-func find_minimum_spanning_tree(triangulation) -> Array:
+func find_minimum_spanning_tree(triangulation) -> Array[Edge]:
 	minimum_spanning_tree = []
 	
 	edges = []

@@ -26,42 +26,38 @@ func calculate_super_triangle(points) -> Triangle:
 	return Triangle.new(point_1, point_2, point_3)
 
 func triangulate(points) -> Array:
-	var super_triangle = calculate_super_triangle(points)
+	var super_triangle: Triangle = calculate_super_triangle(points)
 	var triangulation = [
 		super_triangle
 	]
 	
 	for point in points:
-		var bad_triangles = []
+		var bad_triangles: Array[Triangle] = []
 		for triangle in triangulation:
 			if triangle.circum_circle_contains(point):
-				bad_triangles.append(triangle)
+				if !bad_triangles.has(triangle):
+					bad_triangles.append(triangle)
 		
-		var polygon = []
+		var polygon: Array[Edge] = []
 		for bad_triangle in bad_triangles:
 			for edge in bad_triangle.edges:
 				var is_shared_edge = false
 				for other_triangle in bad_triangles:
 					if bad_triangle == other_triangle:
 						continue
-					
 					if other_triangle.has_edge(edge):
 						is_shared_edge = true
-				
 				if !is_shared_edge:
-					polygon.append(edge)
+					if !polygon.has(edge):
+						polygon.append(edge)
 		
 		# remove all bad triangles from the triangulation
-		var triangle_indexes_to_remove = []
-		for i in range(triangulation.size()):
-			for bad_triangle in bad_triangles:
-				if (bad_triangle.equals(triangulation[i])):
-					triangle_indexes_to_remove.append(i)
-		for i in triangle_indexes_to_remove:
-			triangulation.remove_at(i)
+		var no_bad_triangles = triangulation.filter(func(triangle): return !bad_triangles.has(triangle))
+		triangulation = no_bad_triangles
 		
 		for edge in polygon:
-			triangulation.append(Triangle.new(point, edge.point_a, edge.point_a))
+			var triangle = Triangle.new(point, edge.point_a, edge.point_b)
+			triangulation.append(triangle)
 	
 	triangulation = triangulation.filter(func(triangle): return !triangle.has_vertex_from(super_triangle))
 	

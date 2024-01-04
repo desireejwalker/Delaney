@@ -1,5 +1,3 @@
 res://scenes/world.tscn
-res://scripts/procedural/game_manager.gd
-res://scripts/procedural/floor_generation_visualizer.gd
+res://scenes/player.tscn
 res://scripts/procedural/floor_generator.gd
-res://scripts/procedural/room.gd
