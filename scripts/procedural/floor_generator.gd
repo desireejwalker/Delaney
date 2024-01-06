@@ -1,15 +1,18 @@
 class_name FloorGenerator extends Node
 
+signal floor_generated
 signal _all_room_physics_bodies_sleeping
+
 var _check_all_room_physics_bodies = false
 
 var _average_room_size: float
 var _room_array: Array[Room]
 var _hub_room_array: Array[Room]
 var _sub_room_array: Array[Room]
+var _paths_array: Array[Rect2i]
 
 var _final_graph: Array[Edge]
-var _paths: Array[Rect2i]
+var _current_output: FloorGenerationOutput
 
 func run(room_count):
 	_generate_initial_rooms(room_count)
@@ -17,9 +20,9 @@ func run(room_count):
 	# pick rooms that are above the average room size and mark them as "hub rooms"
 	_hub_room_array = _room_array.filter(func(room): return room.rect.size.length() > _average_room_size)
 	_final_graph = _create_final_graph()
-	_paths = _create_paths(_final_graph)
+	_paths_array = _create_paths_array(_final_graph)
 	# pick rooms that arent hub rooms and intersect with a path rect from the path array
-	_sub_room_array = _room_array.filter(func(room): return not room.is_hub_room and _room_intersects_paths(room))
+	_sub_room_array = _room_array.filter(func(room): return not room.is_hub_room and _room_intersects_paths_array(room))
 	print("ready.")
 
 func _generate_initial_rooms(count):
@@ -69,7 +72,7 @@ func _create_final_graph() -> Array[Edge]:
 	print("done.")
 	return minimum_spanning_tree
 
-func _create_paths(final_graph) -> Array[Rect2i]:
+func _create_paths_array(final_graph) -> Array[Rect2i]:
 	# find paths
 	print("creating paths...")
 	var paths: Array[Rect2i] = []
@@ -131,8 +134,8 @@ func _create_paths(final_graph) -> Array[Rect2i]:
 	print("done.")
 	return paths
 
-func _room_intersects_paths(room: Room):
-	for path in _paths:
+func _room_intersects_paths_array(room: Room):
+	for path in _paths_array:
 		if room.rect.intersects(path):
 			return true
 	return false

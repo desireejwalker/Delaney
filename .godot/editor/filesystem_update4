@@ -1,3 +1,4 @@
 res://scenes/world.tscn
-res://scenes/player.tscn
 res://scripts/procedural/floor_generator.gd
+res://scenes/player.tscn
+res://scripts/procedural/floor_generation_output.gd
