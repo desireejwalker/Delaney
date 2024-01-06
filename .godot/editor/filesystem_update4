@@ -1,4 +1,9 @@
 res://scenes/world.tscn
 res://scripts/procedural/floor_generator.gd
+<<<<<<< Updated upstream
 res://scenes/player.tscn
 res://scripts/procedural/floor_generation_output.gd
+=======
+res://scripts/procedural/game_manager.gd
+res://scripts/procedural/floor_generation_visualizer.gd
+>>>>>>> Stashed changes

@@ -1,6 +1,10 @@
 class_name FloorGenerator extends Node
 
+<<<<<<< Updated upstream
 signal floor_generated
+=======
+signal on_ready
+>>>>>>> Stashed changes
 signal _all_room_physics_bodies_sleeping
 
 var _check_all_room_physics_bodies = false
