@@ -20,4 +20,4 @@ static func length_comparison(edge_a, edge_b):
 	var edge_a_length = edge_a.length()
 	var edge_b_length = edge_b.length()
 	
-	return edge_a_length >= edge_b_length
+	return edge_a_length > edge_b_length

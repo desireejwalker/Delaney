@@ -1,10 +1,6 @@
 class_name FloorGenerator extends Node
 
-<<<<<<< Updated upstream
 signal floor_generated
-=======
-signal on_ready
->>>>>>> Stashed changes
 signal _all_room_physics_bodies_sleeping
 
 var _check_all_room_physics_bodies = false
@@ -15,18 +11,22 @@ var _hub_room_array: Array[Room]
 var _sub_room_array: Array[Room]
 var _paths_array: Array[Rect2i]
 
-var _final_graph: Array[Edge]
+var _final_graph: Array
 var _current_output: FloorGenerationOutput
 
 func run(room_count):
 	_generate_initial_rooms(room_count)
 	await _await_rooms_physics_bodies()
+	_update_rooms_rect_position()
+	
 	# pick rooms that are above the average room size and mark them as "hub rooms"
 	_hub_room_array = _room_array.filter(func(room): return room.rect.size.length() > _average_room_size)
 	_final_graph = _create_final_graph()
 	_paths_array = _create_paths_array(_final_graph)
 	# pick rooms that arent hub rooms and intersect with a path rect from the path array
 	_sub_room_array = _room_array.filter(func(room): return not room.is_hub_room and _room_intersects_paths_array(room))
+	_current_output = FloorGenerationOutput.new(_average_room_size, _room_array, _hub_room_array, _sub_room_array, _paths_array, _final_graph)
+	floor_generated.emit()
 	print("ready.")
 
 func _generate_initial_rooms(count):
@@ -34,7 +34,7 @@ func _generate_initial_rooms(count):
 	
 	for i in range(count):
 		var room: Room = Room.new(Rect2(
-				get_random_position_in_ellipsoid(100, 100), 
+				_get_random_position_in_ellipsoid(100, 100), 
 				Vector2i(randi_range(100, 300), randi_range(100, 300))))
 		room_size_sum += room.rect.size.length()
 		
@@ -43,20 +43,22 @@ func _generate_initial_rooms(count):
 		_room_array.append(room)
 	
 	_average_room_size = room_size_sum / count
-
 func _await_rooms_physics_bodies():
 	_check_all_room_physics_bodies = true
 	print("waiting for physics bodies to sleep...")
 	await _all_room_physics_bodies_sleeping
 	print("done.")
+func _update_rooms_rect_position():
+	for room in _room_array:
+		_snap_room_position_to_int(room)
 
-func snap_room_position_to_int(room):
+func _snap_room_position_to_int(room):
 	var snapped_position = Vector2(int(room.physics_body.global_position.x), int(room.physics_body.global_position.y))
 	room.physics_body.global_position = snapped_position
-	room.position = snapped_position
+	room.rect.position = snapped_position
 	room.physics_body.freeze = true
 
-func _create_final_graph() -> Array[Edge]:
+func _create_final_graph() -> Array:
 	# run Delaunay triangulation and get minimum spanning tree of the output
 	print("creating final floor graph...")
 	
@@ -64,17 +66,23 @@ func _create_final_graph() -> Array[Edge]:
 	var kruskal: Kruskal = Kruskal.new()
 	
 	# map hub room array to center points for delaunay triangulation
-	var triangulation = delaunay.triangulate(_hub_room_array.map(func(hub_room: Room): return hub_room.rect.get_center()))
-	var minimum_spanning_tree = kruskal.find_minimum_spanning_tree(triangulation)
+	# OLD IMPLEMENTATION
+	# var triangulation = delaunay.triangulate(_hub_room_array.map(func(hub_room: Room): return hub_room.rect.position))
+	# var minimum_spanning_tree = kruskal.find_minimum_spanning_tree(triangulation)
 	
+	var points := _hub_room_array.map(func(room: Room): return Delaunay.Point.new(room.rect.position.x, room.rect.position.y))
+	var triangulation = delaunay.do_triangulation(points)
+	var minimum_spanning_tree = kruskal.do_minimum_spanning_tree(points, triangulation)
+	
+	var final_graph = triangulation
 	# merge these graphs together and remove duplicates
-	#var final_graph = minimum_spanning_tree
-	#for edge in minimum_spanning_tree:
-	#	if final_graph.has(edge):
-	#		continue
-	#	final_graph.append(edge)
-	print("done.")
-	return minimum_spanning_tree
+	# var final_graph: Array[Edge] = []
+	# for edge in minimum_spanning_tree:
+	# 	if final_graph.has(edge):
+	# 		continue
+	# 	final_graph.append(edge)
+
+	return final_graph
 
 func _create_paths_array(final_graph) -> Array[Rect2i]:
 	# find paths
@@ -101,7 +109,7 @@ func _create_paths_array(final_graph) -> Array[Rect2i]:
 						midpoint_x,
 						int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2),
 						5, # path thickness
-						int((hub_room_b.rect.position.y + hub_room_b.rect.size.y) / 2) - int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2))
+						abs(int((hub_room_b.rect.position.y + hub_room_b.rect.size.y) / 2) - int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2)))
 				
 				paths.append(path)
 				continue
@@ -111,9 +119,9 @@ func _create_paths_array(final_graph) -> Array[Rect2i]:
 			# the two points
 			if (midpoint_y >= hub_room_a.rect.position.y and midpoint_y < hub_room_a.rect.position.y + hub_room_a.rect.size.y):
 				var path = Rect2i(
-						int((hub_room_a.rect.position.x + hub_room_a.size.x) / 2),
+						int((hub_room_a.rect.position.x + hub_room_a.rect.size.x) / 2),
 						midpoint_y,
-						int((hub_room_b.rect.position.x + hub_room_b.size.x) / 2) - int((hub_room_a.rect.position.x + hub_room_a.rect.size.x) / 2),
+						abs(int((hub_room_b.rect.position.x + hub_room_b.rect.size.x) / 2) - int((hub_room_a.rect.position.x + hub_room_a.rect.size.x) / 2)),
 						5) # path thickness
 				
 				paths.append(path)
@@ -125,12 +133,12 @@ func _create_paths_array(final_graph) -> Array[Rect2i]:
 					int((hub_room_a.rect.position.x + hub_room_a.rect.size.x) / 2),
 					int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2),
 					5, # path thickness
-					int((hub_room_b.rect.position.y + hub_room_b.rect.size.y) / 2) - int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2))
+					abs(int((hub_room_b.rect.position.y + hub_room_b.rect.size.y) / 2) - int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2)))
 			# horizontal half
 			var l_half_b = Rect2i(
 				int((hub_room_a.rect.position.x + hub_room_a.rect.size.x) / 2),
 				int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2),
-				int((hub_room_b.rect.position.y + hub_room_b.rect.size.y) / 2) - int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2),
+				abs(int((hub_room_b.rect.position.y + hub_room_b.rect.size.y) / 2) - int((hub_room_a.rect.position.y + hub_room_a.rect.size.y) / 2)),
 				5) # path thickness
 			
 			paths.append(l_half_a)
@@ -154,7 +162,7 @@ func _physics_process(delta):
 	_all_room_physics_bodies_sleeping.emit()
 	_check_all_room_physics_bodies = false
 
-func get_random_position_in_ellipsoid(width, height):
+func _get_random_position_in_ellipsoid(width, height):
 	var t = 2 * PI * randf()
 	var u = randf() + randf()
 	var r = 0
@@ -165,3 +173,6 @@ func get_random_position_in_ellipsoid(width, height):
 		r = u
 	
 	return Vector2i(int(width * r * cos(t) / 2), int(height * r * sin(t) / 2))
+
+func get_current_output() -> FloorGenerationOutput:
+	return _current_output

@@ -17,5 +17,3 @@ z_index = -10
 position = Vector2(-4.76837e-07, -4.76837e-07)
 scale = Vector2(18.5234, 18.5234)
 texture = ExtResource("2_wh7jd")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
