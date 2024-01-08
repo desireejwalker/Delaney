@@ -70,9 +70,9 @@ func _create_final_graph() -> Array:
 	# var triangulation = delaunay.triangulate(_hub_room_array.map(func(hub_room: Room): return hub_room.rect.position))
 	# var minimum_spanning_tree = kruskal.find_minimum_spanning_tree(triangulation)
 	
-	var points := _hub_room_array.map(func(room: Room): return Delaunay.Point.new(room.rect.position.x, room.rect.position.y))
-	var triangulation = delaunay.do_triangulation(points)
-	var minimum_spanning_tree = kruskal.do_minimum_spanning_tree(points, triangulation)
+	var points := _hub_room_array.map(func(room: Room): return room.rect.position)
+	var triangulation = BowyerWatson.do_triangulation(points)
+	# var minimum_spanning_tree = kruskal.do_minimum_spanning_tree(points, triangulation)
 	
 	var final_graph = triangulation
 	# merge these graphs together and remove duplicates

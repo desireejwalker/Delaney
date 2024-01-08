@@ -14,7 +14,7 @@ func _draw():
 		return
 	
 	for edge in floor_generation_output.get_floor_graph():
-		draw_line(edge[0], edge[1], Color.BLUE)
+		draw_line(edge.point_a, edge.point_b, Color.BLUE)
 
 func _do_visualization():
 	var floor_generation_output = _floor_generator.get_current_output()

@@ -6,9 +6,9 @@ var point_c: Vector2
 
 var edges: Array[Edge]
 
-var circum_center_x
-var circum_center_y
-var circum_radius_squared
+var _circumcenter_x
+var _circumcenter_y
+var _circumcenter_radius_squared
 
 func _init(point_a: Vector2, point_b: Vector2, point_c: Vector2):
 	# hashing depends on the ordering of points a b and c
@@ -54,27 +54,27 @@ func _init(point_a: Vector2, point_b: Vector2, point_c: Vector2):
 	var x = (self.point_a.x * self.point_a.x + self.point_a.y * self.point_a.y) * (self.point_b.y - self.point_c.y) + (self.point_b.x * self.point_b.x + self.point_b.y * self.point_b.y) * (self.point_c.y - self.point_a.y) + (self.point_c.x * self.point_c.x + self.point_c.y * self.point_c.y) * (self.point_a.y - self.point_b.y)
 	var y = (self.point_a.x * self.point_a.x + self.point_a.y * self.point_a.y) * (self.point_c.x - self.point_b.x) + (self.point_b.x * self.point_b.x + self.point_b.y * self.point_b.y) * (self.point_a.x - self.point_c.x) + (self.point_c.x * self.point_c.x + self.point_c.y * self.point_c.y) * (self.point_b.x - self.point_a.x)
 	
-	circum_center_x = x / D
-	circum_center_y = y / D
+	_circumcenter_x = x / D
+	_circumcenter_y = y / D
 	
-	var dx = point_a.x - circum_center_x
-	var dy = point_a.y - circum_center_y
-	circum_radius_squared = dx * dx + dy * dy
+	var delta_x = point_a.x - _circumcenter_x
+	var delta_y = point_a.y - _circumcenter_y
+	_circumcenter_radius_squared = delta_x * delta_x + delta_y * delta_y
 
-func equals(other):
+func equals(other) -> bool:
 	return (other is Triangle and point_a == other.point_a and point_b == other.point_b and point_c == other.point_c)
 
-func has_edge(edge):
+func has_edge(edge) -> bool:
 	return edges.has(edge)
 
-func has_vertex(point):
+func has_vertex(point) -> bool:
 	return (point_a == point or point_b == point or point_c == point)
 
-func has_vertex_from(triangle):
+func has_vertex_from(triangle) -> bool:
 	return (has_vertex(triangle.point_a) or has_vertex(triangle.point_b) or has_vertex(triangle.point_c))
 
-func circum_circle_contains(point):
-	var dx = point.x - circum_center_x
-	var dy = point.y - circum_center_y
+func circumcircle_contains(point) -> bool:
+	var dx = point.x - _circumcenter_x
+	var dy = point.y - _circumcenter_y
 	var distance_squared = dx * dx + dy * dy
-	return distance_squared < circum_radius_squared
+	return distance_squared < _circumcenter_radius_squared
