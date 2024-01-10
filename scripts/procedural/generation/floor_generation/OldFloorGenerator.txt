@@ -1,0 +1,362 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Manapotion.Procedural;
+using UnityEngine;
+
+public class FloorGenerator
+{
+    public bool invalidGeneration { get; private set; }
+
+    private FloorGenerationParameters _parameters;
+
+    private Room[] _roomArray;
+
+    private Room[] _hubRoomArray;
+    private HashSet<Point> _hubRoomPoints;
+    private Dictionary<Point, Room> _pointToHubRoomDict;
+
+    private HashSet<Edge> _hubRoomTriangulation; 
+    private List<Edge> _hubRoomMinimumSpanningTree;
+    private HashSet<Edge> _hubRoomFinalGraph;
+
+    private HashSet<BoundsInt> _hallPaths;
+
+    private float _averageRoomSize;
+
+    private Room _startingRoom;
+    private Room _endingRoom;
+
+    public FloorGenerator(FloorGenerationParameters parameters)
+    {
+        _parameters = parameters;
+
+        invalidGeneration = true;
+    }
+
+    public void Initialize()
+    {
+        var sizeSum = 0f;
+        
+        if (_roomArray != null)
+        {
+            foreach (var room in _roomArray)
+            {
+                GameObject.Destroy(room.Collider.gameObject);
+            }
+        }
+        _roomArray = new Room[_parameters.RoomCount];
+
+        for (int i = 0; i < _roomArray.Length; i++)
+        {
+            if (_parameters.RoomDefinitions.Length != 0)
+            {
+                _roomArray[i] = Room.CreateFromDefinitionAt(
+                    GetRandomPointInEllipse(_parameters.RoomPlacementEllipseWidth, _parameters.RoomPlacementEllipseHeight),
+                    _parameters.RoomDefinitions[UnityEngine.Random.Range(0, _parameters.RoomDefinitions.Length)]
+                );
+                _roomArray[i].BecomePhysical();
+            }
+            else
+            {
+                _roomArray[i] = Room.RandomSizeAt(
+                    GetRandomPointInEllipse(_parameters.RoomPlacementEllipseWidth, _parameters.RoomPlacementEllipseHeight),
+                    _parameters.RoomMinimumWidth,
+                    _parameters.RoomMaximumWidth,
+                    _parameters.RoomMinimumHeight,
+                    _parameters.RoomMaximumHeight
+                );
+                _roomArray[i].BecomePhysical();
+            }
+
+            sizeSum += _roomArray[i].dimensions.size.magnitude;
+        }
+
+        _averageRoomSize = sizeSum / _parameters.RoomCount;
+
+        Time.timeScale = 100;
+    }
+    public void GenerateBaseMap()
+    {
+        Time.timeScale = 1;
+
+        DecideHubRooms();
+        _hubRoomTriangulation = Triangulate(_hubRoomPoints);
+        _hubRoomMinimumSpanningTree = Kruskal.MinimumSpanningTree(_hubRoomTriangulation);
+        
+        _hubRoomFinalGraph = new HashSet<Edge>(_hubRoomMinimumSpanningTree);
+        _hubRoomFinalGraph.UnionWith(PercentOfDelaunayEdges(_hubRoomTriangulation, _parameters.PercentOfDelaunayEdgesToKeep));
+
+        FindHallwayPaths();
+        FindHallwayRooms();
+
+        _startingRoom = FindFarthestRoomFrom(Vector2.zero);
+        _endingRoom = FindClosestRoomTo(-_startingRoom.dimensions.center);
+    }
+
+    public async Task CheckIfRoomsAreAsleep()
+    {
+        while (_roomArray.All(room => !room.Collider.attachedRigidbody.IsSleeping()))
+        {
+            await Task.Delay(100);
+        }
+    }
+
+    private void DecideHubRooms()
+    {
+        _pointToHubRoomDict = new Dictionary<Point, Room>();
+
+        foreach (var room in _roomArray)
+        {
+            room.StopBeingPhysical();
+            if (room.dimensions.size.magnitude > _averageRoomSize * _parameters.RoomSizeThresholdMultiplier)
+            {
+                room.isHubRoom = true;
+            }
+        }
+
+        _hubRoomArray = _roomArray.Where(room => room.isHubRoom == true).ToArray();
+
+        _hubRoomPoints = new HashSet<Point>();
+        foreach (var room in _hubRoomArray)
+        {
+            var hubRoomPoint = new Point(
+                (int)room.dimensions.center.x,
+                (int)room.dimensions.center.y
+            );
+            _hubRoomPoints.Add(hubRoomPoint);
+            _pointToHubRoomDict.Add(hubRoomPoint, room);
+        }
+    }
+    private HashSet<Edge> Triangulate(HashSet<Point> points)
+    {
+        var triangles = BowyerWatson.Triangulate(points);
+
+        var graph = new HashSet<Edge>();
+        var trianglePoints = new HashSet<Point>();
+        foreach (var triangle in triangles)
+        {
+            graph.UnionWith(triangle.edges);
+            foreach (var edge in triangle.edges)
+            {
+                trianglePoints.Add(edge.a);
+                trianglePoints.Add(edge.b);
+            }
+        }
+
+        if (trianglePoints.Count == points.Count)
+        {
+            invalidGeneration = false;
+        }
+
+        return graph;
+    }
+    private HashSet<Edge> PercentOfDelaunayEdges(HashSet<Edge> delaunayTriangulation, float percent)
+    {
+        var triangulation = delaunayTriangulation.ToArray();
+        var extraEdges = new HashSet<Edge>();
+
+        for (int i = 0; i < (int)((triangulation.Length) * percent); i++)
+        {
+            var edge = triangulation[i];
+            extraEdges.Add(edge);
+        }
+
+        return extraEdges;
+    }
+    private void FindHallwayPaths()
+    {
+        _hallPaths = new HashSet<BoundsInt>();
+
+        foreach (var point in _hubRoomPoints)
+        {
+            var startHubRoom = _pointToHubRoomDict[point];
+
+            var connectedEdges = _hubRoomFinalGraph.Where(edge => edge.a == point);
+
+            foreach (var edge in connectedEdges)
+            {
+                var endHubRoom = _pointToHubRoomDict[edge.b];
+
+                var midpointPosition = (point.ToVector2() + edge.b.ToVector2()) / 2;
+                var midpointX = (int)midpointPosition.x;
+                var midpointY = (int)midpointPosition.y;
+
+                // if midpoint x position is within 
+                // the dimensions of the currently
+                // analyzed hub room, create a 
+                // vertical path connecting the 
+                // two points
+                if (midpointPosition.x > startHubRoom.dimensions.min.x && midpointPosition.x < startHubRoom.dimensions.max.x)
+                {
+                    var path = new BoundsInt(
+                        midpointX,
+                        (int)startHubRoom.dimensions.center.y,
+                        0,
+                        _parameters.HallwayPathThickness,
+                        (int)endHubRoom.dimensions.center.y - (int)startHubRoom.dimensions.center.y,
+                        1
+                    );
+                    _hallPaths.Add(path);
+
+                    continue;
+                }
+
+                // if midpoint y position is within 
+                // the dimensions of the currently
+                // analyzed hub room, create a 
+                // horizontal path connecting the 
+                // two points
+                if (midpointPosition.y > startHubRoom.dimensions.min.y && midpointPosition.y < startHubRoom.dimensions.max.y)
+                {
+                    var path = new BoundsInt(
+                        (int)startHubRoom.dimensions.center.x,
+                        midpointY,
+                        0,
+                        (int)endHubRoom.dimensions.center.x - (int)startHubRoom.dimensions.center.x,
+                        _parameters.HallwayPathThickness,
+                        1
+                    );
+                    _hallPaths.Add(path);
+
+                    continue;
+                }
+
+                // vertical half
+                var aHalfL = new BoundsInt(
+                    (int)startHubRoom.dimensions.center.x,
+                    (int)startHubRoom.dimensions.center.y,
+                    0,
+                    _parameters.HallwayPathThickness,
+                    (int)endHubRoom.dimensions.center.y - (int)startHubRoom.dimensions.center.y,
+                    1
+                );
+                // horizontal half
+                var bHalfL = new BoundsInt(
+                    (int)endHubRoom.dimensions.center.x,
+                    (int)endHubRoom.dimensions.center.y,
+                    0,
+                    (int)startHubRoom.dimensions.center.x - (int)endHubRoom.dimensions.center.x,
+                    _parameters.HallwayPathThickness,
+                    1
+                );
+                _hallPaths.Add(aHalfL);
+                _hallPaths.Add(bHalfL);
+            }
+        }
+    }
+    private void FindHallwayRooms()
+    {
+        foreach (var room in _roomArray)
+        {
+            if (room.isHubRoom)
+            {
+                continue;
+            }
+
+            var roomBounds = new Bounds(room.dimensions.center, room.dimensions.size);
+            foreach (var path in _hallPaths)
+            {
+                var pathBounds = new Bounds(path.center, path.size);
+
+                if (roomBounds.Intersects(pathBounds))
+                {
+                    room.isHallRoom = true;
+                }
+            }
+        }
+    }
+
+    private Room FindFarthestRoomFrom(Vector2 position)
+    {
+        var maxDist = Vector2.Distance(position, _hubRoomArray[0].dimensions.center);
+        var maxDistRoom = _hubRoomArray[0];
+
+        foreach (var hubRoom in _hubRoomArray)
+        {
+            var lastMax = maxDist;
+            maxDist = MathF.Max(
+                Vector2.Distance(position, maxDistRoom.dimensions.center),
+                Vector2.Distance(position, hubRoom.dimensions.center)
+            );
+
+            if (maxDist == lastMax)
+            {
+                continue;
+            }
+
+            maxDistRoom = hubRoom;
+        }
+
+        return  maxDistRoom;
+    }
+    private Room FindClosestRoomTo(Vector2 position)
+    {
+        var minDist = Vector2.Distance(position, _hubRoomArray[0].dimensions.center);
+        var minDistRoom = _hubRoomArray[0];
+
+        foreach (var hubRoom in _hubRoomArray)
+        {
+            var lastMin = minDist;
+            minDist = MathF.Min(
+                Vector2.Distance(position, minDistRoom.dimensions.center),
+                Vector2.Distance(position, hubRoom.dimensions.center)
+            );
+
+            if (minDist == lastMin)
+            {
+                continue;
+            }
+
+            minDistRoom = hubRoom;
+        }
+
+        return minDistRoom;
+    }
+
+    public FloorGenerationOutput GetOutput()
+    {
+        return new FloorGenerationOutput(
+            _roomArray,
+            _hubRoomArray,
+            
+            _hallPaths.ToArray(),
+
+            _startingRoom,
+            _endingRoom,
+
+            _hubRoomTriangulation.ToArray(),
+            _hubRoomMinimumSpanningTree.ToArray(),
+            _hubRoomFinalGraph.ToArray()
+        );
+    }
+
+    public void CleanUp(Transform roomParent)
+    {
+        foreach (var room in _roomArray)
+        {
+            room.Initialize(roomParent);
+        }
+    }
+
+    private Vector2Int GetRandomPointInEllipse(float width, float height)
+    {
+        var t = 2 * Mathf.PI * UnityEngine.Random.value;
+        var u = UnityEngine.Random.value + UnityEngine.Random.value;
+        var r = 0f;
+        if (u > 1)
+        {
+            r = 2 - u;
+        }
+        else
+        {
+            r = u;
+        }
+
+        return new Vector2Int(
+            (int)(width * r * Mathf.Cos(t) / 2), 
+            (int)(height * r * Mathf.Sin(t) / 2)
+        );
+    }
+}

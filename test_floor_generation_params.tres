@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="FloorGenerationParameters" load_steps=2 format=3 uid="uid://u8b70qpxkcp5"]
+
+[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/FloorGenerationParameters.cs" id="1_qjr3d"]
+
+[resource]
+script = ExtResource("1_qjr3d")
+MinimumFloorLevelInclusive = 0

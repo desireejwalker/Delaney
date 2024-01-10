@@ -1,0 +1,183 @@
+using System;
+using Manapotion.Characters;
+using Manapotion.Utilities;
+using UnityEngine;
+
+namespace Manapotion.Procedural
+{
+    public class Room
+    {
+        public event EventHandler<OnRoomPlayerEntryArgs> OnRoomPlayerEntry;
+        public class OnRoomPlayerEntryArgs : EventArgs
+        {
+            public Character character;
+            public Room room;
+        }
+        public event EventHandler<OnRoomPlayerStayArgs> OnRoomPlayerStay;
+        public class OnRoomPlayerStayArgs : EventArgs
+        {
+            public Character character;
+            public Room room;
+        }
+        public event EventHandler<OnRoomPlayerExitArgs> OnRoomPlayerExit;
+        public class OnRoomPlayerExitArgs : EventArgs
+        {
+            public Character character;
+            public Room room;
+        }
+
+        public BoundsInt dimensions;
+        public RoomDefinition Definition { get; }
+        public bool isHallRoom = false;
+        public bool isHubRoom = false;
+        private bool _isActiveRoom = false;
+        public bool IsActiveRoom { get => _isActiveRoom; }
+
+
+        private BoxCollider2D _collider;
+        public BoxCollider2D Collider { get => _collider; }
+
+        public Room(BoundsInt dimensions)
+        {
+            this.dimensions = dimensions;
+            this.Definition = null;
+        }
+        public Room(BoundsInt dimensions, RoomDefinition definition)
+        {
+            this.dimensions = dimensions;
+            this.Definition = definition;
+        }
+        public static Room RandomSizeAt(Vector2Int position, int minWidth, int maxWidth, int minHeight, int MaxHeight)
+        {
+            return new Room(new BoundsInt(
+                (Vector3Int)position,
+                new Vector3Int(
+                    UnityEngine.Random.Range(minWidth, maxWidth),
+                    UnityEngine.Random.Range(minHeight, MaxHeight),
+                    1
+                )
+            ));
+        }
+        public static Room CreateFromDefinitionAt(Vector2Int position, RoomDefinition definition)
+        {
+            return new Room(
+                new BoundsInt((Vector3Int)position, new Vector3Int(definition.Layers[0].cellBounds.size.x, definition.Layers[0].cellBounds.size.y, 1)),
+                definition
+            );
+        }
+
+        public void BecomePhysical()
+        {
+            _collider = new GameObject(
+                $"Room {this.GetHashCode()}",
+                typeof(BoxCollider2D),
+                typeof(Rigidbody2D)
+            ).GetComponent<BoxCollider2D>();
+
+            var rigidbody = _collider.attachedRigidbody;
+            rigidbody.gravityScale = 0;
+            rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
+            rigidbody.drag = 999;
+            
+            rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+            _collider.size = new Vector2(dimensions.size.x, dimensions.size.y);
+            _collider.transform.position = new Vector3(dimensions.center.x, dimensions.center.y);
+        }
+        public void StopBeingPhysical()
+        {
+            _collider.transform.position = new Vector3(
+                (int)_collider.transform.position.x,
+                (int)_collider.transform.position.y,
+                (int)_collider.transform.position.z
+            );
+
+            dimensions = new BoundsInt(
+                new Vector3Int(
+                    (int)_collider.bounds.min.x,
+                    (int)_collider.bounds.min.y
+                ),
+                new Vector3Int(
+                    dimensions.size.x,
+                    dimensions.size.y,
+                    1
+                )
+            );
+
+            var rigidbody = _collider.attachedRigidbody;
+            rigidbody.simulated = true;
+            // rigidbody.Sleep();
+        }
+
+        public void Initialize(Transform parent)
+        {
+            if (!isHallRoom && !isHubRoom)
+            {
+                GameObject.Destroy(_collider.gameObject);
+                return;
+            }
+
+            _collider.isTrigger = true;
+            _collider.transform.position = new Vector3(dimensions.center.x, dimensions.center.y);
+
+            var triggerListener = _collider.gameObject.AddComponent<TriggerListener>();
+            triggerListener.OnTriggerEnter2DEvent += OnTriggerEnter2DEvent_InvokeOnRoomPlayerEntry;
+            triggerListener.OnTriggerStay2DEvent += OnTriggerStay2DEvent_InvokeOnRoomPlayerStay;
+            triggerListener.OnTriggerExit2DEvent += OnTriggerExit2DEvent_InvokeOnRoomPlayerExit;
+
+
+            _collider.transform.SetParent(parent);
+        }
+
+        private void OnTriggerEnter2DEvent_InvokeOnRoomPlayerEntry(Collider2D other)
+        {
+            if (other.gameObject.tag != "Player")
+            {
+                return;
+            }
+
+            _isActiveRoom = true;
+            Debug.Log($"Player entered {this._collider.gameObject.name}");
+            OnRoomPlayerEntry?.Invoke(this, new OnRoomPlayerEntryArgs 
+            {
+                character = other.gameObject.GetComponent<Character>(),
+                room = this
+            });
+        }
+        private void OnTriggerStay2DEvent_InvokeOnRoomPlayerStay(Collider2D other)
+        {
+            if (other.gameObject.tag != "Player")
+            {
+                return;
+            }
+
+            // Debug.Log($"Player is inside {this._collider.gameObject.name}");
+            OnRoomPlayerStay?.Invoke(this, new OnRoomPlayerStayArgs 
+            {
+                character = other.gameObject.GetComponent<Character>(),
+                room = this
+            });
+        }
+        private void OnTriggerExit2DEvent_InvokeOnRoomPlayerExit(Collider2D other)
+        {
+            if (other.gameObject.tag != "Player")
+            {
+                
+                return;
+            }
+
+            _isActiveRoom = false;
+            Debug.Log($"Player left {this._collider.gameObject.name}");
+            OnRoomPlayerExit?.Invoke(this, new OnRoomPlayerExitArgs 
+            {
+                character = other.gameObject.GetComponent<Character>(),
+                room = this
+            });
+        }
+
+        public bool ContainsPosition(Vector3 position)
+        {
+            return _collider.bounds.Contains(position);
+        }
+    }
+}

@@ -1,0 +1,116 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using Manapotion.Utilities;
+using Manapotion.Monsters;
+
+namespace Manapotion.Procedural
+{   
+    [CreateAssetMenu(fileName = "New RoomDefinition", menuName = "Manapotion/Procedural/New Room Definition")]
+    public class RoomDefinition : ScriptableObject
+    {
+        public Transform prefab;
+
+        private Tilemap[] _layers;
+        public Tilemap[] Layers { get => _layers; }
+        public BoundsInt Bounds { get => _layers[0].cellBounds; }
+
+        private Tilemap _walls;
+        public Tilemap Walls { get => _walls; }
+
+        private HashSet<Transform> _props;
+        public Transform[] Props { get => _props.ToArray(); }
+
+        private HashSet<MonsterSpawner> _spawners;
+        public MonsterSpawner[] Spawners { get => _spawners.ToArray(); }
+
+        [SerializeField]
+        private bool _isArena;
+        public bool IsArena { get => _isArena; }
+
+        private Transform _spawn;
+        public Vector3 SpawnPoint { get => _spawn.position; }
+        
+        public void OnEnable()
+        {
+            if (prefab == null)
+            {
+                return;
+            }
+
+            FindLayers();
+            FindWalls();
+            FindProps();
+            FindSpawn();
+            FindSpawners();
+        }
+
+        private void FindLayers()
+        {
+            _layers = prefab.GetComponentsInChildren<Tilemap>().Where(tilemap =>
+            {
+                var props = tilemap.gameObject.name.Split(' ');
+                return props[0] == "Layer";
+            }).ToArray();
+            foreach (var layer in _layers)
+            {
+                layer.CompressBounds();
+            }
+        }
+        private void FindWalls()
+        {
+            var walls = prefab.GetComponentsInChildren<Tilemap>().Where(tilemap => tilemap.gameObject.name == "Walls").ToArray();
+
+            if (walls.Length == 0)
+            {
+                return;
+            }
+
+            _walls = walls[0];
+
+            _walls.CompressBounds();
+        }
+        private void FindProps()
+        {
+            _props = new HashSet<Transform>();
+            var propsParent = prefab.Find("Props");
+            
+            if (propsParent == null)
+            {
+                return;
+            }
+
+            _props.UnionWith(propsParent.gameObject.GetComponentsInDirectChildren<Transform>());
+        }
+        private void FindSpawn()
+        {
+            try
+            {
+                _spawn = prefab.Find("Spawn").transform;
+            }
+            catch (NullReferenceException)
+            {
+                Debug.LogWarning($"Room Definition: Room {prefab.name} does not have a spawn point! Make sure to create a GameObject named \"Spawn\" within the prefab!");
+            }
+        }
+        private void FindSpawners()
+        {
+            _spawners = new HashSet<MonsterSpawner>();
+            Transform spawnersParent = null;
+            try
+            {
+                spawnersParent = prefab.Find("Spawners").transform;
+            }
+            catch (System.Exception)
+            {
+                Debug.Log($"Room Definition: Room {prefab.name} does not contain any monster spawners.");
+                return;
+            }
+
+            _spawners.UnionWith(spawnersParent.gameObject.GetComponentsInDirectChildren<MonsterSpawner>());
+        }
+    }
+}

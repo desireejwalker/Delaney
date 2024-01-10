@@ -1,0 +1,58 @@
+using System;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+namespace Manapotion.Procedural
+{    
+    [CreateAssetMenu(fileName = "New FloorGenerationParameters", menuName = "Manapotion/Procedural/New Floor Generation Parameters")]
+    public class FloorGenerationParameters : ScriptableObject
+    {
+        [field: SerializeField]
+        public int MinimumFloorLevelInclusive { get; private set; }
+        [field: SerializeField]
+        public int MaximumFloorLevelInclusive { get; private set; }
+
+        [field: Header("Inital Room Placement Settings")]
+        [field: SerializeField]
+        public RoomDefinition[] RoomDefinitions { get; private set; }
+        [field: SerializeField]
+        public int RoomCount { get; private set; }
+        [field: SerializeField]
+        public float RoomPlacementEllipseWidth { get; private set; }
+        [field: SerializeField]
+        public float RoomPlacementEllipseHeight { get; private set; }
+        
+        [field: Header("Room Size Settings")]
+        [field: SerializeField]
+        public int RoomMinimumWidth { get; private set; }
+        [field: SerializeField]
+        public int RoomMaximumWidth { get; private set; }
+        [field: SerializeField]
+        public int RoomMinimumHeight { get; private set; }
+        [field: SerializeField]
+        public int RoomMaximumHeight { get; private set; }
+        [field: SerializeField]
+        public float RoomSizeThresholdMultiplier { get; private set; }
+        
+        [field: Header("Hallway/Path Settings")]
+        [field: SerializeField]
+        [field: Range(0, 1)]
+        public float PercentOfDelaunayEdgesToKeep { get; private set; }
+        [field: SerializeField]
+        public int HallwayPathThickness { get; private set; }
+        
+        [field: SerializeField]
+        public TileBase PathTile { get; private set; }
+        [field: SerializeField]
+        public TileBase WallTile { get; private set; }
+
+        [field: Header("Visuals")]
+        [field: SerializeField]
+        public Transform GlobalFX { get; private set; }
+
+        public bool IsWithinGenerationBounds(int floorLevel)
+        {
+            return floorLevel >= MinimumFloorLevelInclusive && floorLevel <= MaximumFloorLevelInclusive;
+        }
+    }
+}

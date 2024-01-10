@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using Manapotion.Monsters;
+using UnityEngine;
+
+namespace Manapotion.Procedural
+{
+    public class FloorMonstersManager
+    {   
+        private List<MonsterSpawner> _monsterSpawners;
+        private List<Monster> _monsters;
+
+        public FloorMonstersManager(IEnumerable<MonsterSpawner> spawners)
+        {
+            _monsters = new List<Monster>();
+            _monsterSpawners = new List<MonsterSpawner>(spawners);
+        }
+
+        public void HandleMonsterSpawning()
+        {
+            SpawnNonArenaMonsters();
+        }
+
+        private void SpawnNonArenaMonsters()
+        {
+            foreach (var spawner in _monsterSpawners)
+            {
+                if (spawner.IsInArenaRoom)
+                {
+                    continue;
+                }
+
+                _monsters.AddRange(spawner.Spawn());
+                GameObject.Destroy(spawner.gameObject);
+            }
+        }
+
+        public void ClearAllMonsters()
+        {
+            foreach (var monster in _monsters)
+            {
+                GameObject.Destroy(monster.gameObject);
+            }
+        }
+    }
+}

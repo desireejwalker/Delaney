@@ -1,0 +1,545 @@
+using System;
+using System.Collections.Generic;
+using Manapotion.Monsters;
+using Manapotion.Pathfinding.AStar;
+using Unity.Burst;
+using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Tilemaps;
+
+namespace Manapotion.Procedural
+{
+    public class FloorTilemapDrawer
+    {
+        private Grid _grid;
+
+        private Tilemap _paths;
+        private TileBase _pathTile;
+        private Tilemap _innerWalls;
+        private Tilemap _outerWalls;
+        private TileBase _outerWallTile;
+        private Tilemap[] _layers;
+        private Transform _propsParent;
+
+        private Transform _globalFXObject;
+
+        private AStarGrid _aStarGrid;
+        public AStarGrid AStarGrid { get => _aStarGrid; }
+
+        private List<MonsterSpawner> _spawners;
+        public List<MonsterSpawner> Spawners { get => _spawners; }
+
+        public FloorTilemapDrawer(Grid grid)
+        {
+            _grid = grid;
+
+            _layers = new Tilemap[10];
+        }
+
+        public void DrawFloor(Floor floor, FloorGenerationParameters parameters)
+        {
+            _pathTile = parameters.PathTile;
+            _outerWallTile = parameters.WallTile;
+
+            if (parameters.RoomDefinitions.Length != 0)
+            {
+                DrawFloorWithDefinitions(floor, parameters);
+            }
+            else
+            {
+                DrawFloorWithoutDefinitions(floor);
+            }
+
+            _aStarGrid = new AStarGrid(
+                _outerWalls.cellBounds,
+                new Tilemap[] { _layers[0], _paths },
+                new Tilemap[] { _innerWalls, _outerWalls }
+            );
+
+            SetFloorGlobalFX(parameters.GlobalFX);
+        }
+
+        private void DrawFloorWithoutDefinitions(Floor floor)
+        {
+            foreach (var path in floor.Generation.HallPaths)
+            {
+                HandleDrawingPaths(path);
+            }
+
+            foreach (var room in floor.Generation.Rooms)
+            {
+                if (!room.isHallRoom && !room.isHubRoom)
+                {
+                    continue;
+                }
+
+                HandleDrawingProtoRooms(room);
+            }
+
+            HandleDrawingSignalsFor(_paths, 0, Color.white);
+            HandleDrawingSignalsFor(_layers[0], 0, Color.white);
+
+            HandleDrawingOuterWalls(floor.Generation.FloorPositions);
+            HandleDrawingSignalsFor(_outerWalls, 1, Color.gray);
+        }
+
+        private void DrawFloorWithDefinitions(Floor floor, FloorGenerationParameters parameters)
+        {   
+            _spawners = new List<MonsterSpawner>();
+
+            foreach (var path in floor.Generation.HallPaths)
+            {
+                HandleDrawingPaths(path);
+            }
+
+            foreach (var room in floor.Generation.Rooms)
+            {
+                if (!room.isHallRoom && !room.isHubRoom)
+                {
+                    continue;
+                }
+
+                HandleDrawingLayers(room);
+                HandleDrawingInnerWalls(room);
+                HandleDrawingProps(room);
+
+                HandleMonsterSpawners(room);
+            }
+
+            RemoveObstructingProps(floor);
+
+            HandleDrawingSignalsFor(_paths, 0, Color.white);
+            HandleDrawingSignalsFor(_layers[0], 0, Color.white);
+            HandleDrawingSignalsFor(_innerWalls, 1, Color.gray);
+
+            HandleDrawingOuterWalls(floor.Generation.FloorPositions);
+            HandleDrawingSignalsFor(_outerWalls, 1, Color.gray);
+        }
+
+        private void HandleMonsterSpawners(Room room)
+        {
+            var spawners = room.Definition.Spawners;
+
+            if (spawners == null)
+            {
+                return;
+            }
+
+            foreach (var spawner in spawners)
+            {
+                var spawnerClone = GameObject.Instantiate(
+                    spawner,
+                    (spawner.transform.position - room.Definition.Layers[0].cellBounds.position) + room.dimensions.position,
+                    Quaternion.identity
+                );
+                spawnerClone.IsInArenaRoom = room.Definition.IsArena;
+                _spawners.Add(spawnerClone);
+            }
+        }
+
+        private void HandleDrawingProtoRooms(Room room)
+        {
+            if (_layers[0] == null)
+            {
+                CreateLayerGameObject(0);
+            }
+
+            foreach (var position in room.dimensions.allPositionsWithin)
+            {
+                DrawTileToLayer(
+                    room,
+                    _layers[0],
+                    room.dimensions,
+                    position
+                );
+            }
+        }
+
+        private void SetFloorGlobalFX(Transform fxObject)
+        {
+            if (_globalFXObject != null)
+            {
+                GameObject.Destroy(_globalFXObject.gameObject);
+            }
+
+            _globalFXObject = GameObject.Instantiate(fxObject, Vector3.zero, Quaternion.identity);
+        }
+
+        private void RemoveObstructingProps(Floor floor)
+        { 
+            foreach (var path in floor.Generation.HallPaths)
+            {
+                foreach (Transform prop in _propsParent)
+                {
+                    if (path.Contains(new Vector3Int((int)prop.position.x, (int)prop.position.y, (int)prop.position.z)))
+                    {
+                        GameObject.Destroy(prop.gameObject);
+                    }
+                }
+            }
+        }
+
+        private void HandleDrawingSignalsFor(Tilemap source, int sortingOrder, Color32 color)
+        {
+            var signal = new GameObject(
+                $"[SIGNAL] {source.name}",
+                typeof(TilemapRenderer)
+            ).GetComponent<Tilemap>();
+
+            var tilemapRenderer = signal.GetComponent<TilemapRenderer>();
+            tilemapRenderer.material.shader = Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default");
+            tilemapRenderer.sortingLayerName = "Signals";
+            tilemapRenderer.sortingOrder = sortingOrder;
+
+            var sourceTiles = source.GetTilesBlock(source.cellBounds);
+            
+            var signalTile = Tile.CreateInstance<Tile>();
+            signalTile.name = $"{source.name} Signal";
+
+            var texture = new Texture2D(16, 16);
+            
+            for (int x = 0; x < texture.width; x++)
+            {
+                for (int y = 0; y < texture.height; y++)
+                {
+                    texture.SetPixel(x, y, color);
+                }
+            }
+            
+            texture.Apply();
+
+            signalTile.sprite = Sprite.Create(texture, new Rect(0, 0, 16, 16), new Vector2(0.5f, 0.5f), 16);
+
+            for (int i = 0; i < sourceTiles.Length; i++)
+            {
+                if (sourceTiles[i] == null)
+                {
+                    continue;
+                }
+
+                sourceTiles[i] = signalTile;
+            }
+
+            signal.SetTilesBlock(source.cellBounds, sourceTiles);
+
+            signal.gameObject.layer = 16; // Outer Walls Signal
+
+            signal.transform.SetParent(source.transform);
+        }
+
+        private void HandleDrawingInnerWalls(Room room)
+        {   
+            if (_innerWalls == null)
+            {
+                CreateInnerWallsGameObject();
+            }
+
+            var roomWalls = room.Definition.Walls;
+
+            if (roomWalls == null)
+            {
+                return;
+            }
+
+            foreach (var position in roomWalls.cellBounds.allPositionsWithin)
+            {
+                DrawTileToLayer(
+                    room,
+                    _innerWalls,
+                    room.Definition.Layers[0],
+                    roomWalls,
+                    position,
+                    false
+                );
+            }
+        }
+
+        private void HandleDrawingProps(Room room)
+        {
+            if (_propsParent == null)
+            {
+                CreatePropsParentGameObject();
+            }
+
+            var props = room.Definition.Props;
+
+            if (props == null)
+            {
+                return;
+            }
+
+            foreach (var prop in props)
+            {
+                GameObject.Instantiate(
+                    prop, 
+                    (prop.position - room.Definition.Layers[0].cellBounds.position) + room.dimensions.position, 
+                    Quaternion.identity, _propsParent
+                );
+            }
+        }
+
+        private void HandleDrawingOuterWalls(HashSet<Vector2Int> floorPositions)
+        {
+            if (_outerWalls == null)
+            {
+                CreateOuterWallsGameObject();
+            }
+
+            foreach (var position in floorPositions)
+            {
+                var up = (Vector3Int)position + new Vector3Int(0, 1);
+                var upRight = (Vector3Int)position + new Vector3Int(1, 1);
+                var right = (Vector3Int)position + new Vector3Int(1, 0);
+                var downRight = (Vector3Int)position + new Vector3Int(1, -1);
+                var down = (Vector3Int)position + new Vector3Int(0, -1);
+                var downLeft = (Vector3Int)position + new Vector3Int(-1, -1);
+                var left = (Vector3Int)position + new Vector3Int(-1, 0);
+                var upLeft = (Vector3Int)position + new Vector3Int(-1, 1);
+                
+                if (_layers[0].GetTile(up) == null && _paths.GetTile(up) == null)
+                {
+                    _outerWalls.SetTile(up, _outerWallTile);
+                }
+                if (_layers[0].GetTile(upRight) == null && _paths.GetTile(upRight) == null)
+                {
+                    _outerWalls.SetTile(upRight, _outerWallTile);
+                }
+                if (_layers[0].GetTile(right) == null && _paths.GetTile(right) == null)
+                {
+                    _outerWalls.SetTile(right, _outerWallTile);
+                }
+                if (_layers[0].GetTile(downRight) == null && _paths.GetTile(downRight) == null)
+                {
+                    _outerWalls.SetTile(downRight, _outerWallTile);
+                }
+                if (_layers[0].GetTile(down) == null && _paths.GetTile(down) == null)
+                {
+                    _outerWalls.SetTile(down, _outerWallTile);
+                }
+                if (_layers[0].GetTile(downLeft) == null&& _paths.GetTile(downLeft) == null)
+                {
+                    _outerWalls.SetTile(downLeft, _outerWallTile);
+                }
+                if (_layers[0].GetTile(left) == null && _paths.GetTile(left) == null)
+                {
+                    _outerWalls.SetTile(left, _outerWallTile);
+                }
+                if (_layers[0].GetTile(upLeft) == null && _paths.GetTile(upLeft) == null)
+                {
+                    _outerWalls.SetTile(upLeft, _outerWallTile);
+                }
+            }
+        }
+
+        private void HandleDrawingPaths(BoundsInt path)
+        {
+            if (_paths == null)
+            {
+                CreatePathsGameObject();
+            }
+
+            foreach (var position in path.allPositionsWithin)
+            {
+                _paths.SetTile(position, _pathTile);
+            }
+        }
+
+        public bool LayersContainPosition(Vector3Int position)
+        {
+            foreach (var layer in _layers)
+            {
+                if (layer.cellBounds.Contains(position))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void HandleDrawingLayers(Room room)
+        {
+            for (int i = 0; i < room.Definition.Layers.Length; i++)
+            {
+                var roomLayer = room.Definition.Layers[i];
+
+                if (_layers[i] == null)
+                {
+                    CreateLayerGameObject(i);
+                }
+
+                foreach (var position in roomLayer.cellBounds.allPositionsWithin)
+                {
+                    DrawTileToLayer(
+                        room,
+                        _layers[i],
+                        room.Definition.Layers[0],
+                        roomLayer,
+                        position,
+                        false
+                    );
+                }
+            }
+        }
+
+        private void CreateInnerWallsGameObject()
+        {
+            _innerWalls = new GameObject(
+                "Inner Walls",
+                typeof(Tilemap),
+                typeof(TilemapCollider2D),
+                typeof(Rigidbody2D),
+                typeof(CompositeCollider2D)
+            ).GetComponent<Tilemap>();
+
+            var tilemapCollider2D = _innerWalls.GetComponent<TilemapCollider2D>();
+            tilemapCollider2D.usedByComposite = true;
+
+            _innerWalls.GetComponent<CompositeCollider2D>().geometryType = CompositeCollider2D.GeometryType.Polygons;
+            
+            var rigidbody2D = _innerWalls.GetComponent<Rigidbody2D>();
+            rigidbody2D.bodyType = RigidbodyType2D.Static;
+
+            _innerWalls.gameObject.layer = 11; // Inner Walls Layer
+
+            _innerWalls.transform.position = Vector3.zero;
+            _innerWalls.transform.SetParent(_grid.transform);
+        }
+
+        private void CreateLayerGameObject(int i)
+        {
+            _layers[i] = new GameObject(
+                $"Layer {i}",
+                typeof(TilemapRenderer)
+            ).GetComponent<Tilemap>();
+
+            TilemapRenderer tilemapRenderer = _layers[i].GetComponent<TilemapRenderer>();
+            tilemapRenderer.sortingLayerName = "Background";
+            tilemapRenderer.sortingOrder = i;
+
+            _layers[i].gameObject.layer = 9; // Floor Layer
+
+            _layers[i].transform.position = Vector3.zero;
+            _layers[i].transform.SetParent(_grid.transform);
+        }
+
+        private void CreatePathsGameObject()
+        {
+            _paths = new GameObject(
+                "Paths",
+                typeof(TilemapRenderer)
+            ).GetComponent<Tilemap>();
+
+            TilemapRenderer tilemapRenderer = _paths.GetComponent<TilemapRenderer>();
+            tilemapRenderer.sortingLayerName = "Background";
+            tilemapRenderer.sortingOrder = -1;
+
+            _paths.gameObject.layer = 12; // Paths Layer
+
+            _paths.transform.position = Vector3.zero;
+            _paths.transform.SetParent(_grid.transform);
+        }
+
+        private void CreateOuterWallsGameObject()
+        {
+            _outerWalls = new GameObject(
+                "Outer Walls",
+                typeof(TilemapRenderer),
+                typeof(TilemapCollider2D),
+                typeof(Rigidbody2D),
+                typeof(CompositeCollider2D)
+            ).GetComponent<Tilemap>();
+
+            var tilemapRenderer = _outerWalls.GetComponent<TilemapRenderer>();
+            tilemapRenderer.sortingLayerName = "Sprites";
+            tilemapRenderer.sortingOrder = 0;
+            tilemapRenderer.mode = TilemapRenderer.Mode.Individual;
+
+            var tilemapCollider2D = _outerWalls.GetComponent<TilemapCollider2D>();
+            tilemapCollider2D.usedByComposite = true;
+
+            _outerWalls.GetComponent<CompositeCollider2D>().geometryType = CompositeCollider2D.GeometryType.Polygons;
+            
+            var rigidbody2D = _outerWalls.GetComponent<Rigidbody2D>();
+            rigidbody2D.bodyType = RigidbodyType2D.Static;
+
+            _outerWalls.gameObject.layer = 10; // Outer Walls Layer
+
+            _outerWalls.transform.position = Vector3.zero;
+            _outerWalls.transform.SetParent(_grid.transform);
+        }
+
+        private void CreatePropsParentGameObject()
+        {
+            _propsParent = new GameObject(
+                "Props",
+                typeof(Rigidbody2D),
+                typeof(CompositeCollider2D)
+            ).GetComponent<Transform>();
+
+            _propsParent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+            _propsParent.GetComponent<CompositeCollider2D>().geometryType = CompositeCollider2D.GeometryType.Polygons;
+
+            _propsParent.gameObject.layer = 7; // Props Layer
+
+            _propsParent.position = Vector3.zero;
+            _propsParent.SetParent(_grid.transform);
+        }
+
+        private void DrawTileToLayer(Room room, Tilemap outputLayer, Tilemap baseLayer, Tilemap inputLayer, Vector3Int position, bool usePathTile)
+        {
+            var tile = inputLayer.GetTile(position);
+            if (usePathTile)
+            {
+                tile = _pathTile;
+            }
+            outputLayer.SetTile((position - baseLayer.cellBounds.position) + room.dimensions.position, tile);
+        }
+        
+        private void DrawTileToLayer(Room room, Tilemap outputLayer, BoundsInt bounds, Vector3Int position)
+        {
+            TileBase tile = _pathTile;
+            outputLayer.SetTile((position - bounds.position) + room.dimensions.position, tile);
+        }
+
+        ~FloorTilemapDrawer()
+        {
+            Clear();
+        }
+
+        public void Clear()
+        {
+            foreach (var layer in _layers)
+            {
+                if (layer == null)
+                {
+                    continue;
+                }
+
+                GameObject.Destroy(layer.gameObject);
+            }
+
+            if (_paths != null)
+            {
+                GameObject.Destroy(_paths.gameObject);
+            }
+            if (_innerWalls != null)
+            {
+                GameObject.Destroy(_innerWalls.gameObject);
+            }
+            if (_outerWalls != null)
+            {
+                GameObject.Destroy(_outerWalls.gameObject);
+            }
+            if (_propsParent != null)
+            {
+                GameObject.Destroy(_propsParent.gameObject);
+            }
+            if (_globalFXObject != null)
+            {
+                GameObject.Destroy(_globalFXObject.gameObject);
+            }
+        }
+    }
+}

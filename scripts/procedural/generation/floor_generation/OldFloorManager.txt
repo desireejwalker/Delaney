@@ -1,0 +1,325 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Manapotion.Cameras;
+using Manapotion.Pathfinding.AStar;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+namespace Manapotion.Procedural
+{
+    public class FloorManager : MonoBehaviour
+    {
+        public static event Action OnCompleteFloorGeneration;
+
+        [SerializeField]
+        private Grid _grid;
+        private Transform _rooms;
+        public Transform Rooms { get => _rooms; }
+        private static Room _activeRoom;
+        public static Room ActiveRoom { get => _activeRoom; }
+
+
+        [SerializeField]
+        private bool _debugDrawRooms, _debugDrawTriangulation, _debugDrawMinimumSpanningTree, _debugDrawFinalGraph, _debugDrawHallways, _debugDrawAStarGrid;
+
+        private static int _currentFloorLevel = 0;
+        private static Floor _currentFloor;
+        public static Floor CurrentFloor { get => _currentFloor; }
+        private static FloorGenerationOutput _currentFloorOutput;
+
+        private static FloorGenerator _floorGenerator;
+        private static FloorTilemapDrawer _floorDrawer;
+        private static FloorMonstersManager _monstersManager;
+
+        private static AStarGrid _floorAStarGrid;
+        public static AStarGrid FloorAStarGrid { get => _floorAStarGrid; }
+
+        [SerializeField]
+        private FloorGenerationParameters[] _generationParameters;
+        private FloorGenerationParameters[] GetFloorGenerationParametersFor(int floorLevel)
+        {
+            return _generationParameters.Where(floorGenerationParameters => floorGenerationParameters.IsWithinGenerationBounds(floorLevel)).ToArray();
+        }
+
+        public void Initialize()
+        {
+            _currentFloorLevel = 0;
+            GenerateFloor(_currentFloorLevel);
+        }
+
+        public void FloorComplete()
+        {
+            _currentFloorLevel++;
+            GenerateFloor(_currentFloorLevel);
+        }
+
+        public async void GenerateFloor(int currentFloorLevel)
+        {
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
+            var chosenParameters = GetFloorGenerationParametersFor(currentFloorLevel)[UnityEngine.Random.Range(0, GetFloorGenerationParametersFor(currentFloorLevel).Length)];
+
+            await HandleInitialFloorGeneration(currentFloorLevel, chosenParameters);
+
+            HandleDrawingFloor(_currentFloor, chosenParameters);
+            HandleMonsterManager();
+
+            stopWatch.Stop();
+            Debug.Log($"Floor Management: Floor generation took {stopWatch.ElapsedMilliseconds}ms!");
+
+            OnCompleteFloorGeneration?.Invoke();
+        }
+
+        async Task HandleInitialFloorGeneration(int floorLevel, FloorGenerationParameters parameters)
+        {
+            _monstersManager?.ClearAllMonsters();
+            _floorDrawer?.Clear();
+
+            _floorGenerator = new FloorGenerator(parameters);
+            while (_floorGenerator.invalidGeneration)
+            {
+                _floorGenerator.Initialize();
+                await _floorGenerator.CheckIfRoomsAreAsleep();
+                _floorGenerator.GenerateBaseMap();
+            }
+            _currentFloorOutput = _floorGenerator.GetOutput();
+            _currentFloor = new Floor(floorLevel, _currentFloorOutput);
+            SweepFloor();
+        }
+        private void SweepFloor()
+        {
+            _rooms = new GameObject(
+                "Rooms",
+                typeof(Rigidbody2D)
+            ).transform;
+            _rooms.SetParent(_grid.transform);
+
+            var rigidbody = _rooms.GetComponent<Rigidbody2D>();
+            rigidbody.isKinematic = true;
+
+            _floorGenerator.CleanUp(_rooms);
+
+            foreach (var room in _currentFloorOutput.Rooms)
+            {
+                room.OnRoomPlayerEntry += OnRoomPlayerEntry_HandlePlayerEnteredRoom;
+                room.OnRoomPlayerExit += OnRoomPlayerExit_HandlePlayerExitedRoom;
+            }
+        }
+        
+        private void HandleDrawingFloor(Floor floor, FloorGenerationParameters chosenParameters)
+        {
+            _floorDrawer = new FloorTilemapDrawer(_grid);
+            _floorDrawer.DrawFloor(floor, chosenParameters);
+            _floorAStarGrid = _floorDrawer.AStarGrid;
+        }
+
+        private void HandleMonsterManager()
+        {
+            _monstersManager = new FloorMonstersManager(_floorDrawer.Spawners);
+            _monstersManager.HandleMonsterSpawning();
+        }
+        
+        private void OnRoomPlayerEntry_HandlePlayerEnteredRoom(object sender, Room.OnRoomPlayerEntryArgs args)
+        {
+            _activeRoom = args.room;
+        }
+        private void OnRoomPlayerExit_HandlePlayerExitedRoom(object sender, Room.OnRoomPlayerExitArgs args)
+        {
+            _activeRoom = null;
+        }
+        
+        #region Debug
+            
+        
+        private void OnDrawGizmos() 
+        {
+            DebugDrawAStarGrid();
+            DebugDrawRooms();
+
+            DebugDrawRoomTriangulation();
+            DebugDrawMinimumSpanningTree();
+            DebugDrawFinalGraph();
+
+            DebugDrawHallways();
+        }
+
+        private void DebugDrawRooms()
+        {
+            if (_currentFloor.Generation.Rooms == null || !_debugDrawRooms)
+            {
+                return;
+            }
+
+            foreach (var room in _currentFloor.Generation.Rooms)
+            {
+                var points = new Vector2[]
+                {
+                    // bottom
+                    new Vector2(room.dimensions.min.x, room.dimensions.min.y),
+                    new Vector2(room.dimensions.max.x, room.dimensions.min.y),
+
+                    // right
+                    new Vector2(room.dimensions.max.x, room.dimensions.min.y),
+                    new Vector2(room.dimensions.max.x, room.dimensions.max.y),
+
+                    // top
+                    new Vector2(room.dimensions.min.x, room.dimensions.max.y),
+                    new Vector2(room.dimensions.max.x, room.dimensions.max.y),
+
+                    // left
+                    new Vector2(room.dimensions.min.x, room.dimensions.min.y),
+                    new Vector2(room.dimensions.min.x, room.dimensions.max.y)
+                };
+
+                if (room.isHubRoom)
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawLine(points[0], points[1]);
+                    Gizmos.DrawLine(points[2], points[3]);
+                    Gizmos.DrawLine(points[4], points[5]);
+                    Gizmos.DrawLine(points[6], points[7]);
+                }
+                else if (room.isHallRoom)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(points[0], points[1]);
+                    Gizmos.DrawLine(points[2], points[3]);
+                    Gizmos.DrawLine(points[4], points[5]);
+                    Gizmos.DrawLine(points[6], points[7]);
+                }
+                else if (room.Definition != null)
+                {
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawLine(points[0], points[1]);
+                    Gizmos.DrawLine(points[2], points[3]);
+                    Gizmos.DrawLine(points[4], points[5]);
+                    Gizmos.DrawLine(points[6], points[7]);
+                }
+                else
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawLine(points[0], points[1]);
+                    Gizmos.DrawLine(points[2], points[3]);
+                    Gizmos.DrawLine(points[4], points[5]);
+                    Gizmos.DrawLine(points[6], points[7]);
+                }
+
+            }
+        }
+
+        private void DebugDrawRoomTriangulation()
+        {
+            if (_currentFloor.Generation.HubRoomTriangulation == null || !_debugDrawTriangulation)
+            {
+                return;
+            }
+
+            Gizmos.color = Color.cyan;
+            foreach (var edge in _currentFloor.Generation.HubRoomTriangulation)
+            {
+                Gizmos.DrawLine(edge.a.ToVector2(), edge.b.ToVector2());
+            }
+        }
+
+        private void DebugDrawMinimumSpanningTree()
+        {
+            if (_currentFloor.Generation.HubRoomMinimumSpanningTree == null || !_debugDrawMinimumSpanningTree)
+            {
+                return;
+            }
+
+            Gizmos.color = Color.green;
+            foreach (var edge in _currentFloor.Generation.HubRoomMinimumSpanningTree)
+            {
+                Gizmos.DrawLine(edge.a.ToVector2(), edge.b.ToVector2());
+            }
+        }
+
+        private void DebugDrawFinalGraph()
+        {
+            if (_currentFloor.Generation.HubRoomFinalGraph == null || !_debugDrawFinalGraph)
+            {
+                return;
+            }
+
+            Gizmos.color = Color.magenta;
+            foreach (var edge in _currentFloor.Generation.HubRoomFinalGraph)
+            {
+                Gizmos.DrawLine(edge.a.ToVector2(), edge.b.ToVector2());
+            }
+        }
+
+        private void DebugDrawHallways()
+        {
+            if (_currentFloor.Generation.HallPaths == null || !_debugDrawHallways)
+            {
+                return;
+            }
+
+            Gizmos.color = Color.white;
+            foreach (var hallPath in _currentFloor.Generation.HallPaths)
+            {
+                var points = new Vector2[]
+                {
+                    // bottom
+                    new Vector2(hallPath.min.x, hallPath.min.y),
+                    new Vector2(hallPath.max.x, hallPath.min.y),
+
+                    // right
+                    new Vector2(hallPath.max.x, hallPath.min.y),
+                    new Vector2(hallPath.max.x, hallPath.max.y),
+
+                    // top
+                    new Vector2(hallPath.min.x, hallPath.max.y),
+                    new Vector2(hallPath.max.x, hallPath.max.y),
+
+                    // left
+                    new Vector2(hallPath.min.x, hallPath.min.y),
+                    new Vector2(hallPath.min.x, hallPath.max.y)
+                };
+
+                Gizmos.DrawLine(points[0], points[1]);
+                Gizmos.DrawLine(points[2], points[3]);
+                Gizmos.DrawLine(points[4], points[5]);
+                Gizmos.DrawLine(points[6], points[7]);
+            }
+        }
+
+        private void DebugDrawAStarGrid()
+        {
+            if (_floorAStarGrid == null || !_debugDrawAStarGrid)
+            {
+                return;
+            }
+            
+            for (int x = _floorAStarGrid.Bounds.xMin; x < _floorAStarGrid.Bounds.xMax + 1; x++)
+            {
+                for (int y = _floorAStarGrid.Bounds.yMin; y < _floorAStarGrid.Bounds.yMax + 1; y++)
+                {
+                    if (!_floorAStarGrid.SortedCells.ContainsKey((x, y)))
+                    {
+                        continue;
+                    }
+
+                    if (!_floorAStarGrid.SortedCells[(x, y)].isWalkable)
+                    {
+                        Gizmos.color = Color.red;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.green;
+                    }
+
+                    Gizmos.DrawWireCube(_floorAStarGrid.SortedCells[(x, y)].worldPos, Vector3.one);
+                }
+            }
+        }
+
+        #endregion
+    }    
+}
+
