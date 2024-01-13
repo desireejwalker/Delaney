@@ -1,49 +1,38 @@
 using System;
+using System.Drawing;
 using System.IO.Pipes;
+using System.Numerics;
 using Godot;
 
 [GlobalClass]
 public partial class Room : RigidBody2D
 {
-	public readonly RoomDefinition RoomDefinition;
+	public RoomDefinition RoomDefinition { get; private set; }
 	public bool isSubRoom = false;
 	public bool isHubRoom = false;
 
-	public Rect2 Rect { get; private set; }
-	public void SetPosition(Vector2 position)
-	{
-		Rect = Rect with {Position = position};
-	}
+	private CollisionShape2D _collisionShape;
 
-	public RigidBody2D PhysicsBody { get; private set; }
-	public CollisionShape2D collisionShape;
-
-	public Room(Rect2 rect)
+    public override void _Ready()
+    {
+        _collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+    }
+	public void SetSize(Vector2I size)
 	{
-		this.Rect = rect;
+		var shape = (RectangleShape2D)_collisionShape.Shape;
+		shape.Size = size;
 	}
-	public Room(Rect2 rect, RoomDefinition roomDefinition)
+	public Rect2I GetRect()
 	{
-		this.Rect = rect;
-		this.RoomDefinition = roomDefinition;
-	}
-	public static Room RandomSizeAt(Vector2I position, int minWidth, int maxWidth, int minHeight, int maxHeight)
-	{
-		return new Room(new Rect2(
-			position,
-			new Vector2I(GD.RandRange(minWidth, maxWidth), GD.RandRange(minHeight, maxHeight))
-		));
-	}
-	public static Room CreateFromDefinitionAt(Vector2I position, RoomDefinition definition)
-	{
-		var rect = new Rect2(position, Vector2.Zero);
-		return new Room(
-			rect,
-			definition
+		var shape = (RectangleShape2D)_collisionShape.Shape;
+		var rectPosition = Position - (shape.Size / 2);
+		return new Rect2I(
+			new Vector2I((int)rectPosition.X, (int)rectPosition.Y),
+			new Vector2I((int)shape.Size.X, (int)shape.Size.Y)
 		);
-		// return new Room(
-		//     new BoundsInt((Vector3Int)position, new Vector3Int(definition.Layers[0].cellBounds.size.x, definition.Layers[0].cellBounds.size.y, 1)),
-		//     definition
-		// );
+	}
+	public void SetRoomDefinition(RoomDefinition roomDefinition)
+	{
+		RoomDefinition = roomDefinition;
 	}
 }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 public class FloorGenerator
 {
+    private Floor _floor;
+
     public bool InvalidGeneration { get; private set; }
 
     private FloorGenerationParameters _parameters;
@@ -26,14 +28,15 @@ public class FloorGenerator
     private Room _startingRoom;
     private Room _endingRoom;
 
-    public FloorGenerator(FloorGenerationParameters parameters)
+    public FloorGenerator(Floor floor, FloorGenerationParameters parameters)
     {
+        _floor = floor;
         _parameters = parameters;
 
         InvalidGeneration = true;
     }
 
-    public void Start()
+    public void GenerateRooms()
     {
         var sizeSum = 0f;
         
@@ -41,34 +44,21 @@ public class FloorGenerator
         {
             foreach (var room in _roomArray)
             {
-                room.PhysicsBody.QueueFree();
+                room.QueueFree();
             }
         }
         _roomArray = new Room[_parameters.RoomCount];
 
         for (int i = 0; i < _roomArray.Length; i++)
         {
-            if (_parameters.RoomDefinitions.Length != 0)
-            {
-                _roomArray[i] = Room.CreateFromDefinitionAt(
-                    GetRandomPointInEllipse(_parameters.RoomPlacementEllipseWidth, _parameters.RoomPlacementEllipseHeight),
-                    _parameters.RoomDefinitions[GD.RandRange(0, _parameters.RoomDefinitions.Length)]
-                );
-                // _roomArray[i].BecomePhysical();
-            }
-            else
-            {
-                _roomArray[i] = Room.RandomSizeAt(
-                    GetRandomPointInEllipse(_parameters.RoomPlacementEllipseWidth, _parameters.RoomPlacementEllipseHeight),
-                    _parameters.RoomMinimumWidth,
-                    _parameters.RoomMaximumWidth,
-                    _parameters.RoomMinimumHeight,
-                    _parameters.RoomMaximumHeight
-                );
-                // _roomArray[i].BecomePhysical();
-            }
+            // Load the room scene, instantiate it, and properly set its values 
+            _roomArray[i] = GD.Load<Room>("res://scenes/generation/world.tscn");
+            _roomArray[i].SetRoomDefinition(_parameters.RoomDefinitions[GD.RandRange(0, _parameters.RoomDefinitions.Length)]);
+            _roomArray[i].Position = GetRandomPointInEllipse(_parameters.RoomPlacementEllipseWidth, _parameters.RoomPlacementEllipseHeight);
 
-            sizeSum += _roomArray[i].Rect.Size.Length();
+            _floor.AddChild(_roomArray[i]);
+
+            sizeSum += _roomArray[i].GetRect().Size.Length();
         }
 
         _averageRoomSize = sizeSum / _parameters.RoomCount;
@@ -90,12 +80,12 @@ public class FloorGenerator
         FindSubRooms();
 
         _startingRoom = FindFarthestRoomFrom(Vector2.Zero);
-        _endingRoom = FindClosestRoomTo(-_startingRoom.Rect.GetCenter());
+        _endingRoom = FindClosestRoomTo(-_startingRoom.Position);
     }
 
-    public async Task CheckIfRoomsAreAsleep()
+    public async Task RoomsAreSleeping()
     {
-        while (_roomArray.All(room => !room.PhysicsBody.Sleeping))
+        while (_roomArray.All(room => !room.Sleeping))
         {
             await Task.Delay(100);
         }
@@ -108,7 +98,7 @@ public class FloorGenerator
         foreach (var room in _roomArray)
         {
             // room.StopBeingPhysical();
-            if (room.Rect.Size.Length() > _averageRoomSize * _parameters.RoomSizeThresholdMultiplier)
+            if (room.GetRect().Size.Length() > _averageRoomSize * _parameters.RoomSizeThresholdMultiplier)
             {
                 room.isHubRoom = true;
             }
@@ -120,7 +110,7 @@ public class FloorGenerator
         foreach (var room in _hubRoomArray)
         {
             var hubRoomPoint = new Point(
-                (Vector2I)room.Rect.GetCenter()
+                (Vector2I)room.Position
             );
             _hubRoomPoints.Add(hubRoomPoint);
             _pointToHubRoomDict.Add(hubRoomPoint, room);
@@ -185,13 +175,13 @@ public class FloorGenerator
                 // analyzed hub room, create pointA 
                 // vertical path connecting the 
                 // two points
-                if (midpointPosition.X > startHubRoom.Rect.Position.X && midpointPosition.X < startHubRoom.Rect.End.X)
+                if (midpointPosition.X > startHubRoom.GetRect().Position.X && midpointPosition.X < startHubRoom.GetRect().End.X)
                 {
                     var path = new Rect2I(
                         midpointX,
-                        (int)startHubRoom.Rect.GetCenter().Y,
+                        (int)startHubRoom.Position.Y,
                         _parameters.HallwayPathThickness,
-                        (int)endHubRoom.Rect.GetCenter().Y - (int)startHubRoom.Rect.GetCenter().Y
+                        (int)endHubRoom.Position.Y - (int)startHubRoom.Position.Y
                     );
                     _hallPaths.Add(path);
 
@@ -203,12 +193,12 @@ public class FloorGenerator
                 // analyzed hub room, create pointA 
                 // horizontal path connecting the 
                 // two points
-                if (midpointPosition.Y > startHubRoom.Rect.Position.Y && midpointPosition.Y < startHubRoom.Rect.End.X)
+                if (midpointPosition.Y > startHubRoom.GetRect().Position.Y && midpointPosition.Y < startHubRoom.GetRect().End.X)
                 {
                     var path = new Rect2I(
-                        (int)startHubRoom.Rect.GetCenter().X,
+                        (int)startHubRoom.GetRect().GetCenter().X,
                         midpointY,
-                        (int)endHubRoom.Rect.GetCenter().X - (int)startHubRoom.Rect.GetCenter().X,
+                        (int)endHubRoom.Position.X - (int)startHubRoom.Position.X,
                         _parameters.HallwayPathThickness
                     );
                     _hallPaths.Add(path);
@@ -218,16 +208,16 @@ public class FloorGenerator
 
                 // vertical half
                 var aHalfL = new Rect2I(
-                    (int)startHubRoom.Rect.GetCenter().X,
-                    (int)startHubRoom.Rect.GetCenter().Y,
+                    (int)startHubRoom.Position.X,
+                    (int)startHubRoom.Position.Y,
                     _parameters.HallwayPathThickness,
-                    (int)endHubRoom.Rect.GetCenter().Y - (int)startHubRoom.Rect.GetCenter().Y
+                    (int)endHubRoom.Position.Y - (int)startHubRoom.Position.Y
                 );
                 // horizontal half
                 var bHalfL = new Rect2I(
-                    (int)endHubRoom.Rect.GetCenter().X,
-                    (int)endHubRoom.Rect.GetCenter().Y,
-                    (int)startHubRoom.Rect.GetCenter().X - (int)endHubRoom.Rect.GetCenter().X,
+                    (int)endHubRoom.Position.X,
+                    (int)endHubRoom.Position.Y,
+                    (int)startHubRoom.Position.X - (int)endHubRoom.Position.X,
                     _parameters.HallwayPathThickness
                 );
                 _hallPaths.Add(aHalfL);
@@ -241,7 +231,7 @@ public class FloorGenerator
         {
             foreach (var path in _hallPaths)
             {
-                if (room.Rect.Intersects(path))
+                if (room.GetRect().Intersects(path))
                 {
                     room.isSubRoom = true;
                 }
@@ -251,15 +241,15 @@ public class FloorGenerator
 
     private Room FindFarthestRoomFrom(Vector2 position)
     {
-        var maxDist = position.DistanceTo(_hubRoomArray[0].Rect.GetCenter());
+        var maxDist = position.DistanceTo(_hubRoomArray[0].GetRect().GetCenter());
         var maxDistRoom = _hubRoomArray[0];
 
         foreach (var hubRoom in _hubRoomArray)
         {
             var lastMax = maxDist;
             maxDist = Mathf.Max(
-                position.DistanceTo(maxDistRoom.Rect.GetCenter()),
-                position.DistanceTo(hubRoom.Rect.GetCenter())
+                position.DistanceTo(maxDistRoom.GetRect().GetCenter()),
+                position.DistanceTo(hubRoom.GetRect().GetCenter())
             );
 
             if (maxDist == lastMax)
@@ -274,15 +264,15 @@ public class FloorGenerator
     }
     private Room FindClosestRoomTo(Vector2 position)
     {
-        var minDist = position.DistanceTo(_hubRoomArray[0].Rect.GetCenter());
+        var minDist = position.DistanceTo(_hubRoomArray[0].GetRect().GetCenter());
         var minDistRoom = _hubRoomArray[0];
 
         foreach (var hubRoom in _hubRoomArray)
         {
             var lastMin = minDist;
             minDist = Mathf.Min(
-                position.DistanceTo(minDistRoom.Rect.GetCenter()),
-                position.DistanceTo(hubRoom.Rect.GetCenter())
+                position.DistanceTo(minDistRoom.GetRect().GetCenter()),
+                position.DistanceTo(hubRoom.GetRect().GetCenter())
             );
 
             if (minDist == lastMin)

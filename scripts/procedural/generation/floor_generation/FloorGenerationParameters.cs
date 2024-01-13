@@ -21,14 +21,6 @@ public partial class FloorGenerationParameters : Resource
     
     [ExportGroup("Room Size Settings")]
     [Export]
-    public int RoomMinimumWidth { get; private set; }
-    [Export]
-    public int RoomMaximumWidth { get; private set; }
-    [Export]
-    public int RoomMinimumHeight { get; private set; }
-    [Export]
-    public int RoomMaximumHeight { get; private set; }
-    [Export]
     public float RoomSizeThresholdMultiplier { get; private set; }
     
     [ExportGroup("Hallway/Path Settings")]

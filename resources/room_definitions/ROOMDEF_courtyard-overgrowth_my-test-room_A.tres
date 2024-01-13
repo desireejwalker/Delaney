@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="RoomDefinition" load_steps=2 format=3 uid="uid://bgh6hkhexooxu"]
+
+[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/RoomDefinition.cs" id="1_3mfhh"]
+
+[resource]
+script = ExtResource("1_3mfhh")

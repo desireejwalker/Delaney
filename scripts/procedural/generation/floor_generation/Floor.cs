@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -39,10 +40,9 @@ public partial class Floor : Node
         MinimumSpanningTree = null;
         FinalGraph = null;
     }
-    public Floor(int level, FloorGenerationOutput floorGenerationOutput)
-    {
-        Level = level;
 
+    public void SetFloorData(FloorGenerationOutput floorGenerationOutput)
+    {
         Rooms = floorGenerationOutput.Rooms;
         HubRooms = floorGenerationOutput.HubRooms;
         SubRooms = floorGenerationOutput.SubRooms;

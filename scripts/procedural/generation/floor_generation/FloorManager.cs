@@ -26,8 +26,8 @@ public partial class FloorManager : Node
 
     private async void GenerateFloor()
     {
-        var stopWatch = new System.Diagnostics.Stopwatch();
-        stopWatch.Start();
+        // var stopWatch = new System.Diagnostics.Stopwatch();
+        // stopWatch.Start();
 
         var floorGenerationParameters = GetFloorGenerationParametersFor(_currentFloor.Level)[GD.RandRange(0, GetFloorGenerationParametersFor(_currentFloor.Level).Length)];
 
@@ -36,16 +36,20 @@ public partial class FloorManager : Node
 
     private async Task DoFloorMapGeneration(FloorGenerationParameters floorGenerationParameters)
     {
-        _floorGenerator = new FloorGenerator(floorGenerationParameters);
+        // Create a new floor and add it as a child of this node
+        var lastFloorLevel = _currentFloor.Level;
+        _currentFloor.QueueFree();
+        _currentFloor = new Floor(lastFloorLevel + 1);
+        AddChild(_currentFloor);
+
+        _floorGenerator = new FloorGenerator(_currentFloor, floorGenerationParameters);
         while (_floorGenerator.InvalidGeneration)
         {
-            _floorGenerator.Start();
-            await _floorGenerator.CheckIfRoomsAreAsleep();
+            _floorGenerator.GenerateRooms();
+            await _floorGenerator.RoomsAreSleeping();
             _floorGenerator.GenerateFloorGraph();
         }
-        var lastFloorLevel = _currentFloor.Level;
-        _currentFloor = new Floor(lastFloorLevel + 1, _floorGenerator.GetOutput());
-        AddChild(_currentFloor);
+        _currentFloor.SetFloorData(_floorGenerator.GetOutput());
     }
 
 }
