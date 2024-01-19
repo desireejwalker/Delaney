@@ -96,7 +96,7 @@ func handle_player_movement(delta, normalized_direction, speed, damping, update_
 	
 	# check if the linear_velocity is small enough to just set to zero
 	# NOTE: there is likely a better way to do this... search later.
-	if linear_velocity.length() <= 10:
+	if linear_velocity.length() <= 1:
 		movement = "idle"
 	else:
 		movement = "walk"

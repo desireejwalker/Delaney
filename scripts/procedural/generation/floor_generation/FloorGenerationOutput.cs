@@ -3,7 +3,7 @@ using Godot;
 
 public struct FloorGenerationOutput
 {
-    // includes hub rooms
+    // includes hub rooms and sub rooms
     public Room[] Rooms;
     public Room[] HubRooms;
     public Room[] SubRooms;

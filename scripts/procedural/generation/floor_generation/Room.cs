@@ -1,7 +1,4 @@
 using System;
-using System.Drawing;
-using System.IO.Pipes;
-using System.Numerics;
 using Godot;
 
 [GlobalClass]
@@ -34,5 +31,7 @@ public partial class Room : RigidBody2D
 	public void SetRoomDefinition(RoomDefinition roomDefinition)
 	{
 		RoomDefinition = roomDefinition;
+		RoomDefinition.Prepare();
+		SetSize(RoomDefinition.GetSize() * 16);
 	}
 }

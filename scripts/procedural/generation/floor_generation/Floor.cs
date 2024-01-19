@@ -4,58 +4,45 @@ using Godot;
 
 public partial class Floor : Node
 {
-    public int Level { get; }
+    public int Level { get; private set; }
 
-    public Room[] Rooms;
-    public Room[] HubRooms;
-    public Room[] SubRooms;
+    public FloorGenerationOutput FloorGenerationOutput { get; private set; }
 
-    public Rect2I[] HallPaths;
-
-    public Room StartingRoom;
-    public Room EndingRoom;
-
-    public HashSet<Vector2I> FloorPositions;
-
-    public Edge[] Triangulation;
-    public Edge[] MinimumSpanningTree;
-    public Edge[] FinalGraph;
-
-    public Floor(int level)
+    public void Setup(int level)
     {
-        this.Level = level;
-
-        Rooms = null;
-        HubRooms = null;
-        SubRooms = null;
-
-        HallPaths = null;
-
-        StartingRoom = null;
-        EndingRoom = null;
-
-        FloorPositions = null;
-
-        Triangulation = null;
-        MinimumSpanningTree = null;
-        FinalGraph = null;
+        Level = level;
     }
 
     public void SetFloorData(FloorGenerationOutput floorGenerationOutput)
     {
-        Rooms = floorGenerationOutput.Rooms;
-        HubRooms = floorGenerationOutput.HubRooms;
-        SubRooms = floorGenerationOutput.SubRooms;
+        FloorGenerationOutput = floorGenerationOutput; 
+    }
 
-        HallPaths = floorGenerationOutput.HallPaths;
+    public void DrawFloor()
+    {
+        foreach (var room in FloorGenerationOutput.Rooms)
+        {
+            var roomDefinition = room.RoomDefinition;
+            var roomInstance = roomDefinition.GetRoomInstance();
+            var roomPositionInTilemap = new Vector2I((int)(room.Position.X / 16), (int)(room.Position.Y / 16));
+            var roomSizeInTilemap = new Vector2I(room.GetRect().Size.X / 16, room.GetRect().Size.Y / 16);
 
-        StartingRoom = floorGenerationOutput.StartingRoom;
-        EndingRoom = floorGenerationOutput.EndingRoom;
-
-        FloorPositions = floorGenerationOutput.FloorPositions;
-
-        Triangulation = floorGenerationOutput.Triangulation;
-        MinimumSpanningTree = floorGenerationOutput.MinimumSpanningTree;
-        FinalGraph = floorGenerationOutput.FinalGraph;
+            for (int x = roomPositionInTilemap.X; x < roomPositionInTilemap.X + roomSizeInTilemap.X; x++)
+            {
+                for (int y = roomPositionInTilemap.Y; y < roomPositionInTilemap.Y + roomSizeInTilemap.Y; y++)
+                {
+                    var inputPosition = new Vector2I(x - roomPositionInTilemap.X, y - roomPositionInTilemap.Y);
+                    var inputRoomTileAtlasCoords = roomInstance.GetNode<TileMap>("TileMap").GetCellAtlasCoords(
+                        0,
+                        inputPosition
+                    );
+                    if (inputRoomTileAtlasCoords == -Vector2I.One)
+                    {
+                        continue;
+                    }
+                    GD.Print("Tile at " + inputPosition + " is on atlas position " + inputRoomTileAtlasCoords);
+                }
+            }
+        }
     }
 }

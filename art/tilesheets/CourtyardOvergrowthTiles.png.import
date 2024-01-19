@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dq1us38hxub6m"
-path="res://.godot/imported/OvergrownCourtyardTiles.png-3482944c557ebacb38ab756642160da6.ctex"
+uid="uid://d035cf8od30cg"
+path="res://.godot/imported/CourtyardOvergrowthTiles.png-5e4d8ca4a9db49bdee44f3658c78ffc1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/tilesheets/OvergrownCourtyardTiles.png"
-dest_files=["res://.godot/imported/OvergrownCourtyardTiles.png-3482944c557ebacb38ab756642160da6.ctex"]
+source_file="res://art/tilesheets/CourtyardOvergrowthTiles.png"
+dest_files=["res://.godot/imported/CourtyardOvergrowthTiles.png-5e4d8ca4a9db49bdee44f3658c78ffc1.ctex"]
 
 [params]
 

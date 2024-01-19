@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 
 public partial class FloorManager : Node
 {
-    private Floor _currentFloor;
+    public event Action FloorMapGenerated;
 
     [Export]
     private Array<FloorGenerationParameters> _floorGenerationParameters;
-    private FloorGenerationParameters[] GetFloorGenerationParametersFor(int floorLevel)
-    {
-        return _floorGenerationParameters.Where(floorGenerationParameters => floorGenerationParameters.IsWithinGenerationBounds(floorLevel)).ToArray();
-    }
-
+    private PackedScene _floorScene;
+    public Floor CurrentFloor { get; private set; }
     private FloorGenerator _floorGenerator;
 
     public override void _Ready()
     {
-        _currentFloor = new Floor(0);
+        _floorScene = GD.Load<PackedScene>("res://scenes/generation/floor.tscn");
+        CurrentFloor = _floorScene.Instantiate<Floor>();
+        CurrentFloor.Setup(0);
         GenerateFloor();
     }
 
@@ -29,27 +28,44 @@ public partial class FloorManager : Node
         // var stopWatch = new System.Diagnostics.Stopwatch();
         // stopWatch.Start();
 
-        var floorGenerationParameters = GetFloorGenerationParametersFor(_currentFloor.Level)[GD.RandRange(0, GetFloorGenerationParametersFor(_currentFloor.Level).Length)];
+        var floorGenerationParameters = GetFloorGenerationParametersFor(CurrentFloor.Level)[GD.RandRange(0, GetFloorGenerationParametersFor(CurrentFloor.Level).Length - 1)];
 
         await DoFloorMapGeneration(floorGenerationParameters);
+        CurrentFloor.DrawFloor();
     }
 
     private async Task DoFloorMapGeneration(FloorGenerationParameters floorGenerationParameters)
     {
         // Create a new floor and add it as a child of this node
-        var lastFloorLevel = _currentFloor.Level;
-        _currentFloor.QueueFree();
-        _currentFloor = new Floor(lastFloorLevel + 1);
-        AddChild(_currentFloor);
+        var lastFloorLevel = CurrentFloor.Level;
+        CurrentFloor.QueueFree();
+        CurrentFloor = _floorScene.Instantiate<Floor>();
+        CurrentFloor.Setup(lastFloorLevel + 1);
+        AddChild(CurrentFloor);
 
-        _floorGenerator = new FloorGenerator(_currentFloor, floorGenerationParameters);
+        _floorGenerator = new FloorGenerator(CurrentFloor, floorGenerationParameters);
+        
+        int iterations = 0;
+        GD.Print("Generating new floor...");
         while (_floorGenerator.InvalidGeneration)
         {
+            if (iterations > 0)
+            {
+                GD.Print("Regenerating new floor... (iteration " + iterations + ")");
+            }
+
             _floorGenerator.GenerateRooms();
-            await _floorGenerator.RoomsAreSleeping();
+            await _floorGenerator.SettleRooms();
             _floorGenerator.GenerateFloorGraph();
+            iterations++;
         }
-        _currentFloor.SetFloorData(_floorGenerator.GetOutput());
+        CurrentFloor.SetFloorData(_floorGenerator.GetOutput());
+
+        FloorMapGenerated?.Invoke();
     }
 
+    private FloorGenerationParameters[] GetFloorGenerationParametersFor(int floorLevel)
+    {
+        return _floorGenerationParameters.Where(floorGenerationParameters => floorGenerationParameters.IsWithinGenerationBounds(floorLevel)).ToArray();
+    }
 }

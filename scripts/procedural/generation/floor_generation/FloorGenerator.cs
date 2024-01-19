@@ -48,27 +48,27 @@ public class FloorGenerator
             }
         }
         _roomArray = new Room[_parameters.RoomCount];
+        GD.Print("Generating " + _parameters.RoomCount + " rooms...");
 
         for (int i = 0; i < _roomArray.Length; i++)
         {
             // Load the room scene, instantiate it, and properly set its values 
-            _roomArray[i] = GD.Load<Room>("res://scenes/generation/world.tscn");
-            _roomArray[i].SetRoomDefinition(_parameters.RoomDefinitions[GD.RandRange(0, _parameters.RoomDefinitions.Length)]);
-            _roomArray[i].Position = GetRandomPointInEllipse(_parameters.RoomPlacementEllipseWidth, _parameters.RoomPlacementEllipseHeight);
-
+            _roomArray[i] = GD.Load<PackedScene>("res://scenes/generation/room.tscn").Instantiate<Room>();
             _floor.AddChild(_roomArray[i]);
+            
+            var randomIndex = GD.Randi() % _parameters.RoomDefinitions.Length;
+            GD.Print(randomIndex);
+            _roomArray[i].SetRoomDefinition(_parameters.RoomDefinitions[randomIndex]);
+            _roomArray[i].Position = GetRandomPointInEllipse(_parameters.RoomPlacementEllipseWidth, _parameters.RoomPlacementEllipseHeight);
 
             sizeSum += _roomArray[i].GetRect().Size.Length();
         }
 
         _averageRoomSize = sizeSum / _parameters.RoomCount;
-
-        Engine.TimeScale = 100;
+        GD.Print("Average room size: " + _averageRoomSize);
     }
     public void GenerateFloorGraph()
     {
-        Engine.TimeScale = 1;
-
         DecideHubRooms();
         _triangulation = Triangulate(_hubRoomPoints);
         _minimumSpanningTree = Kruskal.MinimumSpanningTree(_triangulation);
@@ -83,8 +83,9 @@ public class FloorGenerator
         _endingRoom = FindClosestRoomTo(-_startingRoom.Position);
     }
 
-    public async Task RoomsAreSleeping()
+    public async Task SettleRooms()
     {
+        GD.Print("Waiting for rooms to settle...");
         while (_roomArray.All(room => !room.Sleeping))
         {
             await Task.Delay(100);
@@ -241,7 +242,7 @@ public class FloorGenerator
 
     private Room FindFarthestRoomFrom(Vector2 position)
     {
-        var maxDist = position.DistanceTo(_hubRoomArray[0].GetRect().GetCenter());
+        var maxDist = position.DistanceTo(_hubRoomArray[0].Position);
         var maxDistRoom = _hubRoomArray[0];
 
         foreach (var hubRoom in _hubRoomArray)

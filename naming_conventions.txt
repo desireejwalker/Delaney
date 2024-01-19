@@ -3,3 +3,13 @@ Example: FGP_my-area-name_A
 
 Room Definitions: ROOMDEF_area-name-here_room-name-here_iteration where "iteration" = A, B, C, ...
 Example: ROOMDEF_my-area-name_my-room-name_A
+
+Rooms:
+File Name: ROOM_area-name-here_room-name-here_iteration where "iteration" = A, B, C, ...
+Example: ROOM_my-area-name_my_room_name_A
+
+Scene Name: ROOM_AreaNameHere_RoomNameHere_Iteration where "Iteration" = A, B, C, ...
+Example: ROOM_MyAreaName_MyRoomName_A
+
+Tilesets: TS_area-name-here
+Example: TS_my-area-name

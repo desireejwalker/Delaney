@@ -4,10 +4,15 @@ using System;
 [GlobalClass]
 public partial class FloorGenerationParameters : Resource
 {
+    [ExportGroup("Global Settings")]
     [Export]
     public int MinimumFloorLevelInclusive { get; private set; }
     [Export]
     public int MaximumFloorLevelInclusive { get; private set; }
+    [Export]
+    public TileSet TileSet { get; private set; }
+    [Export]
+    public PackedScene FXScene { get; private set; }
 
     [ExportGroup("Inital Room Placement Settings")]
     [Export]
@@ -23,7 +28,7 @@ public partial class FloorGenerationParameters : Resource
     [Export]
     public float RoomSizeThresholdMultiplier { get; private set; }
     
-    [ExportGroup("Hallway/Path Settings")]
+    [ExportGroup("Hallway Settings")]
     [Export(PropertyHint.Range, "0, 1")]
     public float PercentOfDelaunayEdgesToKeep { get; private set; }
     [Export]

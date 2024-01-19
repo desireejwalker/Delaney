@@ -1,7 +1,10 @@
+Node2D
+CanvasLayer
+Node
+Marker2D
 TileMap
 CollisionShape2D
 Room
-Node
 MeshInstance2D
 MultiMeshInstance2D
 RigidBody2D
@@ -10,6 +13,3 @@ Sprite2D
 AnimationPlayer
 GPUParticles2D
 StaticBody2D
-Node2D
-Camera2D
-CharacterBody2D
