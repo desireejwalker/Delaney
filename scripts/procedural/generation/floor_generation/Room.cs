@@ -24,14 +24,14 @@ public partial class Room : RigidBody2D
 		var shape = (RectangleShape2D)_collisionShape.Shape;
 		var rectPosition = Position - (shape.Size / 2);
 		return new Rect2I(
-			new Vector2I((int)rectPosition.X, (int)rectPosition.Y),
-			new Vector2I((int)shape.Size.X, (int)shape.Size.Y)
+			new Vector2I((int)(rectPosition.X + 0.5f), (int)(rectPosition.Y + 0.5f)),
+			new Vector2I((int)(shape.Size.X + 0.5f), (int)(shape.Size.Y + 0.5f))
 		);
 	}
 	public void SetRoomDefinition(RoomDefinition roomDefinition)
 	{
 		RoomDefinition = roomDefinition;
 		RoomDefinition.Prepare();
-		SetSize(RoomDefinition.GetSize() * 16);
+		SetSize(RoomDefinition.GetSize());
 	}
 }

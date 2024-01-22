@@ -17,6 +17,7 @@ script = ExtResource("2_fbokk")
 _floorGenerationParameters = Array[Resource]([ExtResource("3_vvyuc")])
 
 [node name="FloorDebugVisualizer" type="Node2D" parent="GameManager" node_paths=PackedStringArray("_floorManager")]
+position = Vector2(0, 1)
 script = ExtResource("4_th6bp")
 _floorManager = NodePath("../FloorManager")
 

@@ -6,4 +6,7 @@
 script = ExtResource("1_rsemj")
 
 [node name="TileMap" type="TileMap" parent="."]
+z_index = -1
 format = 2
+layer_0/name = "halls"
+layer_1/tile_data = PackedInt32Array()

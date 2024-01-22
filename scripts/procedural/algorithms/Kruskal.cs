@@ -4,7 +4,7 @@ public static class Kruskal
 {
     public static List<Edge> MinimumSpanningTree(IEnumerable<Edge> graph)
     {
-        List<Edge> ans = new List<Edge>();
+        List<Edge> minimumSpanningTree = new List<Edge>();
 
         List<Edge> edges = new List<Edge>(graph);
         edges.Sort(Edge.LengthComparison);
@@ -18,12 +18,16 @@ public static class Kruskal
 
         Dictionary<Point, Point> parents = new Dictionary<Point, Point>();
         foreach (var point in points)
+        {
             parents[point] = point;
+        }
 
         Point UnionFind(Point x)
         {
             if (parents[x] != x)
+            {
                 parents[x] = UnionFind(parents[x]);
+            }
             return parents[x];
         }
 
@@ -33,11 +37,11 @@ public static class Kruskal
             var y = UnionFind(edge.pointB);
             if (x != y)
             {
-                ans.Add(edge);
+                minimumSpanningTree.Add(edge);
                 parents[x] = y;
             }
         }
 
-        return ans;
+        return minimumSpanningTree;
     }
 }

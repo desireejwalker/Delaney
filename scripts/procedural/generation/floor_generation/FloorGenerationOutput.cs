@@ -4,28 +4,30 @@ using Godot;
 public struct FloorGenerationOutput
 {
     // includes hub rooms and sub rooms
-    public Room[] Rooms;
-    public Room[] HubRooms;
-    public Room[] SubRooms;
+    public readonly Room[] Rooms;
+    public readonly Room[] HubRooms;
+    public readonly Room[] SubRooms;
 
-    public Rect2I[] HallPaths;
+    public readonly Rect2I[] Halls;
 
-    public Room StartingRoom;
-    public Room EndingRoom;
+    public readonly Room StartingRoom;
+    public readonly Room EndingRoom;
 
-    public HashSet<Vector2I> FloorPositions;
+    public readonly HashSet<Vector2I> FloorPositions;
 
-    public Edge[] Triangulation;
-    public Edge[] MinimumSpanningTree;
-    public Edge[] FinalGraph;
+    public readonly Edge[] Triangulation;
+    public readonly Edge[] MinimumSpanningTree;
+    public readonly Edge[] FinalGraph;
 
-    public FloorGenerationOutput(Room[] rooms, Room[] hubRooms, Room[] subRooms, Rect2I[] hallPaths, Room startingRoom, Room endingRoom, Edge[] triangulation, Edge[] minimumSpanningTree, Edge[] finalGraph)
+    public readonly FloorGenerationParameters FloorGenerationParameters;
+
+    public FloorGenerationOutput(Room[] rooms, Room[] hubRooms, Room[] subRooms, Rect2I[] halls, Room startingRoom, Room endingRoom, Edge[] triangulation, Edge[] minimumSpanningTree, Edge[] finalGraph, FloorGenerationParameters floorGenerationParameters)
     {
         this.Rooms = rooms;
         this.HubRooms = hubRooms;
         this.SubRooms = subRooms;
 
-        this.HallPaths = hallPaths;
+        this.Halls = halls;
 
         this.StartingRoom = startingRoom;
         this.EndingRoom = endingRoom;
@@ -33,6 +35,8 @@ public struct FloorGenerationOutput
         this.Triangulation = triangulation;
         this.MinimumSpanningTree = minimumSpanningTree;
         this.FinalGraph = finalGraph;
+
+        this.FloorGenerationParameters = floorGenerationParameters;
 
         FloorPositions = new HashSet<Vector2I>();
         
@@ -52,7 +56,7 @@ public struct FloorGenerationOutput
             }
         }
 
-        foreach (var path in hallPaths)
+        foreach (var path in halls)
         {
             for (int x = (int)path.Position.X; x < (int)path.End.X; x++)
             {

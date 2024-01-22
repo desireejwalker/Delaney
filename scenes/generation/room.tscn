@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/Room.cs" id="1_sj87o"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ilnw"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n3gdf"]
+resource_local_to_scene = true
 
 [node name="Room" type="RigidBody2D"]
 collision_layer = 2
@@ -16,5 +17,5 @@ contact_monitor = true
 script = ExtResource("1_sj87o")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_1ilnw")
+shape = SubResource("RectangleShape2D_n3gdf")
 debug_color = Color(1, 0, 0.376471, 0.419608)

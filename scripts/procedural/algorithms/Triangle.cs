@@ -10,7 +10,7 @@ public class Triangle
 
     private readonly float circumcenterX;
     private readonly float circumcenterY;
-    private readonly float circumcenterRadiusSquared;
+    private readonly float circumRadiusSquared;
 
     public Triangle(Point pointA, Point pointB, Point pointC)
     {
@@ -82,7 +82,7 @@ public class Triangle
         circumcenterY = y / D;
         float dx = pointA.x - circumcenterX;
         float dy = pointA.y - circumcenterY;
-        circumcenterRadiusSquared = dx * dx + dy * dy;
+        circumRadiusSquared = dx * dx + dy * dy;
     }
 
     public override bool Equals(object obj)
@@ -124,6 +124,6 @@ public class Triangle
         float dx = point.x - circumcenterX;
         float dy = point.y - circumcenterY;
         float distance2 = dx * dx + dy * dy;
-        return distance2 < circumcenterRadiusSquared;
+        return distance2 < circumRadiusSquared;
     }
 }
