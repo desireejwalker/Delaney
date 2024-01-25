@@ -1,3 +1,4 @@
+AudioStreamPlayer2D
 Node2D
 CanvasLayer
 Node
@@ -12,4 +13,3 @@ GameManager
 Sprite2D
 AnimationPlayer
 GPUParticles2D
-StaticBody2D

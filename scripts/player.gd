@@ -2,11 +2,11 @@ extends RigidBody2D
 
 var animation_player:AnimationPlayer
 
-var launch_trail_level_1:GPUParticles2D
-var launch_trail_level_2:GPUParticles2D
-var launch_trail_level_3:GPUParticles2D
+var launch_trail_level_1: GPUParticles2D
+var launch_trail_level_2: GPUParticles2D
+var launch_trail_level_3: GPUParticles2D
 
-var dust_light:GPUParticles2D
+var dust_light: GPUParticles2D
 
 const DEFAULT_SPEED = 600
 const DEFAULT_DAMPING = 3
@@ -33,6 +33,12 @@ var recovery = "none"
 
 var launch_level = -1
 
+@onready var footstep_audio_stream_player_2d = $FootstepAudioStreamPlayer2D
+var footstep_sounds := [
+	preload("res://audio/boot_step/boot_step_1.ogg"),
+	preload("res://audio/boot_step/boot_step_2.ogg"),
+	preload("res://audio/boot_step/boot_step_3.ogg")
+]
 
 func _ready():
 	animation_player = $sprites/AnimationPlayer
@@ -75,6 +81,11 @@ func _on_animation_player_animation_finished(anim_name):
 		is_light_attack_animation_completed = true
 
 func _on_player_footstep():
+	# play random footstep sound
+	footstep_audio_stream_player_2d.stream = footstep_sounds[randi_range(0, footstep_sounds.size() - 1)]
+	footstep_audio_stream_player_2d.play()
+	
+	# create particle effects
 	var footstep_light:Node2D = load("res://scenes/burst/footstep_light.tscn").instantiate()
 	get_tree().root.add_child(footstep_light)
 	footstep_light.translate(position + Vector2(0, 20))
