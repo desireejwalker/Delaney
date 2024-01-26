@@ -1,22 +1,18 @@
-[gd_resource type="Resource" script_class="FloorGenerationParameters" load_steps=8 format=3 uid="uid://ddpvonr1bnr5x"]
+[gd_resource type="Resource" script_class="FloorGenerationParameters" load_steps=4 format=3 uid="uid://ddpvonr1bnr5x"]
 
 [ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/FloorGenerationParameters.cs" id="1_jj2hs"]
 [ext_resource type="Resource" uid="uid://bgh6hkhexooxu" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_A.tres" id="1_jxbgt"]
 [ext_resource type="TileSet" uid="uid://bterungwyh5jq" path="res://resources/tilesets/TS_courtyard-overgrowth.tres" id="2_m50r4"]
-[ext_resource type="Resource" uid="uid://cde07opcgsrc0" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_B.tres" id="2_xxt38"]
-[ext_resource type="Resource" uid="uid://ljvihrw8at4b" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_C.tres" id="3_65bbg"]
-[ext_resource type="Resource" uid="uid://bvvwa7ebr8fav" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_D.tres" id="4_w2kdr"]
-[ext_resource type="Resource" uid="uid://cj8x41enlig7d" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_E.tres" id="5_3dcrt"]
 
 [resource]
 script = ExtResource("1_jj2hs")
 MinimumFloorLevelInclusive = 0
 MaximumFloorLevelInclusive = 10
 TileSet = ExtResource("2_m50r4")
-RoomDefinitions = Array[Object]([ExtResource("1_jxbgt"), ExtResource("2_xxt38"), ExtResource("3_65bbg"), ExtResource("4_w2kdr"), ExtResource("5_3dcrt")])
+RoomDefinitions = Array[Object]([ExtResource("1_jxbgt")])
 RoomCount = 20
 RoomPlacementEllipseWidth = 100.0
 RoomPlacementEllipseHeight = 20.0
-RoomSizeThresholdMultiplier = 1.0
+RoomSizeThresholdMultiplier = 0.0
 PercentOfDelaunayEdgesToKeep = 0.2
 HallwayPathThickness = 4

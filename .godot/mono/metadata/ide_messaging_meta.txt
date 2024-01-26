@@ -1,2 +1,0 @@
-﻿60715
-C:/Users/admin/Applications/Godot .NET 4.2.1/Godot_v4.2.1-stable_mono_win64.exe

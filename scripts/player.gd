@@ -102,7 +102,7 @@ func get_normalized_mouse_direction():
 	return direction.normalized()
 
 
-func handle_player_movement(delta, normalized_direction, speed, damping, update_facing_angle:bool, update_animation_speed:bool):
+func handle_player_movement(_delta, normalized_direction, speed, damping, update_facing_angle:bool, update_animation_speed:bool):
 	linear_damp = damping
 	
 	# check if the linear_velocity is small enough to just set to zero
