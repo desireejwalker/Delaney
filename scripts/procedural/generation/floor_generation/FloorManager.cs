@@ -20,6 +20,7 @@ public partial class FloorManager : Node
 		_floorScene = GD.Load<PackedScene>("res://scenes/generation/floor.tscn");
 		CurrentFloor = _floorScene.Instantiate<Floor>();
 		CurrentFloor.Setup(0);
+		
 		GenerateFloor();
 	}
 
