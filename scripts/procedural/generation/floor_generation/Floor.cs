@@ -57,13 +57,13 @@ public partial class Floor : Node
 		var roomTileMap = roomInstance.GetNode<TileMap>("TileMap");
 		var roomTileMapUsedRect = roomTileMap.GetUsedRect();
 
-		for (int layer = 0; layer < _tileMap.GetLayersCount(); layer++)
+		while (_tileMap.GetLayersCount() - 1 < roomTileMap.GetLayersCount())
 		{
-			while (_tileMap.GetLayersCount() - 1 < roomTileMap.GetLayersCount())
-			{
-				_tileMap.AddLayer(-1);
-			}
-
+			_tileMap.AddLayer(-1);
+		}
+		
+		for (int layer = 1; layer < _tileMap.GetLayersCount(); layer++)
+		{
 			var terrainTiles = new Godot.Collections.Array<Vector2I>();
 
 			for (int x = 0; x < roomTileMapUsedRect.Size.X; x++)
@@ -71,14 +71,14 @@ public partial class Floor : Node
 				for (int y = 0; y < roomTileMapUsedRect.Size.Y; y++)
 				{
 					// if the layer index is at or above the layer count for this room, continue
-					if (layer >= roomTileMap.GetLayersCount()) continue;
+					if (layer > roomTileMap.GetLayersCount()) continue;
 
 					var roomTileMapCoords = new Vector2I(x, y);
 					var floorTileMapCoords = new Vector2I(x + roomPosition.X, y + roomPosition.Y);
 
-					var atlasCoords = roomTileMap.GetCellAtlasCoords(layer, roomTileMapCoords);
-					var sourceId = roomTileMap.GetCellSourceId(layer, roomTileMapCoords);
-					var tileData = roomTileMap.GetCellTileData(layer, roomTileMapCoords);
+					var atlasCoords = roomTileMap.GetCellAtlasCoords(layer - 1, roomTileMapCoords);
+					var sourceId = roomTileMap.GetCellSourceId(layer - 1, roomTileMapCoords);
+					var tileData = roomTileMap.GetCellTileData(layer - 1, roomTileMapCoords);
 
 					// if no tileData, theres no tile to read
 					if (tileData == null)
@@ -91,7 +91,7 @@ public partial class Floor : Node
 					// add 1 to the layer index to avoid adding to the halls layer
 					if (tileData.TerrainSet == -1)
 					{
-						_tileMap.SetCell(layer + 1, floorTileMapCoords, sourceId, atlasCoords);
+						_tileMap.SetCell(layer, floorTileMapCoords, sourceId, atlasCoords);
 						continue;
 					}
 
@@ -101,15 +101,15 @@ public partial class Floor : Node
 					}
 				}
 			}
-
-			_DrawTerrainTiles(roomTileMap, roomPosition, layer + 1, terrainTiles);
+			
+			_DrawTerrainTiles(roomTileMap, layer - 1, roomPosition, layer, terrainTiles);
 		}
 	}
 
 	// acepts a godot array of Vector2I, sorts that array by the terrain index that they are in
 	// and draws them to the tilemap.
 	// NOTE: assumes the terrainSet of the tile is of index 0.
-	private void _DrawTerrainTiles(TileMap inputTileMap, Vector2I outputPosition, int layer, Godot.Collections.Array<Vector2I> inputTerrainTiles)
+	private void _DrawTerrainTiles(TileMap inputTileMap, int inputLayer, Vector2I outputPosition, int outputLayer, Godot.Collections.Array<Vector2I> inputTerrainTiles)
 	{
 		var terrains = new System.Collections.Generic.Dictionary<int, Godot.Collections.Array<Vector2I>>();
 		for (int terrainIndex = 0; terrainIndex < _tileMap.TileSet.GetTerrainsCount(0); terrainIndex++)
@@ -118,12 +118,16 @@ public partial class Floor : Node
 		}
 		foreach (var tile in inputTerrainTiles)
 		{
-			var tileData = inputTileMap.GetCellTileData(layer, tile);
+			if (outputLayer > inputTileMap.GetLayersCount()) continue;
+
+			var tileData = inputTileMap.GetCellTileData(inputLayer, tile);
+			if (tileData == null) continue;
+
 			terrains[tileData.Terrain].Add(new Vector2I(tile.X + outputPosition.X, tile.Y + outputPosition.Y));
 		}
 		foreach (var terrainIndex in terrains.Keys)
 		{
-			_tileMap.SetCellsTerrainConnect(layer, terrains[terrainIndex], 0, terrainIndex);
+			_tileMap.SetCellsTerrainConnect(outputLayer, terrains[terrainIndex], 0, terrainIndex);
 		}
 	}
 
