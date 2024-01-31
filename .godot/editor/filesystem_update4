@@ -1,9 +1,4 @@
-res://scripts/procedural/generation/floor_generation/Floor.cs
-res://scripts/procedural/generation/floor_generation/FloorDebugVisualizer.cs
-res://scripts/procedural/generation/floor_generation/FloorGenerationParameters.cs
-res://scripts/procedural/generation/floor_generation/FloorManager.cs
-res://scripts/procedural/generation/floor_generation/Room.cs
-res://scripts/procedural/generation/floor_generation/RoomDefinition.cs
+res://scripts/player.gd
 res://scenes/world.tscn
 res://resources/tilesets/TS_courtyard-overgrowth.tres
 res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_A.tres

@@ -1,12 +1,9 @@
 class_name GameManager extends Node
 
-func _ready():
-	randomize()
+static var _instance: GameManager
 
-	# var floor_generator = FloorGenerator.new()
-	# var floor_visualizer = FloorGenerationVisualizer.new(floor_generator)
-	
-	# add_child(floor_generator)
-	# add_child(floor_visualizer)
-	
-	# floor_generator.run(20)
+static func get_instance(): return _instance
+
+func _ready():
+	if _instance == null:
+		_instance = self

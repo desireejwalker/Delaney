@@ -1,6 +1,8 @@
 extends RigidBody2D
 
-var animation_player:AnimationPlayer
+var game_manager: GameManager
+
+var animation_player: AnimationPlayer
 
 var launch_trail_level_1: GPUParticles2D
 var launch_trail_level_2: GPUParticles2D
@@ -13,6 +15,8 @@ const DEFAULT_DAMPING = 3
 const DEFAULT_HEAVY_ATTACK_SPEED = 80
 
 var heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED
+
+var tile_position: Vector2i
 
 var angle_radians = 0
 var angle_degrees = 0
@@ -35,9 +39,23 @@ var launch_level = -1
 
 @onready var footstep_audio_stream_player_2d = $FootstepAudioStreamPlayer2D
 var footstep_sounds := [
-	preload("res://audio/boot_step/boot_step_1.ogg"),
-	preload("res://audio/boot_step/boot_step_2.ogg"),
-	preload("res://audio/boot_step/boot_step_3.ogg")
+	[
+		preload("res://audio/boot_step/boot_step_1.ogg"),
+		preload("res://audio/boot_step/boot_step_2.ogg"),
+		preload("res://audio/boot_step/boot_step_3.ogg"),
+	],
+	# originates from 073303_footsteps-on-stone-39947.mp3 from pixabay.com
+	[
+		preload("res://audio/boot_step/boot_step_stony_1.ogg"),
+		preload("res://audio/boot_step/boot_step_stony_2.ogg"),
+		preload("res://audio/boot_step/boot_step_stony_3.ogg")
+	],
+	# originates from running-in-grass-6237.mp3 from pixabay.com
+	[
+		preload("res://audio/boot_step/boot_step_grassy_1.ogg"),
+		preload("res://audio/boot_step/boot_step_grassy_2.ogg"),
+		preload("res://audio/boot_step/boot_step_grassy_3.ogg")
+	]
 ]
 
 func _ready():
@@ -53,6 +71,8 @@ func _ready():
 	dust_light = load("res://scenes/trails/dust_light.tscn").instantiate().get_node("GPUParticles2D")
 	add_child(dust_light.get_parent())
 	dust_light.translate(Vector2(0, 20))
+
+	game_manager = GameManager.get_instance()
 	
 
 func _physics_process(delta):
@@ -69,20 +89,23 @@ func _physics_process(delta):
 	handle_player_heavy_recovery()
 	
 	handle_player_rotation()
-	
+
+	tile_position = get_tile_position()
+	print(_get_terrain_type_underfoot())
+
+
 func _process(delta):
 	handle_player_attack(delta)
 	handle_player_animation()
 	
-	#print("facing angle degrees: {degrees} | facing angle radians: {radians} | facing: {direction}".format({"degrees": angle_degrees, "radians": angle_radians, "direction": facing}))
-	
-func _on_animation_player_animation_finished(anim_name):
+func _on_animation_player_animation_finished(_anim_name):
 	if attack == "light":
 		is_light_attack_animation_completed = true
 
 func _on_player_footstep():
-	# play random footstep sound
-	footstep_audio_stream_player_2d.stream = footstep_sounds[randi_range(0, footstep_sounds.size() - 1)]
+	# play random footstep sound according to the terrain type underfoot
+	var terrain_type = _get_terrain_type_underfoot()
+	footstep_audio_stream_player_2d.stream = footstep_sounds[terrain_type][randi_range(0, 2)]
 	footstep_audio_stream_player_2d.play()
 	
 	# create particle effects
@@ -101,8 +124,11 @@ func get_normalized_mouse_direction():
 	direction = get_global_mouse_position() - get_transform().get_origin()
 	return direction.normalized()
 
+func get_tile_position() -> Vector2i:
+	var game_tilemap: TileMap = game_manager.get_node("FloorManager/Floor/TileMap")
+	return game_tilemap.local_to_map(game_tilemap.to_local(global_position))
 
-func handle_player_movement(_delta, normalized_direction, speed, damping, update_facing_angle:bool, update_animation_speed:bool):
+func handle_player_movement(_delta, normalized_direction, speed, damping, update_facing_angle: bool, update_animation_speed: bool):
 	linear_damp = damping
 	
 	# check if the linear_velocity is small enough to just set to zero
@@ -321,7 +347,7 @@ func handle_player_light_attack_start():
 	attack = "light"
 	is_light_attack_animation_completed = false
 
-func handle_player_light_attack(delta):
+func handle_player_light_attack(_delta):
 	if (Input.is_action_pressed("recovery") and recovery == "none"):
 		handle_player_light_recovery_start()	
 
@@ -435,3 +461,28 @@ func handle_player_launch_start(level, direction):
 	physics_material_override.bounce = 0
 	
 	launch_level = -1
+
+# HELPER FUNCTIONS
+
+func _get_uppermost_tilemap_layer(coords: Vector2i) -> int:
+	var game_tilemap: TileMap = game_manager.get_node("FloorManager/Floor/TileMap")
+	for i in range(game_tilemap.get_layers_count() - 1, -1, -1):
+
+		# if there is no tile on this layer, continue
+		if game_tilemap.get_cell_atlas_coords(i, coords) == -Vector2i.ONE:
+			continue
+		
+		return i
+	
+	# couldn't find the highest layer in the tilemap
+	return -1
+
+func _get_terrain_type_underfoot() -> int:
+	var game_tilemap: TileMap = game_manager.get_node("FloorManager/Floor/TileMap")
+	var layer = _get_uppermost_tilemap_layer(tile_position)
+	var underfoot_tile_data = game_tilemap.get_cell_tile_data(layer, tile_position)
+
+	if underfoot_tile_data == null:
+		return 0 # zero is the default terrain type
+
+	return underfoot_tile_data.get_custom_data_by_layer_id(0) as int # terrain_type layer is 0, cast to an int
