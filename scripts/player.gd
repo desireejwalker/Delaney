@@ -91,7 +91,6 @@ func _physics_process(delta):
 	handle_player_rotation()
 
 	tile_position = get_tile_position()
-	print(_get_terrain_type_underfoot())
 
 
 func _process(delta):

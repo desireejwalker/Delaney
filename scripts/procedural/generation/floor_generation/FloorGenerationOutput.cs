@@ -47,9 +47,9 @@ public struct FloorGenerationOutput
                 continue;
             }
 
-            for (int x = (int)room.Position.X; x < (int)room.GetRect().End.X; x++)
+            for (int x = room.GetRect().Position.X; x < room.GetRect().End.X; x++)
             {
-                for (int y = (int)room.Position.Y; y < (int)room.GetRect().End.Y; y++)
+                for (int y = room.GetRect().Position.Y; y < room.GetRect().End.Y; y++)
                 {
                     FloorPositions.Add(new Vector2I(x, y));
                 }

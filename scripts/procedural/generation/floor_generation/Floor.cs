@@ -1,7 +1,9 @@
 using Godot;
 using Godot.Collections;
+using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Floor : Node
 {
@@ -27,29 +29,21 @@ public partial class Floor : Node
 		// set the tileset of the tilemap to the one specified in the FloorGenerationParameters
 		_tileMap.TileSet = FloorGenerationOutput.FloorGenerationParameters.TileSet;
 
-		// draw rooms
 		foreach (var room in FloorGenerationOutput.Rooms)
 		{
 			if (!room.isHubRoom && !room.isSubRoom) continue;
-			_DrawRoom(room);
+			DrawRoom(room);
 		}
 
 		foreach (var hall in FloorGenerationOutput.Halls)
 		{
-			var tilesArray = new Godot.Collections.Array<Vector2I>();
-			for (int x = hall.Position.X; x < hall.End.X; x++)
-			{
-				for (int y = hall.Position.Y; y < hall.End.Y; y++)
-				{
-					tilesArray.Add(new Vector2I(x, y));
-				}
-			}
-
-			_SetCells(0, tilesArray, 1, Vector2I.Zero);
+			DrawRect(hall, 0, 1, new Vector2I(16, 3));
 		}
+
+		CreateWalls();
 	}
 
-	private void _DrawRoom(Room room)
+	private void DrawRoom(Room room)
 	{
 		var roomDefinition = room.RoomDefinition;
 		var roomInstance = roomDefinition.GetRoomInstance();
@@ -64,7 +58,7 @@ public partial class Floor : Node
 		
 		for (int layer = 1; layer < _tileMap.GetLayersCount(); layer++)
 		{
-			var terrainTiles = new Godot.Collections.Array<Vector2I>();
+			var terrainTiles = new Array<Vector2I>();
 
 			for (int x = 0; x < roomTileMapUsedRect.Size.X; x++)
 			{
@@ -76,40 +70,169 @@ public partial class Floor : Node
 					var roomTileMapCoords = new Vector2I(x, y);
 					var floorTileMapCoords = new Vector2I(x + roomPosition.X, y + roomPosition.Y);
 
-					var atlasCoords = roomTileMap.GetCellAtlasCoords(layer - 1, roomTileMapCoords);
-					var sourceId = roomTileMap.GetCellSourceId(layer - 1, roomTileMapCoords);
 					var tileData = roomTileMap.GetCellTileData(layer - 1, roomTileMapCoords);
-
-					// if no tileData, theres no tile to read
-					if (tileData == null)
-					{
-						continue;
-					}
-
-					// check if the tile is in a terrain set. If so, add it to terrainTilesDict 
-					// for batching with SetCellsTerrainConnect()
-					// add 1 to the layer index to avoid adding to the halls layer
-					if (tileData.TerrainSet == -1)
-					{
-						_tileMap.SetCell(layer, floorTileMapCoords, sourceId, atlasCoords);
-						continue;
-					}
+					if (tileData == null) continue;
 
 					if (tileData.Terrain >= 0)
 					{
 						terrainTiles.Add(roomTileMapCoords);
+						continue;
 					}
+
+					var atlasCoords = roomTileMap.GetCellAtlasCoords(layer - 1, roomTileMapCoords);
+					var sourceId = roomTileMap.GetCellSourceId(layer - 1, roomTileMapCoords);
+
+					_tileMap.SetCell(layer, floorTileMapCoords, 0, atlasCoords);
 				}
 			}
 			
-			_DrawTerrainTiles(roomTileMap, layer - 1, roomPosition, layer, terrainTiles);
+			DrawTerrainTiles(roomTileMap, layer - 1, roomPosition, layer, terrainTiles);
 		}
 	}
 
+	private void DrawRect(Rect2I rect, int layer, int sourceId, Vector2I atlasCoords)
+	{
+		var tilesArray = new Array<Vector2I>();
+		for (int x = rect.Position.X; x < rect.End.X; x++)
+		{
+			for (int y = rect.Position.Y; y < rect.End.Y; y++)
+			{
+				tilesArray.Add(new Vector2I(x, y));
+			}
+		}
+
+		SetCells(layer, tilesArray, 0, atlasCoords);
+	}
+
+	private void CreateWalls()
+	{
+		var tileMapUsedRect = _tileMap.GetUsedRect();
+
+		var wallBases = new HashSet<WallBase>();
+
+		for (int x = tileMapUsedRect.Position.X; x < tileMapUsedRect.End.X; x++)
+		{
+			for (int y = tileMapUsedRect.Position.Y; y < tileMapUsedRect.End.Y; y++)
+			{
+				var position = new Vector2I(x, y);
+				var neighbor = position;
+
+				// if the position isnt in the floor positions set, ignore it and continue
+				if (!FloorGenerationOutput.FloorPositions.Contains(position)) continue;
+
+				// get neighbors of this position
+				// starting with the north side
+				DetermineWallBase(position, position + new Vector2I(0, -1));
+				// south
+				DetermineWallBase(position, position + new Vector2I(0, 1));
+				// east
+				DetermineWallBase(position, position + new Vector2I(1, 0));
+				// west
+				DetermineWallBase(position, position + new Vector2I(-1, 0));
+
+				if (!FloorGenerationOutput.FloorGenerationParameters.FillCorners) continue;
+				
+				// northwest
+				DetermineWallBase(position, position + new Vector2I(-1, -1));
+				// southwest
+				DetermineWallBase(position, position + new Vector2I(-1, 1));
+				// northeast
+				DetermineWallBase(position, position + new Vector2I(1, -1));
+				// southeast
+				DetermineWallBase(position, position + new Vector2I(1, 1));
+			}
+		}
+
+		void DetermineWallBase(Vector2I position, Vector2I neighbor)
+        {
+            // if this neighbor isnt in the floor positions set, either the tile at position or the tile at neighbor
+            // should be added to the wallBasePositions set, depending on if FloorGenerationParameters.CreateWallsOnInnerEdge
+            if (FloorGenerationOutput.FloorPositions.Contains(neighbor)) return;
+
+            if (FloorGenerationOutput.FloorGenerationParameters.CreateWallsOnInnerEdge)
+            {
+                wallBases.Add(new WallBase(
+                    position,
+                    GetCellNeighborFrom(position, neighbor, FloorGenerationOutput.FloorGenerationParameters.FillCorners)
+                ));
+            }
+            else
+            {
+                wallBases.Add(new WallBase(
+                    neighbor,
+                    GetCellNeighborFrom(neighbor, position, FloorGenerationOutput.FloorGenerationParameters.FillCorners)
+                ));
+            }
+        }
+
+        // create walls layer
+        _tileMap.AddLayer(-1);
+		foreach (var wallBase in wallBases)
+		{
+			GD.Print(wallBase.Position + ", floor neighbor: " + wallBase.FloorCellNeighbor);
+			var wallSegment = FloorGenerationOutput.FloorGenerationParameters.WallDefinition.GetWallSegmentForCellNeighbor(wallBase.FloorCellNeighbor);
+
+			// first draw base tile from the walldef
+			if (wallSegment.BaseTileAtlasPosition == -Vector2I.One) continue;
+
+			_tileMap.SetCell(-1, wallBase.Position, 0, wallSegment.BaseTileAtlasPosition);
+
+			// then draw the mid tiles from the walldef for how high the middle height value is
+			if (wallSegment.MiddleTileAtlasPosition == -Vector2I.One) continue;
+
+			for (int i = 0; i < FloorGenerationOutput.FloorGenerationParameters.WallDefinition.MiddleHeight; i++)
+			{
+				_tileMap.SetCell(
+					-1,
+					wallBase.Position - new Vector2I(0, 1 + i),
+					0,
+					wallSegment.MiddleTileAtlasPosition
+				);
+			}
+
+			// lastly draw the top tile from the walldef
+			if (wallSegment.TopTileAtlasPosition == -Vector2I.One) continue;
+
+			_tileMap.SetCell(
+				-1,
+				wallBase.Position - new Vector2I(0, 1 + FloorGenerationOutput.FloorGenerationParameters.WallDefinition.MiddleHeight),
+				0,
+				wallSegment.TopTileAtlasPosition
+			);
+		}
+	}
+
+	// will return CellNeighbor.TopSide if somehow cannot evaluate
+	TileSet.CellNeighbor GetCellNeighborFrom(Vector2I position, Vector2I neighbor, bool includeCorners)
+	{
+		switch (neighbor)
+		{
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.TopSide) == n:
+				return TileSet.CellNeighbor.TopSide;
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.BottomSide) == n:
+				return TileSet.CellNeighbor.BottomSide;
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.RightSide) == n:
+				return TileSet.CellNeighbor.RightSide;
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.LeftSide) == n:
+				return TileSet.CellNeighbor.LeftSide;
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.TopLeftCorner) == n && includeCorners:
+				return TileSet.CellNeighbor.TopLeftCorner;
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.BottomLeftCorner) == n && includeCorners:
+				return TileSet.CellNeighbor.BottomLeftCorner;
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.TopRightCorner) == n && includeCorners:
+				return TileSet.CellNeighbor.TopRightCorner;
+			case var n when _tileMap.GetNeighborCell(position, TileSet.CellNeighbor.BottomRightCorner) == n && includeCorners:
+				return TileSet.CellNeighbor.BottomRightCorner;
+				
+			default:
+				return TileSet.CellNeighbor.TopSide;
+		}
+	}
+	
 	// acepts a godot array of Vector2I, sorts that array by the terrain index that they are in
 	// and draws them to the tilemap.
 	// NOTE: assumes the terrainSet of the tile is of index 0.
-	private void _DrawTerrainTiles(TileMap inputTileMap, int inputLayer, Vector2I outputPosition, int outputLayer, Godot.Collections.Array<Vector2I> inputTerrainTiles)
+	private void DrawTerrainTiles(TileMap inputTileMap, int inputLayer, Vector2I outputPosition, int outputLayer, Godot.Collections.Array<Vector2I> inputTerrainTiles)
 	{
 		var terrains = new System.Collections.Generic.Dictionary<int, Godot.Collections.Array<Vector2I>>();
 		for (int terrainIndex = 0; terrainIndex < _tileMap.TileSet.GetTerrainsCount(0); terrainIndex++)
@@ -131,7 +254,7 @@ public partial class Floor : Node
 		}
 	}
 
-	private void _SetCells(int layer, Godot.Collections.Array<Vector2I> coordsArray, int sourceId, Vector2I atlasCoords)
+	private void SetCells(int layer, Godot.Collections.Array<Vector2I> coordsArray, int sourceId, Vector2I atlasCoords)
 	{
 		foreach (var coord in coordsArray)
 		{

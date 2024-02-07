@@ -1,2 +1,3 @@
+WallDefinition
 RoomDefinition
 FloorGenerationParameters

@@ -1,0 +1,66 @@
+[gd_resource type="Resource" script_class="WallDefinition" load_steps=12 format=3 uid="uid://c24wmn3qhkb83"]
+
+[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallDefinition.cs" id="1_6f6w0"]
+[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallSegment.cs" id="1_skh16"]
+[ext_resource type="TileSet" uid="uid://bterungwyh5jq" path="res://resources/tilesets/TS_courtyard-overgrowth.tres" id="1_wdmfl"]
+
+[sub_resource type="Resource" id="Resource_bh3cl"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(17, 0)
+
+[sub_resource type="Resource" id="Resource_uvcaf"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(15, 0)
+
+[sub_resource type="Resource" id="Resource_ykfka"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(13, 2)
+MiddleTileAtlasPosition = Vector2i(13, 3)
+BaseTileAtlasPosition = Vector2i(13, 4)
+
+[sub_resource type="Resource" id="Resource_0jakt"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(17, 1)
+
+[sub_resource type="Resource" id="Resource_7ike5"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(15, 1)
+
+[sub_resource type="Resource" id="Resource_mvmje"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(12, 0)
+
+[sub_resource type="Resource" id="Resource_l0s22"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(14, 0)
+
+[sub_resource type="Resource" id="Resource_iv5ni"]
+script = ExtResource("1_skh16")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(16, 2)
+
+[resource]
+script = ExtResource("1_6f6w0")
+TileSet = ExtResource("1_wdmfl")
+FloorNeighboringTopSideWallSegment = SubResource("Resource_iv5ni")
+FloorNeighboringBottomSideWallSegment = SubResource("Resource_ykfka")
+FloorNeighboringRightSideWallSegment = SubResource("Resource_7ike5")
+FloorNeighboringLeftSideWallSegment = SubResource("Resource_0jakt")
+FloorNeighboringTopLeftCornerWallSegment = SubResource("Resource_mvmje")
+FloorNeighboringBottomLeftCornerWallSegment = SubResource("Resource_bh3cl")
+FloorNeighboringTopRightCornerWallSegment = SubResource("Resource_l0s22")
+FloorNeighboringBottomRightCornerWallSegment = SubResource("Resource_uvcaf")
+MiddleHeight = 1

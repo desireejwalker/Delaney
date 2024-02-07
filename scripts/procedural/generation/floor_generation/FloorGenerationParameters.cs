@@ -28,11 +28,19 @@ public partial class FloorGenerationParameters : Resource
     [Export]
     public float RoomSizeThresholdMultiplier { get; private set; }
     
-    [ExportGroup("Hallway Settings")]
+    [ExportGroup("Hall Settings")]
     [Export(PropertyHint.Range, "0, 1")]
     public float PercentOfDelaunayEdgesToKeep { get; private set; }
     [Export]
-    public int HallwayPathThickness { get; private set; }
+    public int HallThickness { get; private set; }
+
+    [ExportGroup("Wall Settings")]
+    [Export]
+    public WallDefinition WallDefinition { get; private set; }
+    [Export]
+    public bool CreateWallsOnInnerEdge { get; private set; }
+    [Export]
+    public bool FillCorners { get; private set; }
 
     public bool IsWithinGenerationBounds(int floorLevel)
     {

@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -170,7 +171,7 @@ public class FloorGenerator
 					var path = new Rect2I(
 						midpointX,
 						startHubRoom.GetRect().Position.Y,
-						_floorGenerationParameters.HallwayPathThickness,
+						_floorGenerationParameters.HallThickness,
 						(int)(endHubRoom.Position.Y + 0.5f) - (int)(startHubRoom.Position.Y + 0.5f)
 					).Abs();
 					_halls.Add(path);
@@ -189,7 +190,7 @@ public class FloorGenerator
 						startHubRoom.GetRect().GetCenter().X,
 						midpointY,
 						(int)(endHubRoom.Position.X + 0.5f) - (int)(startHubRoom.Position.X + 0.5f),
-						_floorGenerationParameters.HallwayPathThickness
+						_floorGenerationParameters.HallThickness
 					).Abs();
 					_halls.Add(path);
 
@@ -200,7 +201,7 @@ public class FloorGenerator
 				var aHalfL = new Rect2I(
 					(int)(startHubRoom.Position.X + 0.5f),
 					(int)(startHubRoom.Position.Y + 0.5f),
-					_floorGenerationParameters.HallwayPathThickness,
+					_floorGenerationParameters.HallThickness,
 					(int)(endHubRoom.Position.Y + 0.5f) - (int)(startHubRoom.Position.Y + 0.5f)
 				).Abs();
 				// horizontal half
@@ -208,7 +209,7 @@ public class FloorGenerator
 					(int)(endHubRoom.Position.X + 0.5f),
 					(int)(endHubRoom.Position.Y + 0.5f),
 					(int)(startHubRoom.Position.X + 0.5f) - (int)(endHubRoom.Position.X + 0.5f),
-					_floorGenerationParameters.HallwayPathThickness
+					_floorGenerationParameters.HallThickness
 				).Abs();
 				_halls.Add(aHalfL);
 				_halls.Add(bHalfL);
@@ -294,14 +295,6 @@ public class FloorGenerator
 
             _floorGenerationParameters
         );
-
-    // public void CleanUp(Transform roomParent)
-    // {
-    //     foreach (var room in _roomArray)
-    //     {
-    //         room.Initialize(roomParent);
-    //     }
-    // }
 
     private Vector2I GetRandomPointInEllipse(float width, float height)
 	{
