@@ -4,9 +4,9 @@ using Godot;
 public partial class WallSegment : Resource
 {
     [Export]
-    public Vector2I TopTileAtlasPosition { get; private set; }
+    public Vector2I TopTileAtlasPosition { get; private set; } = -Vector2I.One;
     [Export]
-    public Vector2I MiddleTileAtlasPosition { get; private set; }
+    public Vector2I MiddleTileAtlasPosition { get; private set; } = -Vector2I.One;
     [Export]
-    public Vector2I BaseTileAtlasPosition { get; private set; }
+    public Vector2I BaseTileAtlasPosition { get; private set; } = -Vector2I.One;
 }

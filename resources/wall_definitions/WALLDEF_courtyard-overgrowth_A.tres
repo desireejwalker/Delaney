@@ -1,66 +1,25 @@
-[gd_resource type="Resource" script_class="WallDefinition" load_steps=12 format=3 uid="uid://c24wmn3qhkb83"]
+[gd_resource type="Resource" script_class="WallDefinition" load_steps=11 format=3 uid="uid://c24wmn3qhkb83"]
 
 [ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallDefinition.cs" id="1_6f6w0"]
-[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallSegment.cs" id="1_skh16"]
+[ext_resource type="Resource" uid="uid://hs17i5hfhhk5" path="res://resources/wall_definitions/wall_segments/WALLSEG_E_courtyard-overgrowth_A.tres" id="1_mlgmt"]
 [ext_resource type="TileSet" uid="uid://bterungwyh5jq" path="res://resources/tilesets/TS_courtyard-overgrowth.tres" id="1_wdmfl"]
-
-[sub_resource type="Resource" id="Resource_bh3cl"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(17, 0)
-
-[sub_resource type="Resource" id="Resource_uvcaf"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(15, 0)
-
-[sub_resource type="Resource" id="Resource_ykfka"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(13, 2)
-MiddleTileAtlasPosition = Vector2i(13, 3)
-BaseTileAtlasPosition = Vector2i(13, 4)
-
-[sub_resource type="Resource" id="Resource_0jakt"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(17, 1)
-
-[sub_resource type="Resource" id="Resource_7ike5"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(15, 1)
-
-[sub_resource type="Resource" id="Resource_mvmje"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(12, 0)
-
-[sub_resource type="Resource" id="Resource_l0s22"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(14, 0)
-
-[sub_resource type="Resource" id="Resource_iv5ni"]
-script = ExtResource("1_skh16")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(16, 2)
+[ext_resource type="Resource" uid="uid://blunxlofsvko1" path="res://resources/wall_definitions/wall_segments/WALLSEG_NE_courtyard-overgrowth_A.tres" id="2_hjx6u"]
+[ext_resource type="Resource" uid="uid://dvuvu45d6ojm2" path="res://resources/wall_definitions/wall_segments/WALLSEG_N_courtyard-overgrowth_A.tres" id="3_f21ul"]
+[ext_resource type="Resource" uid="uid://bay86v2nvicem" path="res://resources/wall_definitions/wall_segments/WALLSEG_NW_courtyard-overgrowth_A.tres" id="4_18vnk"]
+[ext_resource type="Resource" uid="uid://by5evuk4jws8g" path="res://resources/wall_definitions/wall_segments/WALLSEG_SE_courtyard-overgrowth_A.tres" id="5_hdhpo"]
+[ext_resource type="Resource" uid="uid://cwwb6pvuvoyum" path="res://resources/wall_definitions/wall_segments/WALLSEG_S_courtyard-overgrowth_A.tres" id="6_32hak"]
+[ext_resource type="Resource" uid="uid://dmdnbvmpu5o6m" path="res://resources/wall_definitions/wall_segments/WALLSEG_SW_courtyard-overgrowth_A.tres" id="7_kxj8c"]
+[ext_resource type="Resource" uid="uid://qs1q0iqaq471" path="res://resources/wall_definitions/wall_segments/WALLSEG_W_courtyard-overgrowth_A.tres" id="9_rfn54"]
 
 [resource]
 script = ExtResource("1_6f6w0")
 TileSet = ExtResource("1_wdmfl")
-FloorNeighboringTopSideWallSegment = SubResource("Resource_iv5ni")
-FloorNeighboringBottomSideWallSegment = SubResource("Resource_ykfka")
-FloorNeighboringRightSideWallSegment = SubResource("Resource_7ike5")
-FloorNeighboringLeftSideWallSegment = SubResource("Resource_0jakt")
-FloorNeighboringTopLeftCornerWallSegment = SubResource("Resource_mvmje")
-FloorNeighboringBottomLeftCornerWallSegment = SubResource("Resource_bh3cl")
-FloorNeighboringTopRightCornerWallSegment = SubResource("Resource_l0s22")
-FloorNeighboringBottomRightCornerWallSegment = SubResource("Resource_uvcaf")
+NorthWallSegment = ExtResource("3_f21ul")
+SouthWallSegment = ExtResource("6_32hak")
+EastWallSegment = ExtResource("1_mlgmt")
+WestWallSegment = ExtResource("9_rfn54")
+NorthWestWallSegment = ExtResource("4_18vnk")
+SouthWestWallSegment = ExtResource("7_kxj8c")
+NorthEastWallSegment = ExtResource("2_hjx6u")
+SouthEastWallSegment = ExtResource("5_hdhpo")
 MiddleHeight = 1

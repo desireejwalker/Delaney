@@ -9,51 +9,39 @@ public partial class WallDefinition : Resource
 
     [ExportGroup("Tile Atlas Config")]
     [Export]
-    public WallSegment FloorNeighboringTopSideWallSegment { get; private set; }
+    public WallSegment NorthWallSegment { get; private set; }
     [Export]
-    public WallSegment FloorNeighboringBottomSideWallSegment { get; private set; }
+    public WallSegment SouthWallSegment { get; private set; }
     [Export]
-    public WallSegment FloorNeighboringRightSideWallSegment { get; private set; }
+    public WallSegment EastWallSegment { get; private set; }
     [Export]
-    public WallSegment FloorNeighboringLeftSideWallSegment { get; private set; }
+    public WallSegment WestWallSegment { get; private set; }
     [Export]
-    public WallSegment FloorNeighboringTopLeftCornerWallSegment { get; private set; }
+    public WallSegment NorthWestWallSegment { get; private set; }
     [Export]
-    public WallSegment FloorNeighboringBottomLeftCornerWallSegment { get; private set; }
+    public WallSegment SouthWestWallSegment { get; private set; }
     [Export]
-    public WallSegment FloorNeighboringTopRightCornerWallSegment { get; private set; }
+    public WallSegment NorthEastWallSegment { get; private set; }
     [Export]
-    public WallSegment FloorNeighboringBottomRightCornerWallSegment { get; private set; }
+    public WallSegment SouthEastWallSegment { get; private set; }
 
     [Export]
     public int MiddleHeight { get; private set; }
 
-    public WallSegment GetWallSegmentForCellNeighbor(TileSet.CellNeighbor cellNeighbor)
+    public WallSegment GetWallSegmentForDirection(Direction direction)
     {
-        switch (cellNeighbor)
+        switch (direction)
         {
-            case TileSet.CellNeighbor.TopSide: return FloorNeighboringTopSideWallSegment;
-            case TileSet.CellNeighbor.BottomSide: return FloorNeighboringBottomSideWallSegment;
-            case TileSet.CellNeighbor.RightSide: return FloorNeighboringRightSideWallSegment;
-            case TileSet.CellNeighbor.LeftSide: return FloorNeighboringLeftSideWallSegment;
-            case TileSet.CellNeighbor.TopLeftCorner: return FloorNeighboringTopLeftCornerWallSegment;
-            case TileSet.CellNeighbor.BottomLeftCorner: return FloorNeighboringBottomLeftCornerWallSegment;
-            case TileSet.CellNeighbor.TopRightCorner: return FloorNeighboringTopRightCornerWallSegment;
-            case TileSet.CellNeighbor.BottomRightCorner: return FloorNeighboringBottomRightCornerWallSegment;
-            default: return FloorNeighboringBottomSideWallSegment;
+            case Direction.North: return NorthWallSegment;
+            case Direction.South: return SouthWallSegment;
+            case Direction.East: return EastWallSegment;
+            case Direction.West: return WestWallSegment;
+            case Direction.North_West: return NorthWestWallSegment;
+            case Direction.South_West: return SouthWestWallSegment;
+            case Direction.North_East: return NorthEastWallSegment;
+            case Direction.South_East: return SouthEastWallSegment;
+            default: return SouthWallSegment;
         }
     }
-}
-
-public struct WallBase
-{
-	public readonly Vector2I Position;
-	public readonly TileSet.CellNeighbor FloorCellNeighbor;
-
-	public WallBase(Vector2I position, TileSet.CellNeighbor floorCellNeighbor)
-	{
-		this.Position = position;
-		this.FloorCellNeighbor = floorCellNeighbor;
-	}
 }
 

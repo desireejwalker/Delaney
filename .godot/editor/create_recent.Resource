@@ -1,3 +1,4 @@
+WallSegment
 WallDefinition
 RoomDefinition
 FloorGenerationParameters
