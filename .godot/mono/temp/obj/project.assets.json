@@ -11,14 +11,10 @@
       "GodotSharp/4.2.1": {
         "type": "package",
         "compile": {
-          "lib/net6.0/GodotSharp.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/GodotSharp.dll": {}
         },
         "runtime": {
-          "lib/net6.0/GodotSharp.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/GodotSharp.dll": {}
         }
       },
       "GodotSharpEditor/4.2.1": {
@@ -27,14 +23,10 @@
           "GodotSharp": "4.2.1"
         },
         "compile": {
-          "lib/net6.0/GodotSharpEditor.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/GodotSharpEditor.dll": {}
         },
         "runtime": {
-          "lib/net6.0/GodotSharpEditor.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/GodotSharpEditor.dll": {}
         }
       }
     }
@@ -88,23 +80,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ayrdr\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ayrdr\\Projects\\Project Delaney (Godot)\\Project Delaney.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Projects\\Project-Delaney-Godot-\\Project Delaney.csproj",
       "projectName": "Project Delaney",
-      "projectPath": "C:\\Users\\ayrdr\\Projects\\Project Delaney (Godot)\\Project Delaney.csproj",
-      "packagesPath": "C:\\Users\\ayrdr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ayrdr\\Projects\\Project Delaney (Godot)\\.godot\\mono\\temp\\obj\\",
+      "projectPath": "C:\\Users\\admin\\Projects\\Project-Delaney-Godot-\\Project Delaney.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\admin\\Projects\\Project-Delaney-Godot-\\.godot\\mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ayrdr\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -147,31 +135,16 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.21, 6.0.21]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.21, 6.0.21]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.21, 6.0.21]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.321\\RuntimeIdentifierGraph.json"
       }
     }
   }

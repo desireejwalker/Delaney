@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="WallSegment" load_steps=2 format=3 uid="uid://bay86v2nvicem"]
-
-[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallSegment.cs" id="1_84cqx"]
-
-[resource]
-script = ExtResource("1_84cqx")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(-1, -1)

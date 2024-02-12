@@ -7,9 +7,6 @@ Example: ROOMDEF_my-area-name_my-room-name_A
 Wall Definitions: WALLDEF_area-name-here_iteration where "iteration" = A, B, C, ...
 Example: WALLDEF_my-area-name_A
 
-Wall Segments: WALLSEG_DIRECTION_area-name-here_iteration where "DIRECTION" = S, SW, W, NW, N, NE, E, SE and where "iteration" = A, B, C, ...
-Example: WALLSEG_S_my-area-name_A
-
 Rooms:
 	File Name: ROOM_area-name-here_room-name-here_iteration where "iteration" = A, B, C, ...
 	Example: ROOM_my-area-name_my_room_name_A
@@ -19,3 +16,6 @@ Rooms:
 
 Tilesets: TS_area-name-here
 Example: TS_my-area-name
+
+Tilesheets: TSH_area-name-here
+Example: TSH_my-area-name

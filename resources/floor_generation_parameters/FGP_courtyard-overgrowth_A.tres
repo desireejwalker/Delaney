@@ -21,5 +21,3 @@ RoomSizeThresholdMultiplier = 1.0
 PercentOfDelaunayEdgesToKeep = 0.2
 HallThickness = 4
 WallDefinition = ExtResource("6_lssc1")
-CreateWallsOnInnerEdge = true
-FillCorners = false
