@@ -1,12 +1,10 @@
-res://scripts/game_manager.gd
-res://scripts/player.gd
-res://scenes/generation/floor.tscn
+res://scenes/world.tscn
 res://resources/tilesets/TS_courtyard-overgrowth.tres
 res://resources/wall_definitions/WALLDEF_courtyard-overgrowth_A.tres
 res://resources/floor_generation_parameters/FGP_courtyard-overgrowth_A.tres
-res://scenes/world.tscn
 res://scenes/player.tscn
 res://scenes/generation/room.tscn
+res://scenes/generation/floor.tscn
 res://scripts/procedural/generation/floor_generation/Floor.cs
 res://scripts/procedural/generation/floor_generation/FloorDebugVisualizer.cs
 res://scripts/procedural/generation/floor_generation/FloorGenerationParameters.cs
@@ -15,9 +13,4 @@ res://scripts/procedural/generation/floor_generation/Room.cs
 res://scripts/procedural/generation/floor_generation/RoomDefinition.cs
 res://scripts/procedural/generation/floor_generation/WallDefinition.cs
 res://scripts/procedural/generation/floor_generation/WallSegment.cs
-res://resources/wall_definitions/wall_segments/WALLSEG_S_courtyard-overgrowth_A.tres
-res://resources/wall_definitions/wall_segments/WALLSEG_N_courtyard-overgrowth_A.tres
 res://resources/wall_definitions/wall_segments/WALLSEG_E_courtyard-overgrowth_A.tres
-res://resources/wall_definitions/wall_segments/WALLSEG_W_courtyard-overgrowth_A.tres
-res://naming_conventions.txt
-res://resources/wall_definitions/wall_segments/WALLSEG_NW_courtyard-overgrowth_A.tres

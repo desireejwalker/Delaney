@@ -37,10 +37,6 @@ public partial class FloorGenerationParameters : Resource
     [ExportGroup("Wall Settings")]
     [Export]
     public WallDefinition WallDefinition { get; private set; }
-    [Export]
-    public bool CreateWallsOnInnerEdge { get; private set; }
-    [Export]
-    public bool FillCorners { get; private set; }
 
     public bool IsWithinGenerationBounds(int floorLevel)
     {

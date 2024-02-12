@@ -1,47 +1,60 @@
 using Godot;
 using System;
+using System.Linq;
 
 [GlobalClass]
 public partial class WallDefinition : Resource
 {   
     [Export]
     public TileSet TileSet { get; private set; }
-
-    [ExportGroup("Tile Atlas Config")]
     [Export]
-    public WallSegment NorthWallSegment { get; private set; }
-    [Export]
-    public WallSegment SouthWallSegment { get; private set; }
-    [Export]
-    public WallSegment EastWallSegment { get; private set; }
-    [Export]
-    public WallSegment WestWallSegment { get; private set; }
-    [Export]
-    public WallSegment NorthWestWallSegment { get; private set; }
-    [Export]
-    public WallSegment SouthWestWallSegment { get; private set; }
-    [Export]
-    public WallSegment NorthEastWallSegment { get; private set; }
-    [Export]
-    public WallSegment SouthEastWallSegment { get; private set; }
+    private Godot.Collections.Array<WallSegment> _wallSegments;
 
     [Export]
     public int MiddleHeight { get; private set; }
 
-    public WallSegment GetWallSegmentForDirection(Direction direction)
+    public WallSegment[] GetWallSegmentsMatching(WallBase wallBase)
     {
-        switch (direction)
+        var result = _wallSegments.Where(wallSeg => {
+            var isMatching = (wallSeg.SouthType < 0 || wallSeg.SouthType == wallBase.southType) &&
+                             (wallSeg.SouthWestType < 0 || wallSeg.SouthWestType == wallBase.southWestType) &&
+                             (wallSeg.WestType < 0 || wallSeg.WestType == wallBase.westType) &&
+                             (wallSeg.NorthWestType < 0 || wallSeg.NorthWestType == wallBase.northWestType) &&
+                             (wallSeg.NorthType < 0 || wallSeg.NorthType == wallBase.northType) &&
+                             (wallSeg.NorthEastType < 0 || wallSeg.NorthEastType == wallBase.northEastType) &&
+                             (wallSeg.EastType < 0 || wallSeg.EastType == wallBase.eastType) &&
+                             (wallSeg.SouthEastType < 0 || wallSeg.SouthEastType == wallBase.southEastType);
+            return isMatching;
+        }).ToArray();
+
+        if (result.Length == 0)
         {
-            case Direction.North: return NorthWallSegment;
-            case Direction.South: return SouthWallSegment;
-            case Direction.East: return EastWallSegment;
-            case Direction.West: return WestWallSegment;
-            case Direction.North_West: return NorthWestWallSegment;
-            case Direction.South_West: return SouthWestWallSegment;
-            case Direction.North_East: return NorthEastWallSegment;
-            case Direction.South_East: return SouthEastWallSegment;
-            default: return SouthWallSegment;
+            throw new WallSegementNotFoundException(this, wallBase);
         }
+
+        return result;
+    }
+}
+
+public class WallSegementNotFoundException : ApplicationException
+{
+    public WallDefinition wallDefinition;
+    public WallBase wallBase;
+
+    public WallSegementNotFoundException(WallDefinition wallDefinition, WallBase wallBase) : base(
+        $@"Could not find WallSegement on {wallDefinition.ResourcePath} with the following required surrounding types:
+        south: {wallBase.southType}
+        southwest: {wallBase.southWestType}
+        west: {wallBase.westType}
+        northwest: {wallBase.northWestType}
+        north: {wallBase.northType}
+        northeast: {wallBase.northEastType}
+        east: {wallBase.eastType}
+        southeast: {wallBase.southEastType}"
+    )
+    {
+        this.wallDefinition = wallDefinition;
+        this.wallBase = wallBase;
     }
 }
 

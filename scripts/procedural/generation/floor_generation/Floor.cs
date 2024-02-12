@@ -106,137 +106,121 @@ public partial class Floor : Node
 
 	private void CreateWalls()
 	{
-		var tileMapUsedRect = _tileMap.GetUsedRect();
+		var rect = _tileMap.GetUsedRect().Grow(4);
+		
+		var floorPositions = FloorGenerationOutput.FloorPositions;
 
+		// add layer for walls
+		_tileMap.AddLayer(-1);
+		_tileMap.SetLayerName(-1, "walls");
 		var wallBases = new HashSet<WallBase>();
 
 		// create all wall bases and set their bitmasks for surrounding floors
-		for (int x = tileMapUsedRect.Position.X; x < tileMapUsedRect.End.X; x++)
+		for (int x = rect.Position.X; x < rect.End.X; x++)
 		{
-			for (int y = tileMapUsedRect.Position.Y; y < tileMapUsedRect.End.Y; y++)
+			for (int y = rect.Position.Y; y < rect.End.Y; y++)
 			{
 				var position = new Vector2I(x, y);
-				var neighbor = position;
 
-				// if the position isnt in the floor positions set, ignore it and continue
-				if (!FloorGenerationOutput.FloorPositions.Contains(position)) continue;
+				// if the position is in the floor positions set, ignore it and continue
+				if (floorPositions.Contains(position)) continue;
 
-				var wallBasePosition = neighbor;
-				if (FloorGenerationOutput.FloorGenerationParameters.CreateWallsOnInnerEdge)
-				{
-					wallBasePosition = position;
-				}
+				var neighbors = Get8Neighbors(position).Values;
 
-				// create the wallbase and set its position
-				var wallBase = new WallBase(wallBasePosition);
+				// if none of the neighbors are in the floor position set, ignore this position and continue
+				if (neighbors.All(neighbor => !floorPositions.Contains(neighbor))) continue;
 
-				// set the wallbases surrounding tile types
-				var south = new Vector2I(x, y+1);
-				var west = new Vector2I(x-1, y);
-				var north = new Vector2I(x, y-1);
-				var east = new Vector2I(x+1, y);
-
-				if (FloorGenerationOutput.FloorPositions.Contains(south))
-				{
-					wallBase.southType += (int)WallBase.SurroundingTileType.Floor;
-				}
-				if (FloorGenerationOutput.FloorPositions.Contains(west))
-				{
-					wallBase.westType += (int)WallBase.SurroundingTileType.Floor;
-				}
-				if (FloorGenerationOutput.FloorPositions.Contains(north))
-				{
-					wallBase.northType += (int)WallBase.SurroundingTileType.Floor;
-				}
-				if (FloorGenerationOutput.FloorPositions.Contains(east))
-				{
-					wallBase.eastType += (int)WallBase.SurroundingTileType.Floor;
-				}
-
-				// do corners if the params allow it
-				if (FloorGenerationOutput.FloorGenerationParameters.FillCorners) continue;
-
-				var southWest = new Vector2I(x-1, y+1);
-				var northWest = new Vector2I(x-1, y-1);
-				var northEast = new Vector2I(x+1, y-1);
-				var southEast = new Vector2I(x+1, y+1);
-
-				if (FloorGenerationOutput.FloorPositions.Contains(southWest))
-				{
-					wallBase.southWestType += (int)WallBase.SurroundingTileType.Floor;
-				}
-				if (FloorGenerationOutput.FloorPositions.Contains(northWest))
-				{
-					wallBase.northWestType += (int)WallBase.SurroundingTileType.Floor;
-				}
-				if (FloorGenerationOutput.FloorPositions.Contains(northEast))
-				{
-					wallBase.northEastType += (int)WallBase.SurroundingTileType.Floor;
-				}
-				if (FloorGenerationOutput.FloorPositions.Contains(southEast))
-				{
-					wallBase.southEastType += (int)WallBase.SurroundingTileType.Floor;
-				}
+				// if we made it here, this position should be a wall base
+				wallBases.Add(new WallBase(position));
 			}
 		}
 
-		// search through every wallbase to see if it neighbors another
-		// then draw the wallsegments to the tilemap
+		
+
 		foreach (var wallBase in wallBases)
 		{
-			var south = new Vector2I(wallBase.Position.X, wallBase.Position.Y+1);
-			var west = new Vector2I(wallBase.Position.X-1, wallBase.Position.Y);
-			var north = new Vector2I(wallBase.Position.X, wallBase.Position.Y-1);
-			var east = new Vector2I(wallBase.Position.X+1, wallBase.Position.Y);
+			var neighbors = Get8Neighbors(wallBase.Position);
 
-			// check against the entire set of wallBases to see if there are any neighboring wallbases
-			if (wallBases.Where(x => x.Position == south).ToArray().Length == 1)
-			{
-				wallBase.southType += (int)WallBase.SurroundingTileType.Wall;
-			}
-			if (wallBases.Where(x => x.Position == west).ToArray().Length == 1)
-			{
-				wallBase.westType += (int)WallBase.SurroundingTileType.Wall;
-			}
-			if (wallBases.Where(x => x.Position == north).ToArray().Length == 1)
-			{
-				wallBase.northType += (int)WallBase.SurroundingTileType.Wall;
-			}
-			if (wallBases.Where(x => x.Position == east).ToArray().Length == 1)
-			{
+			// check for floor neighbors first
+			if (floorPositions.Contains(neighbors[Direction.East]))
+				wallBase.eastType += (int)WallBase.SurroundingTileType.Floor;
+			if (floorPositions.Contains(neighbors[Direction.South_East]))
+				wallBase.southEastType += (int)WallBase.SurroundingTileType.Floor;
+			if (floorPositions.Contains(neighbors[Direction.South]))
+				wallBase.southType += (int)WallBase.SurroundingTileType.Floor;
+			if (floorPositions.Contains(neighbors[Direction.South_West]))
+				wallBase.southWestType += (int)WallBase.SurroundingTileType.Floor;
+			if (floorPositions.Contains(neighbors[Direction.West]))
+				wallBase.westType += (int)WallBase.SurroundingTileType.Floor;
+			if (floorPositions.Contains(neighbors[Direction.North_West]))
+				wallBase.northWestType += (int)WallBase.SurroundingTileType.Floor;
+			if (floorPositions.Contains(neighbors[Direction.North]))
+				wallBase.northType += (int)WallBase.SurroundingTileType.Floor;
+			if (floorPositions.Contains(neighbors[Direction.North_East]))
+				wallBase.northEastType += (int)WallBase.SurroundingTileType.Floor;
+
+			// then check against wallBases (probably the time taker of all time since it uses LINQ)
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.East]))
 				wallBase.eastType += (int)WallBase.SurroundingTileType.Wall;
-			}
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.South_East]))
+				wallBase.southEastType += (int)WallBase.SurroundingTileType.Wall;
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.South]))
+				wallBase.southType += (int)WallBase.SurroundingTileType.Wall;
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.South_West]))
+				wallBase.southWestType += (int)WallBase.SurroundingTileType.Wall;
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.West]))
+				wallBase.westType += (int)WallBase.SurroundingTileType.Wall;
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.North_West]))
+				wallBase.northWestType += (int)WallBase.SurroundingTileType.Wall;
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.North]))
+				wallBase.northType += (int)WallBase.SurroundingTileType.Wall;
+			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.North_East]))
+				wallBase.northEastType += (int)WallBase.SurroundingTileType.Floor;
 
-			// do corners if the params allow it
-			if (FloorGenerationOutput.FloorGenerationParameters.FillCorners)
+
+			// draw wallseg to tilemap
+			WallSegment[] wallSegments;
+            WallDefinition wallDefinition = FloorGenerationOutput.FloorGenerationParameters.WallDefinition;
+
+			try
 			{
-				var southWest = new Vector2I(wallBase.Position.X-1, wallBase.Position.Y+1);
-				var northWest = new Vector2I(wallBase.Position.X-1, wallBase.Position.Y-1);
-				var northEast = new Vector2I(wallBase.Position.X+1, wallBase.Position.Y-1);
-				var southEast = new Vector2I(wallBase.Position.X+1, wallBase.Position.Y+1);
-
-				if (wallBases.Where(x => x.Position == southWest).ToArray().Length == 1)
-				{
-					wallBase.southWestType += (int)WallBase.SurroundingTileType.Wall;
-				}
-				if (wallBases.Where(x => x.Position == northWest).ToArray().Length == 1)
-				{
-					wallBase.northWestType += (int)WallBase.SurroundingTileType.Wall;
-				}
-				if (wallBases.Where(x => x.Position == northEast).ToArray().Length == 1)
-				{
-					wallBase.northEastType += (int)WallBase.SurroundingTileType.Wall;
-				}
-				if (wallBases.Where(x => x.Position == southEast).ToArray().Length == 1)
-				{
-					wallBase.southEastType += (int)WallBase.SurroundingTileType.Wall;
-				}
+                wallSegments = wallDefinition.GetWallSegmentsMatching(wallBase);
+			}
+			catch(WallSegementNotFoundException)
+			{
+				continue;
 			}
 
-			// draw wallseg
-			_tileMap.AddLayer(-1);
-			_tileMap.SetCell(-1, wallBase.Position, 1, Vector2I.Zero, 0);
+			var wallSeg = wallSegments[GD.Randi() % wallSegments.Length];
+
+			if (wallSeg.BaseTileAtlasPosition == -Vector2I.One) continue;
+			_tileMap.SetCell(-1, wallBase.Position, 0, wallSeg.BaseTileAtlasPosition, 0);
+			
+			if (wallSeg.MiddleTileAtlasPosition == -Vector2I.One) continue;
+			for (int i = 1; i < wallDefinition.MiddleHeight + 2; i++)
+			{
+				_tileMap.SetCell(-1, wallBase.Position + (Vector2I.Up * i), 0, wallSeg.MiddleTileAtlasPosition, 0);
+			}
+
+			if (wallSeg.TopTileAtlasPosition == -Vector2I.One) continue;
+			_tileMap.SetCell(-1, wallBase.Position + (Vector2I.Up * (wallDefinition.MiddleHeight + 1)), 0, wallSeg.TopTileAtlasPosition, 0);
 		}
+	}
+
+	Godot.Collections.Dictionary<Direction, Vector2I> Get8Neighbors(Vector2I position)
+	{
+		Godot.Collections.Dictionary<Direction, Vector2I> neighbors = new Godot.Collections.Dictionary<Direction, Vector2I>
+        {
+            { Direction.East, new Vector2I(position.X + 1, position.Y) },
+            { Direction.South_East, new Vector2I(position.X + 1, position.Y + 1) },
+            { Direction.South, new Vector2I(position.X, position.Y + 1) },
+            { Direction.South_West, new Vector2I(position.X - 1, position.Y + 1) },
+            { Direction.West, new Vector2I(position.X - 1, position.Y) },
+            { Direction.North_West, new Vector2I(position.X - 1, position.Y - 1) },
+            { Direction.North, new Vector2I(position.X, position.Y - 1) },
+            { Direction.North_East, new Vector2I(position.X + 1, position.Y - 1) }
+        };
+		return neighbors;
 	}
 
 	// will return Direction.South if somehow cannot evaluate
