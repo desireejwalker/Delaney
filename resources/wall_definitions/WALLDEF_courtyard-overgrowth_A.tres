@@ -1,126 +1,630 @@
-[gd_resource type="Resource" script_class="WallDefinition" load_steps=14 format=3 uid="uid://c24wmn3qhkb83"]
+[gd_resource type="Resource" script_class="WallDefinition" load_steps=50 format=3 uid="uid://c24wmn3qhkb83"]
 
 [ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallDefinition.cs" id="1_6f6w0"]
 [ext_resource type="TileSet" uid="uid://bterungwyh5jq" path="res://resources/tilesets/TS_courtyard-overgrowth.tres" id="1_wdmfl"]
 [ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallSegment.cs" id="2_mcegd"]
 
-[sub_resource type="Resource" id="Resource_x373h"]
-script = ExtResource("2_mcegd")
-TopTileAtlasPosition = Vector2i(13, 2)
-MiddleTileAtlasPosition = Vector2i(13, 3)
-BaseTileAtlasPosition = Vector2i(13, 4)
-SouthType = 1
-SouthWestType = -1
-WestType = -1
-NorthWestType = -1
-NorthType = 0
-NorthEastType = -1
-EastType = -1
-SouthEastType = -1
-
-[sub_resource type="Resource" id="Resource_5amoe"]
+[sub_resource type="Resource" id="Resource_j1vf4"]
 script = ExtResource("2_mcegd")
 TopTileAtlasPosition = Vector2i(-1, -1)
 MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(16, 2)
-SouthType = 0
-SouthWestType = -1
-WestType = -1
-NorthWestType = -1
+BaseTileAtlasPosition = Vector2i(0, 4)
+SouthType = 2
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
 NorthType = 1
-NorthEastType = -1
-EastType = -1
-SouthEastType = -1
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
 
-[sub_resource type="Resource" id="Resource_e0dm4"]
+[sub_resource type="Resource" id="Resource_j0klc"]
 script = ExtResource("2_mcegd")
 TopTileAtlasPosition = Vector2i(-1, -1)
 MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(12, 0)
+BaseTileAtlasPosition = Vector2i(0, 5)
+SouthType = 2
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_t6pql"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(0, 6)
+SouthType = 1
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_esscd"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(0, 7)
+SouthType = 1
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_im6f7"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(1, 4)
+SouthType = 2
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_0sgdo"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(1, 5)
+SouthType = 2
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_ujh8c"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(1, 6)
+SouthType = 1
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_n76di"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(1, 7)
+SouthType = 1
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_4iwlt"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(2, 4)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_l20oy"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(2, 5)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_m444w"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(2, 6)
+SouthType = 1
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_y538v"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(2, 7)
+SouthType = 1
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_5po01"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(3, 4)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_wkn1k"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(3, 5)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_gby3u"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(3, 6)
+SouthType = 1
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_xf2jx"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(3, 6)
+SouthType = 1
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_bet43"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(4, 4)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = -1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_svkid"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(4, 5)
+SouthType = 2
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_e4qgf"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(4, 6)
+SouthType = 2
+SouthWestType = 1
+WestType = 1
+NorthWestType = 1
+NorthType = 2
+NorthEastType = -1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_m458g"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(4, 7)
 SouthType = 2
 SouthWestType = -1
-WestType = 1
-NorthWestType = -1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_glxo4"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(5, 4)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
 NorthType = 1
-NorthEastType = -1
+NorthEastType = 1
 EastType = 2
 SouthEastType = 0
 
-[sub_resource type="Resource" id="Resource_3pid3"]
+[sub_resource type="Resource" id="Resource_4v44g"]
 script = ExtResource("2_mcegd")
 TopTileAtlasPosition = Vector2i(-1, -1)
 MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(14, 0)
+BaseTileAtlasPosition = Vector2i(5, 5)
+SouthType = -1
+SouthWestType = -1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = -1
+EastType = -1
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_apje2"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(5, 6)
 SouthType = 2
-SouthWestType = 0
+SouthWestType = 1
+WestType = 2
+NorthWestType = -1
+NorthType = -1
+NorthEastType = -1
+EastType = -1
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_qohjc"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(5, 7)
+SouthType = 1
+SouthWestType = -1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = -1
+EastType = -1
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_bvy32"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(6, 4)
+SouthType = 2
+SouthWestType = -1
+WestType = 2
+NorthWestType = 1
+NorthType = 1
+NorthEastType = 1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_cp47l"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(6, 5)
+SouthType = -1
+SouthWestType = -1
+WestType = -1
+NorthWestType = -1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_afw0e"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(6, 6)
+SouthType = 2
+SouthWestType = -1
+WestType = -1
+NorthWestType = -1
+NorthType = -1
+NorthEastType = -1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_ricv5"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(6, 7)
+SouthType = 1
+SouthWestType = -1
+WestType = 2
+NorthWestType = -1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_lnwds"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(7, 4)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = -1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_hcp2l"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(7, 5)
+SouthType = 2
+SouthWestType = -1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_imie7"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(7, 6)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = -1
+NorthType = 2
+NorthEastType = 1
+EastType = 1
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_g4why"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(7, 7)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_e2l72"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(8, 4)
+SouthType = 2
+SouthWestType = -1
+WestType = 1
+NorthWestType = -1
+NorthType = 1
+NorthEastType = -1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_2y8rq"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(8, 5)
+SouthType = 2
+SouthWestType = -1
+WestType = 1
+NorthWestType = -1
+NorthType = 2
+NorthEastType = -1
+EastType = -1
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_i3iis"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(8, 6)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = -1
+EastType = -1
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_8ckg7"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(8, 7)
+SouthType = 1
+SouthWestType = -1
+WestType = 1
+NorthWestType = -1
+NorthType = 2
+NorthEastType = -1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_10noj"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(9, 4)
+SouthType = -1
+SouthWestType = -1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_n3j0b"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(9, 5)
+SouthType = 2
+SouthWestType = -1
+WestType = 2
+NorthWestType = 1
+NorthType = 2
+NorthEastType = -1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_g5vjr"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(9, 7)
+SouthType = 1
+SouthWestType = -1
+WestType = 2
+NorthWestType = -1
+NorthType = -1
+NorthEastType = -1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_ucv1i"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(10, 4)
+SouthType = -1
+SouthWestType = -1
 WestType = 2
 NorthWestType = -1
 NorthType = 1
 NorthEastType = -1
-EastType = 1
-SouthEastType = -1
-
-[sub_resource type="Resource" id="Resource_f8nx0"]
-script = ExtResource("2_mcegd")
-TopTileAtlasPosition = Vector2i(12, 2)
-MiddleTileAtlasPosition = Vector2i(12, 3)
-BaseTileAtlasPosition = Vector2i(12, 4)
-SouthType = 1
-SouthWestType = -1
-WestType = 1
-NorthWestType = -1
-NorthType = 2
-NorthEastType = -1
 EastType = 2
 SouthEastType = -1
 
-[sub_resource type="Resource" id="Resource_6uvlk"]
-script = ExtResource("2_mcegd")
-TopTileAtlasPosition = Vector2i(14, 2)
-MiddleTileAtlasPosition = Vector2i(14, 3)
-BaseTileAtlasPosition = Vector2i(14, 4)
-SouthType = 1
-SouthWestType = -1
-WestType = 2
-NorthWestType = -1
-NorthType = 2
-NorthEastType = -1
-EastType = 1
-SouthEastType = -1
-
-[sub_resource type="Resource" id="Resource_48jmf"]
+[sub_resource type="Resource" id="Resource_encwy"]
 script = ExtResource("2_mcegd")
 TopTileAtlasPosition = Vector2i(-1, -1)
 MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(15, 2)
-SouthType = -1
-SouthWestType = 0
+BaseTileAtlasPosition = Vector2i(10, 6)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = -1
+NorthType = 2
+NorthEastType = 1
+EastType = 2
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_2sm5n"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(10, 7)
+SouthType = 2
+SouthWestType = 1
+WestType = 2
+NorthWestType = -1
+NorthType = -1
+NorthEastType = -1
+EastType = 2
+SouthEastType = 1
+
+[sub_resource type="Resource" id="Resource_ih4i4"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(11, 4)
+SouthType = 2
+SouthWestType = -1
+WestType = 2
+NorthWestType = -1
+NorthType = 1
+NorthEastType = 1
+EastType = 1
+SouthEastType = -1
+
+[sub_resource type="Resource" id="Resource_glrxq"]
+script = ExtResource("2_mcegd")
+TopTileAtlasPosition = Vector2i(-1, -1)
+MiddleTileAtlasPosition = Vector2i(-1, -1)
+BaseTileAtlasPosition = Vector2i(11, 5)
+SouthType = 2
+SouthWestType = -1
 WestType = -1
-NorthWestType = -1
+NorthWestType = 1
 NorthType = 2
-NorthEastType = -1
+NorthEastType = 1
 EastType = 2
-SouthEastType = -1
+SouthEastType = 1
 
-[sub_resource type="Resource" id="Resource_qd64r"]
+[sub_resource type="Resource" id="Resource_pomuq"]
 script = ExtResource("2_mcegd")
 TopTileAtlasPosition = Vector2i(-1, -1)
 MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(17, 2)
-SouthType = -1
-SouthWestType = -1
-WestType = 2
-NorthWestType = -1
-NorthType = 2
-NorthEastType = -1
-EastType = -1
-SouthEastType = 0
-
-[sub_resource type="Resource" id="Resource_d0t43"]
-script = ExtResource("2_mcegd")
-TopTileAtlasPosition = Vector2i(-1, -1)
-MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(15, 1)
+BaseTileAtlasPosition = Vector2i(11, 6)
 SouthType = 2
 SouthWestType = -1
 WestType = -1
@@ -130,22 +634,22 @@ NorthEastType = -1
 EastType = 1
 SouthEastType = -1
 
-[sub_resource type="Resource" id="Resource_0q654"]
+[sub_resource type="Resource" id="Resource_qe7iu"]
 script = ExtResource("2_mcegd")
 TopTileAtlasPosition = Vector2i(-1, -1)
 MiddleTileAtlasPosition = Vector2i(-1, -1)
-BaseTileAtlasPosition = Vector2i(17, 1)
-SouthType = 2
+BaseTileAtlasPosition = Vector2i(11, 7)
+SouthType = 1
 SouthWestType = -1
-WestType = 1
+WestType = 2
 NorthWestType = -1
 NorthType = 2
 NorthEastType = -1
-EastType = -1
-SouthEastType = -1
+EastType = 1
+SouthEastType = 1
 
 [resource]
 script = ExtResource("1_6f6w0")
 TileSet = ExtResource("1_wdmfl")
-_wallSegments = Array[Object]([SubResource("Resource_x373h"), SubResource("Resource_5amoe"), SubResource("Resource_e0dm4"), SubResource("Resource_3pid3"), SubResource("Resource_f8nx0"), SubResource("Resource_6uvlk"), SubResource("Resource_48jmf"), SubResource("Resource_qd64r"), SubResource("Resource_d0t43"), SubResource("Resource_0q654")])
+_wallSegments = Array[Object]([SubResource("Resource_j1vf4"), SubResource("Resource_j0klc"), SubResource("Resource_t6pql"), SubResource("Resource_esscd"), SubResource("Resource_im6f7"), SubResource("Resource_0sgdo"), SubResource("Resource_ujh8c"), SubResource("Resource_n76di"), SubResource("Resource_4iwlt"), SubResource("Resource_l20oy"), SubResource("Resource_m444w"), SubResource("Resource_y538v"), SubResource("Resource_5po01"), SubResource("Resource_wkn1k"), SubResource("Resource_gby3u"), SubResource("Resource_xf2jx"), SubResource("Resource_bet43"), SubResource("Resource_svkid"), SubResource("Resource_e4qgf"), SubResource("Resource_m458g"), SubResource("Resource_glxo4"), SubResource("Resource_4v44g"), SubResource("Resource_apje2"), SubResource("Resource_qohjc"), SubResource("Resource_bvy32"), SubResource("Resource_cp47l"), SubResource("Resource_afw0e"), SubResource("Resource_ricv5"), SubResource("Resource_lnwds"), SubResource("Resource_hcp2l"), SubResource("Resource_imie7"), SubResource("Resource_g4why"), SubResource("Resource_e2l72"), SubResource("Resource_2y8rq"), SubResource("Resource_i3iis"), SubResource("Resource_8ckg7"), SubResource("Resource_10noj"), SubResource("Resource_n3j0b"), SubResource("Resource_g5vjr"), SubResource("Resource_ucv1i"), SubResource("Resource_encwy"), SubResource("Resource_2sm5n"), SubResource("Resource_ih4i4"), SubResource("Resource_glrxq"), SubResource("Resource_pomuq"), SubResource("Resource_qe7iu")])
 MiddleHeight = 0

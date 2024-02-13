@@ -27,6 +27,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Project Delaney"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/wall_segment_rule_plugin/plugin.cfg")
+
 [input]
 
 ui_left={
