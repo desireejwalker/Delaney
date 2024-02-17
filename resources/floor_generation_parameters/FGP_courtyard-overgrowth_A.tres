@@ -1,18 +1,33 @@
-[gd_resource type="Resource" script_class="FloorGenerationParameters" load_steps=8 format=3 uid="uid://ddpvonr1bnr5x"]
+[gd_resource type="Resource" script_class="FloorGenerationParameters" load_steps=9 format=3 uid="uid://ddpvonr1bnr5x"]
 
 [ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/FloorGenerationParameters.cs" id="1_jj2hs"]
+[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/WallSegment.cs" id="1_jt2e0"]
 [ext_resource type="TileSet" uid="uid://bterungwyh5jq" path="res://resources/tilesets/TS_courtyard-overgrowth.tres" id="2_m50r4"]
 [ext_resource type="Resource" uid="uid://cde07opcgsrc0" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_B.tres" id="2_pjijs"]
 [ext_resource type="Resource" uid="uid://ljvihrw8at4b" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_C.tres" id="3_0xyk5"]
 [ext_resource type="Resource" uid="uid://bvvwa7ebr8fav" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_D.tres" id="4_wllmo"]
 [ext_resource type="Resource" uid="uid://cj8x41enlig7d" path="res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_E.tres" id="5_3lcrh"]
-[ext_resource type="Resource" uid="uid://c24wmn3qhkb83" path="res://resources/wall_definitions/WALLDEF_courtyard-overgrowth_A.tres" id="6_lssc1"]
+
+[sub_resource type="Resource" id="Resource_332p2"]
+script = ExtResource("1_jt2e0")
+TopTileAtlasPosition = Vector2i(13, 5)
+MiddleTileAtlasPosition = Vector2i(13, 6)
+BaseTileAtlasPosition = Vector2i(13, 7)
+SouthType = -1
+SouthWestType = -1
+WestType = -1
+NorthWestType = -1
+NorthType = -1
+NorthEastType = -1
+EastType = -1
+SouthEastType = -1
 
 [resource]
 script = ExtResource("1_jj2hs")
 MinimumFloorLevelInclusive = 0
 MaximumFloorLevelInclusive = 10
 TileSet = ExtResource("2_m50r4")
+SourceID = 0
 RoomDefinitions = Array[Object]([ExtResource("2_pjijs"), ExtResource("3_0xyk5"), ExtResource("4_wllmo"), ExtResource("5_3lcrh")])
 RoomCount = 20
 RoomPlacementEllipseWidth = 100.0
@@ -20,4 +35,7 @@ RoomPlacementEllipseHeight = 20.0
 RoomSizeThresholdMultiplier = 1.0
 PercentOfDelaunayEdgesToKeep = 0.2
 HallThickness = 4
-WallDefinition = ExtResource("6_lssc1")
+WallMiddleHeight = 2
+BackWall = SubResource("Resource_332p2")
+WallTerrainSet = 0
+WallTerrain = 1

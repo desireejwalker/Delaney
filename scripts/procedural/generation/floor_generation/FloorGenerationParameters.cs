@@ -12,6 +12,8 @@ public partial class FloorGenerationParameters : Resource
     [Export]
     public TileSet TileSet { get; private set; }
     [Export]
+    public int SourceID { get; private set; }
+    [Export]
     public PackedScene FXScene { get; private set; }
 
     [ExportGroup("Inital Room Placement Settings")]
@@ -36,7 +38,13 @@ public partial class FloorGenerationParameters : Resource
 
     [ExportGroup("Wall Settings")]
     [Export]
-    public WallDefinition WallDefinition { get; private set; }
+    public int WallMiddleHeight { get; private set; }
+    [Export]
+    public WallSegment BackWall { get; private set; }
+    [Export]
+    public int WallTerrainSet { get; private set; } = -1;
+    [Export]
+    public int WallTerrain { get; private set; } = -1;
 
     public bool IsWithinGenerationBounds(int floorLevel)
     {

@@ -7,6 +7,8 @@ using System.Linq;
 
 public partial class Floor : Node
 {
+	const int WALL_TILEMAP_RECT_GROWTH = 2;
+
 	public int Level { get; private set; }
 	public FloorGenerationOutput FloorGenerationOutput { get; private set; }
 
@@ -106,104 +108,73 @@ public partial class Floor : Node
 
 	private void CreateWalls()
 	{
-		var rect = _tileMap.GetUsedRect().Grow(4);
+		var rect = _tileMap.GetUsedRect().Grow(WALL_TILEMAP_RECT_GROWTH);
 		
 		var floorPositions = FloorGenerationOutput.FloorPositions;
+		var wallPositions = new HashSet<Vector2I>();
 
-		// add layer for walls
-		_tileMap.AddLayer(-1);
-		_tileMap.SetLayerName(-1, "walls");
-		var wallBases = new HashSet<WallBase>();
-
-		// create all wall bases and set their bitmasks for surrounding floors
+		// get all positions within this rect and add them to wallPositions
 		for (int x = rect.Position.X; x < rect.End.X; x++)
 		{
 			for (int y = rect.Position.Y; y < rect.End.Y; y++)
 			{
-				var position = new Vector2I(x, y);
-
-				// if the position is in the floor positions set, ignore it and continue
-				if (floorPositions.Contains(position)) continue;
-
-				var neighbors = Get8Neighbors(position).Values;
-
-				// if none of the neighbors are in the floor position set, ignore this position and continue
-				if (neighbors.All(neighbor => !floorPositions.Contains(neighbor))) continue;
-
-				// if we made it here, this position should be a wall base
-				wallBases.Add(new WallBase(position));
+				wallPositions.Add(new Vector2I(x, y));
 			}
 		}
 
-		
+		// remove all floorPositions from wallPositions
+		wallPositions.ExceptWith(floorPositions);
 
-		foreach (var wallBase in wallBases)
+		// add layer for walls
+		_tileMap.AddLayer(-1);
+		_tileMap.SetLayerName(-1, "walls");
+
+		// This seems to take a while... But it is the easiest way to get this working.
+		// Hopefully we can find a better method soon. this pushes level generation times
+		// up past 10000ms (10 seconds).
+		// - Des
+		_tileMap.SetCellsTerrainConnect(
+			-1,
+			new Array<Vector2I>(wallPositions),
+			FloorGenerationOutput.FloorGenerationParameters.WallTerrainSet,
+			FloorGenerationOutput.FloorGenerationParameters.WallTerrain
+		);
+
+		// remove wall tiles that aren't adjacent to a floor tile
+		var wallPositionsToRemove = new HashSet<Vector2I>();
+		foreach (var position in wallPositions)
 		{
-			var neighbors = Get8Neighbors(wallBase.Position);
+			if (Get8Neighbors(position).Values.Any(neighbor => floorPositions.Contains(neighbor))) continue;
 
-			// check for floor neighbors first
-			if (floorPositions.Contains(neighbors[Direction.East]))
-				wallBase.eastType += (int)WallBase.SurroundingTileType.Floor;
-			if (floorPositions.Contains(neighbors[Direction.South_East]))
-				wallBase.southEastType += (int)WallBase.SurroundingTileType.Floor;
-			if (floorPositions.Contains(neighbors[Direction.South]))
-				wallBase.southType += (int)WallBase.SurroundingTileType.Floor;
-			if (floorPositions.Contains(neighbors[Direction.South_West]))
-				wallBase.southWestType += (int)WallBase.SurroundingTileType.Floor;
-			if (floorPositions.Contains(neighbors[Direction.West]))
-				wallBase.westType += (int)WallBase.SurroundingTileType.Floor;
-			if (floorPositions.Contains(neighbors[Direction.North_West]))
-				wallBase.northWestType += (int)WallBase.SurroundingTileType.Floor;
-			if (floorPositions.Contains(neighbors[Direction.North]))
-				wallBase.northType += (int)WallBase.SurroundingTileType.Floor;
-			if (floorPositions.Contains(neighbors[Direction.North_East]))
-				wallBase.northEastType += (int)WallBase.SurroundingTileType.Floor;
+			wallPositionsToRemove.Add(position);
+			_tileMap.EraseCell(-1, position);
+		}
 
-			// then check against wallBases (probably the time taker of all time since it uses LINQ)
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.East]))
-				wallBase.eastType += (int)WallBase.SurroundingTileType.Wall;
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.South_East]))
-				wallBase.southEastType += (int)WallBase.SurroundingTileType.Wall;
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.South]))
-				wallBase.southType += (int)WallBase.SurroundingTileType.Wall;
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.South_West]))
-				wallBase.southWestType += (int)WallBase.SurroundingTileType.Wall;
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.West]))
-				wallBase.westType += (int)WallBase.SurroundingTileType.Wall;
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.North_West]))
-				wallBase.northWestType += (int)WallBase.SurroundingTileType.Wall;
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.North]))
-				wallBase.northType += (int)WallBase.SurroundingTileType.Wall;
-			if (wallBases.Any(wallBase => wallBase.Position == neighbors[Direction.North_East]))
-				wallBase.northEastType += (int)WallBase.SurroundingTileType.Floor;
+		wallPositions.ExceptWith(wallPositionsToRemove);
 
-
-			// draw wallseg to tilemap
-			WallSegment[] wallSegments;
-            WallDefinition wallDefinition = FloorGenerationOutput.FloorGenerationParameters.WallDefinition;
-
-			try
+		// see what tiles we can turn into tall walls (search for walls that border a floor tile on its lower side.)
+		foreach (var position in wallPositions)
+		{
+			// search for floor tiles and wall tiles above, within WallMiddleHeight
+			bool foundFloorAbove = false;
+			bool foundWallAbove = false;
+			for (int i = 0; i < FloorGenerationOutput.FloorGenerationParameters.WallMiddleHeight; i++)
 			{
-                wallSegments = wallDefinition.GetWallSegmentsMatching(wallBase);
-			}
-			catch(WallSegementNotFoundException)
-			{
-				continue;
+				if (floorPositions.Contains(position + new Vector2I(0, -1 - i))) foundFloorAbove = true;
+				if (wallPositions.Contains(position + new Vector2I(0, -1 - i))) foundWallAbove = true;
+
+				if (foundFloorAbove && foundFloorAbove) break;
 			}
 
-			var wallSeg = wallSegments[GD.Randi() % wallSegments.Length];
+			// if found floor or wall above and not finding a floor tile below, ignore this
+			if ((foundFloorAbove || foundWallAbove) ) continue;
 
-			if (wallSeg.BaseTileAtlasPosition == -Vector2I.One) continue;
-			_tileMap.SetCell(-1, wallBase.Position, 0, wallSeg.BaseTileAtlasPosition, 0);
-			
-			if (wallSeg.MiddleTileAtlasPosition == -Vector2I.One) continue;
-			for (int i = 1; i < wallDefinition.MiddleHeight + 2; i++)
-			{
-				_tileMap.SetCell(-1, wallBase.Position + (Vector2I.Up * i), 0, wallSeg.MiddleTileAtlasPosition, 0);
-			}
-
-			if (wallSeg.TopTileAtlasPosition == -Vector2I.One) continue;
-			_tileMap.SetCell(-1, wallBase.Position + (Vector2I.Up * (wallDefinition.MiddleHeight + 1)), 0, wallSeg.TopTileAtlasPosition, 0);
+			_tileMap.SetCell(
+				-1,
+				position,
+				FloorGenerationOutput.FloorGenerationParameters.SourceID,
+				FloorGenerationOutput.FloorGenerationParameters.BackWall.BaseTileAtlasPosition
+			);
 		}
 	}
 

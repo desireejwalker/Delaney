@@ -125,6 +125,8 @@ func get_normalized_mouse_direction():
 
 func get_tile_position() -> Vector2i:
 	var game_tilemap: TileMap = game_manager.get_node("FloorManager/Floor/TileMap")
+	if not game_tilemap.tile_set:
+		return Vector2i.ZERO
 	return game_tilemap.local_to_map(game_tilemap.to_local(global_position))
 
 func handle_player_movement(_delta, normalized_direction, speed, damping, update_facing_angle: bool, update_animation_speed: bool):
@@ -134,7 +136,7 @@ func handle_player_movement(_delta, normalized_direction, speed, damping, update
 	# NOTE: there is likely a better way to do this... search later.
 	if linear_velocity.length() <= 1:
 		movement = "idle"
-	else:
+	else:	
 		movement = "walk"
 	
 	# apply forces in movement direction
