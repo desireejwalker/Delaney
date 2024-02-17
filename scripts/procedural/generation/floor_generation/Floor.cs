@@ -7,6 +7,10 @@ using System.Linq;
 
 public partial class Floor : Node
 {
+	const int HALL_FLOOR_TILEMAP_LAYER = 0;
+	const int ROOM_FLOOR_TILEMAP_LAYER = 1, ROOM_PROP_TILEMAP_LAYER = 2, ROOM_WALL_TILEMAP_LAYER = 3;
+	const int FLOOR_WALL_TILEMAP_LAYER = 4;
+
 	const int WALL_TILEMAP_RECT_GROWTH = 2;
 
 	public int Level { get; private set; }
@@ -20,80 +24,131 @@ public partial class Floor : Node
 		Level = level;
 
 		_tileMap = GetNode<TileMap>("TileMap");
+
+		// create all of the tilemap layers for this floor
+		_tileMap.AddLayer(HALL_FLOOR_TILEMAP_LAYER);
+		_tileMap.SetLayerName(HALL_FLOOR_TILEMAP_LAYER, "halls/floors");
+		_tileMap.AddLayer(ROOM_FLOOR_TILEMAP_LAYER);
+		_tileMap.SetLayerName(ROOM_FLOOR_TILEMAP_LAYER, "rooms/floors");
+		_tileMap.AddLayer(ROOM_PROP_TILEMAP_LAYER);
+		_tileMap.SetLayerName(ROOM_PROP_TILEMAP_LAYER, "rooms/props");
+		_tileMap.AddLayer(ROOM_WALL_TILEMAP_LAYER);
+		_tileMap.SetLayerName(ROOM_WALL_TILEMAP_LAYER, "rooms/walls");
+		_tileMap.AddLayer(FLOOR_WALL_TILEMAP_LAYER);
+		_tileMap.SetLayerName(FLOOR_WALL_TILEMAP_LAYER, "floor/walls");
 	}
 
 	public void SetFloorData(FloorGenerationOutput floorGenerationOutput)
 	{
 		FloorGenerationOutput = floorGenerationOutput;
 		_floorGenerationParameters = FloorGenerationOutput.FloorGenerationParameters;
+		
+		// set the tileset of the tilemap to the one specified in the FloorGenerationParameters
+		_tileMap.TileSet = _floorGenerationParameters.TileSet;
 	}
 
 	public void DrawFloor()
 	{
-		// set the tileset of the tilemap to the one specified in the FloorGenerationParameters
-		_tileMap.TileSet = _floorGenerationParameters.TileSet;
-
 		foreach (var room in FloorGenerationOutput.Rooms)
 		{
 			if (!room.isHubRoom && !room.isSubRoom) continue;
-			DrawRoom(room);
+			DrawRoomFloors(room);
+			DrawRoomProps(room);
+			DrawRoomWalls(room);
 		}
 
 		foreach (var hall in FloorGenerationOutput.Halls)
 		{
-			DrawRect(hall, 0, 1, _floorGenerationParameters.HallTileAtlasPosition);
+			DrawRect(hall, HALL_FLOOR_TILEMAP_LAYER, _floorGenerationParameters.SourceID, _floorGenerationParameters.HallTileAtlasPosition);
 		}
 
-		CreateWalls();
+		DrawFloorWalls();
 	}
 
-	private void DrawRoom(Room room)
+	/*
+	Draws the floor tiles of a Room to the Floor tilemap at ROOM_FLOOR_TILEMAP_LAYER.
+	Will expect all floor tiles of a Room to be on layer 0 of the Room's tilemap.
+	*/
+	private void DrawRoomFloors(Room room)
 	{
-		var roomDefinition = room.RoomDefinition;
-		var roomInstance = roomDefinition.GetRoomInstance();
-		var roomPosition = room.GetRect().Position;
-		var roomTileMap = roomInstance.GetNode<TileMap>("TileMap");
-		var roomTileMapUsedRect = roomTileMap.GetUsedRect();
-
-		while (_tileMap.GetLayersCount() - 1 < roomTileMap.GetLayersCount())
+		// first, see if roomTileMap even has layer 0
+		var roomTileMap = room.RoomDefinition.GetRoomInstance().GetNode<TileMap>("TileMap");
+		if (roomTileMap.GetLayersCount() < 1)
 		{
-			_tileMap.AddLayer(-1);
+			GD.Print("Warning: RoomDefinition " + room.RoomDefinition.ResourcePath.GetFile().TrimSuffix(".tres") + "has 0 layers.");
+			return;
+		}
+
+		var roomPosition = room.GetRect().Position;
+
+		var terrainTiles = new Array<Vector2I>();
+
+		foreach (var roomTileMapCoords in roomTileMap.GetUsedCells(0))
+		{
+			// the supposed output (where the input tile will be placed in the Floor tilemap (_tilemap))
+			var floorTileMapCoords = roomTileMapCoords + roomPosition;
+
+			// if the tile at roomTileMapCoords is not a part of a terrainSet,
+			// simply place it at floorTileMapCoords.
+			var tileData = roomTileMap.GetCellTileData(0, roomTileMapCoords);
+			if (tileData.TerrainSet == -1)
+			{
+				var atlasCoords = roomTileMap.GetCellAtlasCoords(0, roomTileMapCoords);
+				_tileMap.SetCell(ROOM_FLOOR_TILEMAP_LAYER, floorTileMapCoords, _floorGenerationParameters.SourceID, atlasCoords);
+				continue;
+			}
+
+			// add the tile to the terrainTiles array to pass to DrawTerrainTiles()
+			terrainTiles.Add(roomTileMapCoords);
 		}
 		
-		for (int layer = 1; layer < _tileMap.GetLayersCount(); layer++)
+		// draw any tiles that are a part of a terrain set
+		DrawTerrainTiles(roomTileMap, 0, roomPosition, ROOM_FLOOR_TILEMAP_LAYER, terrainTiles);
+	}
+	/*
+	Draws the props of a Room to the Floor tilemap at ROOM_PROP_TILEMAP_LAYER.
+	Will expect all props of a Room to be on layer 1 of the Room's tilemap.
+	*/
+	private void DrawRoomProps(Room room)
+	{
+		// first, see if roomTileMap even has layer 1
+		var roomTileMap = room.RoomDefinition.GetRoomInstance().GetNode<TileMap>("TileMap");
+		if (roomTileMap.GetLayersCount() < 2) return;
+
+		var roomPosition = room.GetRect().Position;
+
+		foreach (var roomTileMapCoords in _tileMap.GetUsedCells(1))
 		{
-			var terrainTiles = new Array<Vector2I>();
+			// the supposed output (where the input tile will be placed in the Floor tilemap (_tilemap))
+			var floorTileMapCoords = roomTileMapCoords + roomPosition;
+			var atlasCoords = roomTileMap.GetCellAtlasCoords(1, roomTileMapCoords);
+			_tileMap.SetCell(ROOM_PROP_TILEMAP_LAYER, floorTileMapCoords, _floorGenerationParameters.SourceID, atlasCoords);
+		}
+	}
+	/*
+	Draws the wall tiles of a Room to the Floor tilemap at ROOM_WALL_TILEMAP_LAYER.
+	Will expect all wall tiles of a Room to be on layer 2 of the Room's tilemap.
+	*/
+	private void DrawRoomWalls(Room room)
+	{
+		// first, see if roomTileMap even has layer 2
+		var roomTileMap = room.RoomDefinition.GetRoomInstance().GetNode<TileMap>("TileMap");
+		if (roomTileMap.GetLayersCount() < 3) return;
 
-			for (int x = 0; x < roomTileMapUsedRect.Size.X; x++)
-			{
-				for (int y = 0; y < roomTileMapUsedRect.Size.Y; y++)
-				{
-					// if the layer index is at or above the layer count for this room, continue
-					if (layer > roomTileMap.GetLayersCount()) continue;
+		var roomPosition = room.GetRect().Position;
 
-					var roomTileMapCoords = new Vector2I(x, y);
-					var floorTileMapCoords = new Vector2I(x + roomPosition.X, y + roomPosition.Y);
-
-					var tileData = roomTileMap.GetCellTileData(layer - 1, roomTileMapCoords);
-					if (tileData == null) continue;
-
-					if (tileData.Terrain >= 0)
-					{
-						terrainTiles.Add(roomTileMapCoords);
-						continue;
-					}
-
-					var atlasCoords = roomTileMap.GetCellAtlasCoords(layer - 1, roomTileMapCoords);
-					var sourceId = roomTileMap.GetCellSourceId(layer - 1, roomTileMapCoords);
-
-					_tileMap.SetCell(layer, floorTileMapCoords, 0, atlasCoords);
-				}
-			}
-			
-			DrawTerrainTiles(roomTileMap, layer - 1, roomPosition, layer, terrainTiles);
+		foreach (var roomTileMapCoords in _tileMap.GetUsedCells(2))
+		{
+			// the supposed output (where the input tile will be placed in the Floor tilemap (_tilemap))
+			var floorTileMapCoords = roomTileMapCoords + roomPosition;
+			var atlasCoords = roomTileMap.GetCellAtlasCoords(2, roomTileMapCoords);
+			_tileMap.SetCell(ROOM_WALL_TILEMAP_LAYER, floorTileMapCoords, _floorGenerationParameters.SourceID, atlasCoords);
 		}
 	}
 
+	/*
+	Draw a rectangle rect of tiles of atlasCoords on _tileMap.
+	*/
 	private void DrawRect(Rect2I rect, int layer, int sourceId, Vector2I atlasCoords)
 	{
 		var tilesArray = new Array<Vector2I>();
@@ -108,7 +163,11 @@ public partial class Floor : Node
 		SetCells(layer, tilesArray, 0, atlasCoords);
 	}
 
-	private void CreateWalls()
+	/*
+	Draws the wall tiles of the Floor to the Floor tilemap at FLOOR_WALL_TILEMAP_LAYER
+	according to the FloorPositions set in FloorGenerationOutput.
+	*/
+	private void DrawFloorWalls()
 	{
 		var rect = _tileMap.GetUsedRect().Grow(WALL_TILEMAP_RECT_GROWTH);
 		
@@ -127,17 +186,13 @@ public partial class Floor : Node
 		// remove all floorPositions from wallPositions
 		wallPositions.ExceptWith(floorPositions);
 
-		// add layer for walls
-		_tileMap.AddLayer(-1);
-		_tileMap.SetLayerName(-1, "walls");
-
 		//// This seems to take a while... But it is the easiest way to get this working.
 		//// Hopefully we can find a better method soon. this pushes level generation times
 		//// up past 10000ms (10 seconds).
 		//// - Des
 		// nevermind? This only adds a bit of time to floor generation. freakin' sweet!!
 		_tileMap.SetCellsTerrainConnect(
-			-1,
+			FLOOR_WALL_TILEMAP_LAYER,
 			new Array<Vector2I>(wallPositions),
 			_floorGenerationParameters.WallTerrainSet,
 			_floorGenerationParameters.WallTerrain
@@ -150,10 +205,9 @@ public partial class Floor : Node
 			if (Get8Neighbors(position).Values.Any(neighbor => floorPositions.Contains(neighbor))) continue;
 
 			wallPositionsToRemove.Add(position);
-			_tileMap.EraseCell(-1, position);
+			_tileMap.EraseCell(FLOOR_WALL_TILEMAP_LAYER, position);
 		}
 		wallPositions.ExceptWith(wallPositionsToRemove);
-
 
 		// # TALL BACK WALL GENERATION #
 		// // see what tiles we can turn into tall walls (search for walls that border a floor tile on its lower side.)
@@ -197,7 +251,6 @@ public partial class Floor : Node
         };
 		return neighbors;
 	}
-
 	// will return Direction.South if somehow cannot evaluate
 	Direction GetDirectionToNeighborCell(Vector2I position, Vector2I neighborCell, bool includeCorners)
 	{
