@@ -1,8 +1,6 @@
 res://scenes/world.tscn
 res://resources/tilesets/TS_courtyard-overgrowth.tres
-res://resources/wall_definitions/WALLDEF_courtyard-overgrowth_A.tres
 res://resources/floor_generation_parameters/FGP_courtyard-overgrowth_A.tres
-res://naming_conventions.txt
 res://scripts/procedural/generation/floor_generation/Floor.cs
 res://scripts/procedural/generation/floor_generation/FloorDebugVisualizer.cs
 res://scripts/procedural/generation/floor_generation/FloorGenerationParameters.cs
@@ -11,6 +9,4 @@ res://scripts/procedural/generation/floor_generation/Room.cs
 res://scripts/procedural/generation/floor_generation/RoomDefinition.cs
 res://scripts/procedural/generation/floor_generation/WallDefinition.cs
 res://scripts/procedural/generation/floor_generation/WallSegment.cs
-res://scenes/generation/rooms/ROOM_courtyard-overgrowth_my-test-room_A.tscn
-res://resources/room_definitions/ROOMDEF_courtyard-overgrowth_my-test-room_A.tres
-res://scripts/player.gd
+res://scenes/player.tscn

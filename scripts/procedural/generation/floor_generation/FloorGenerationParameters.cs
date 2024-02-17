@@ -35,6 +35,8 @@ public partial class FloorGenerationParameters : Resource
     public float PercentOfDelaunayEdgesToKeep { get; private set; }
     [Export]
     public int HallThickness { get; private set; }
+    [Export]
+    public Vector2I HallTileAtlasPosition { get; private set; }
 
     [ExportGroup("Wall Settings")]
     [Export]
@@ -45,6 +47,7 @@ public partial class FloorGenerationParameters : Resource
     public int WallTerrainSet { get; private set; } = -1;
     [Export]
     public int WallTerrain { get; private set; } = -1;
+
 
     public bool IsWithinGenerationBounds(int floorLevel)
     {

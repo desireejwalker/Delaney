@@ -61,6 +61,7 @@ public class FloorGenerator
 		}
 
 		_averageRoomSize = sizeSum / _floorGenerationParameters.RoomCount;
+		GD.Print("Generated " + _floorGenerationParameters.RoomCount + " rooms.");
 		GD.Print("Average room size: " + _averageRoomSize);
 	}
 	public void GenerateFloorGraph()
@@ -86,6 +87,7 @@ public class FloorGenerator
 		{
 			await Task.Delay(100);
 		}
+		GD.Print("Rooms settled.");
 	}
 
 	private void DecideHubRooms()

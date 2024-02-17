@@ -35,6 +35,7 @@ RoomPlacementEllipseHeight = 20.0
 RoomSizeThresholdMultiplier = 1.0
 PercentOfDelaunayEdgesToKeep = 0.2
 HallThickness = 4
+HallTileAtlasPosition = Vector2i(16, 5)
 WallMiddleHeight = 2
 BackWall = SubResource("Resource_332p2")
 WallTerrainSet = 0
