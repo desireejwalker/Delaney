@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqr5022r58pv7"]
+
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://game/game_states/title/assets/dpcomic.regular.ttf" id="1_vrs8d"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://game/game_states/title/assets/AtlantisInternational-jen0.ttf" id="2_6ovjj"]
+
+[sub_resource type="Gradient" id="Gradient_p31j2"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.784314)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_la346"]
+gradient = SubResource("Gradient_p31j2")
+width = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_nc3w0"]
+font = ExtResource("1_vrs8d")
+font_size = 32
+shadow_size = 0
+shadow_color = Color(0.490196, 0.490196, 0.490196, 1)
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_sf100"]
+font = ExtResource("2_6ovjj")
+font_size = 15
+font_color = Color(0.5, 0.5, 0.5, 1)
+shadow_size = 0
+shadow_color = Color(0.25098, 0.25098, 0.25098, 1)
+shadow_offset = Vector2(0, 1)
+
+[node name="PauseScene" type="CanvasLayer"]
+process_mode = 3
+
+[node name="DimmerTextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_la346")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -15.0
+offset_right = 72.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "-PAUSED-"
+label_settings = SubResource("LabelSettings_nc3w0")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 13.0
+offset_right = 20.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "(smash [q] to quit)"
+label_settings = SubResource("LabelSettings_sf100")

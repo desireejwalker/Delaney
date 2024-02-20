@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-public struct FloorGenerationOutput
+public partial class FloorGenerationOutput : Resource
 {
     // includes hub rooms and sub rooms
     public readonly Room[] Rooms;

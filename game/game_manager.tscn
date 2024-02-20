@@ -1,0 +1,91 @@
+[gd_scene load_steps=11 format=3 uid="uid://deohlffvl8vow"]
+
+[ext_resource type="Script" path="res://game/game_manager.gd" id="1_jnnxm"]
+[ext_resource type="PackedScene" uid="uid://rmp3memykgyw" path="res://game/game_states/floor_generation/floor_manager.tscn" id="2_t1eve"]
+[ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="5_1lqpr"]
+[ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="5_sc75x"]
+[ext_resource type="Resource" uid="uid://br1do7vkp8rhl" path="res://resources/blackboards/game_blackboard.tres" id="6_b1ygr"]
+[ext_resource type="Script" path="res://game/game_states/title/title_state.gd" id="7_0lcc2"]
+[ext_resource type="Script" path="res://game/game_states/floor_generation/floor_generation_state.gd" id="7_ikau2"]
+[ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state.gd" id="7_jy2e4"]
+[ext_resource type="Script" path="res://game/game_states/main/main_state.gd" id="8_jm22n"]
+[ext_resource type="Script" path="res://game/game_states/pause/pause_state.gd" id="9_dw6fn"]
+
+[node name="GameManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_jnnxm")
+
+[node name="FloorManager" parent="." instance=ExtResource("2_t1eve")]
+
+[node name="GameStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
+script = ExtResource("5_1lqpr")
+autostart = true
+initial_state = NodePath("TitleState")
+actor = NodePath("..")
+blackboard = ExtResource("6_b1ygr")
+
+[node name="TitleState" type="Node" parent="GameStateMachine"]
+script = ExtResource("7_0lcc2")
+
+[node name="onStartButtonPressed" type="Node" parent="GameStateMachine/TitleState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../FloorGenerationState")
+use_event = true
+event = "start_button_pressed"
+
+[node name="FloorGenerationState" type="Node" parent="GameStateMachine"]
+script = ExtResource("7_ikau2")
+
+[node name="onFloorGenerated" type="Node" parent="GameStateMachine/FloorGenerationState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../MainState")
+use_event = true
+event = "on_floor_generated"
+
+[node name="MainState" type="Node" parent="GameStateMachine"]
+script = ExtResource("8_jm22n")
+
+[node name="onPaused" type="Node" parent="GameStateMachine/MainState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../PausedState")
+use_event = true
+event = "on_paused"
+
+[node name="PausedState" type="Node" parent="GameStateMachine"]
+script = ExtResource("9_dw6fn")
+
+[node name="onUnpaused" type="Node" parent="GameStateMachine/PausedState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../MainState")
+use_event = true
+event = "on_unpaused"
+
+[node name="onPausedAndQuitted" type="Node" parent="GameStateMachine/PausedState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../TitleState")
+use_event = true
+event = "on_paused_and_quitted"
+
+[node name="GameOverState" type="Node" parent="GameStateMachine"]
+script = ExtResource("7_jy2e4")
+
+[node name="onContinueToPerformanceReview" type="Node" parent="GameStateMachine/GameOverState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../PerformanceReviewState")
+use_event = true
+event = "on_continue_to_performance_review"
+
+[node name="PerformanceReviewState" type="Node" parent="GameStateMachine"]
+script = ExtResource("7_jy2e4")
+
+[node name="onRetry" type="Node" parent="GameStateMachine/PerformanceReviewState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../FloorGenerationState")
+use_event = true
+event = "on_retry"
+
+[node name="onQuit" type="Node" parent="GameStateMachine/PerformanceReviewState" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_sc75x")
+next_state = NodePath("../../TitleState")
+use_event = true
+event = "on_quit"

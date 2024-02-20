@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 public partial class FloorManager : Node
 {
-	public event Action FloorMapGenerated;
+	[Signal]
+	public delegate void FloorMapGeneratedEventHandler();
+	[Signal]
+	public delegate void FloorDrawnEventHandler();
+	[Signal]
+	public delegate void FloorReadyEventHandler();
 
+	public Floor CurrentFloor { get; private set; }
+	
 	[Export]
 	private Array<FloorGenerationParameters> _floorGenerationParameters;
 	private PackedScene _floorScene;
-	public Floor CurrentFloor { get; private set; }
 	private FloorGenerator _floorGenerator;
 
 	public override void _Ready()
@@ -20,11 +26,11 @@ public partial class FloorManager : Node
 		_floorScene = GD.Load<PackedScene>("res://scenes/generation/floor.tscn");
 		CurrentFloor = _floorScene.Instantiate<Floor>();
 		CurrentFloor.Setup(0);
-		
-		GenerateFloor();
 	}
 
-	private async void GenerateFloor()
+	public void GenerateFloor() => _GenerateFloor();
+
+	private async void _GenerateFloor()
 	{
 		var stopWatch = new System.Diagnostics.Stopwatch();
 		stopWatch.Start();
@@ -33,9 +39,12 @@ public partial class FloorManager : Node
 
 		await DoFloorMapGeneration(floorGenerationParameters);
 		CurrentFloor.DrawFloor();
+		EmitSignal(SignalName.FloorDrawn);
 
 		stopWatch.Stop();
 		GD.Print($"Floor generation took {stopWatch.ElapsedMilliseconds}ms.");
+
+		EmitSignal(SignalName.FloorReady);
 	}
 
 	private async Task DoFloorMapGeneration(FloorGenerationParameters floorGenerationParameters)
@@ -57,7 +66,7 @@ public partial class FloorManager : Node
 
 		CurrentFloor.SetFloorData(_floorGenerator.GetOutput());
 
-		FloorMapGenerated?.Invoke();
+		EmitSignal(SignalName.FloorMapGenerated);
 	}
 
 	private FloorGenerationParameters[] GetFloorGenerationParametersFor(int floorLevel)

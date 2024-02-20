@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3l6c8ljocwj"]
+
+[ext_resource type="Script" path="res://game/game_states/title/title.gd" id="1_0imk2"]
+[ext_resource type="Texture2D" uid="uid://c01as0irktbf4" path="res://game/game_states/title/assets/game_title_indev.png" id="1_jsh8k"]
+[ext_resource type="LabelSettings" uid="uid://b753pxolsphff" path="res://game/game_states/title/assets/title_label_settings.tres" id="2_cknyw"]
+[ext_resource type="Theme" uid="uid://ighvocrdgfhc" path="res://game/game_states/title/assets/title_theme.tres" id="3_4qf20"]
+
+[node name="TitleScene" type="CanvasLayer"]
+script = ExtResource("1_0imk2")
+
+[node name="TitleShadowTextureRect" type="TextureRect" parent="."]
+modulate = Color(0.4, 0.4, 0.4, 1)
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 18.0
+offset_bottom = 102.0
+grow_horizontal = 2
+texture = ExtResource("1_jsh8k")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TitleTextureRect" type="TextureRect" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 16.0
+offset_bottom = 100.0
+grow_horizontal = 2
+texture = ExtResource("1_jsh8k")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="VersionLabel" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+text = "ver. 0"
+label_settings = ExtResource("2_cknyw")
+
+[node name="DevelopersLabel" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "*NON-PUBLIC* Manapotion Studios, 2024"
+label_settings = ExtResource("2_cknyw")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -10.0
+offset_right = 92.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="ButtonContainer"]
+process_mode = 3
+layout_mode = 2
+theme = ExtResource("3_4qf20")
+theme_type_variation = &"FlatButton"
+text = "[LAUNCH]"
+
+[node name="QuitButton" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+theme = ExtResource("3_4qf20")
+theme_type_variation = &"FlatButton"
+text = "[QUIT]"

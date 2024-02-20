@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://ighvocrdgfhc"]
+
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://game/game_states/title/assets/dpcomic.regular.ttf" id="1_i887h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wbc48"]
+
+[resource]
+Button/colors/font_color = Color(0.501961, 0.501961, 0.501961, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(0.262745, 0.262745, 0.262745, 1)
+Button/colors/font_pressed_color = Color(0.262745, 0.262745, 0.262745, 1)
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("1_i887h")
+Button/styles/focus = SubResource("StyleBoxEmpty_wbc48")

@@ -1,3 +1,9 @@
+res://game/game_states/pause
+res://game/game_states/floor_generation
+res://game/game_states/title/assets
+res://game
+res://addons/behaviour_toolkit
+res://
 res://addons/wall_segment_rule_plugin/controls
 res://addons/wall_segment_rule_plugin
 res://art/tilesheets
@@ -10,8 +16,6 @@ C:/Users/admin/Projects/Project-Delaney-Godot-
 res://resources/floor_generation_parameters
 C:/Users/admin/AppData/Local/Programs/Microsoft VS Code
 res://scenes
-res://
 res://scenes/burst
 res://scripts
 res://art/hammers
-res://art/delaney

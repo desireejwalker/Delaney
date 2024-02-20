@@ -1,25 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://4ibunjpknikt"]
+[gd_scene load_steps=4 format=3 uid="uid://4ibunjpknikt"]
 
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_lrhli"]
-[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/FloorManager.cs" id="2_fbokk"]
-[ext_resource type="Resource" uid="uid://ddpvonr1bnr5x" path="res://resources/floor_generation_parameters/FGP_courtyard-overgrowth_A.tres" id="3_vvyuc"]
-[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/FloorDebugVisualizer.cs" id="4_th6bp"]
-[ext_resource type="PackedScene" uid="uid://wp77ad1rkslh" path="res://scenes/player.tscn" id="4_xw7hx"]
+[ext_resource type="PackedScene" uid="uid://deohlffvl8vow" path="res://game/game_manager.tscn" id="1_3g63i"]
+[ext_resource type="PackedScene" uid="uid://wp77ad1rkslh" path="res://game/game_states/main/assets/player/player.tscn" id="4_xw7hx"]
 [ext_resource type="Texture2D" uid="uid://drcpt7cd2t3ex" path="res://icon.svg" id="5_i2oby"]
 
 [node name="World" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="."]
-script = ExtResource("1_lrhli")
-
-[node name="FloorManager" type="Node" parent="GameManager"]
-script = ExtResource("2_fbokk")
-_floorGenerationParameters = Array[Resource]([ExtResource("3_vvyuc")])
-
-[node name="FloorDebugVisualizer" type="Node2D" parent="GameManager" node_paths=PackedStringArray("_floorManager")]
-position = Vector2(0, 1)
-script = ExtResource("4_th6bp")
-_floorManager = NodePath("../FloorManager")
+[node name="GameManager" parent="." instance=ExtResource("1_3g63i")]
 
 [node name="Player" parent="." instance=ExtResource("4_xw7hx")]
 

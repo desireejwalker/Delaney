@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Blackboard" load_steps=2 format=3 uid="uid://br1do7vkp8rhl"]
+
+[ext_resource type="Script" path="res://addons/behaviour_toolkit/blackboard.gd" id="1_pv5ho"]
+
+[resource]
+script = ExtResource("1_pv5ho")
+content = {}
