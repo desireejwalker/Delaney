@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctoql2u0awch0"]
+[gd_scene load_steps=3 format=3 uid="uid://ctoql2u0awch0"]
 
 [ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/Floor.cs" id="1_rsemj"]
+[ext_resource type="TileSet" uid="uid://cx1ngct33e8ww" path="res://resources/tilesets/TS_markers.tres" id="2_ly21l"]
 
 [node name="Floor" type="Node2D"]
 script = ExtResource("1_rsemj")
+
+[node name="MarkerTileMap" type="TileMap" parent="."]
+visible = false
+z_index = -1
+tile_set = ExtResource("2_ly21l")
+format = 2
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1

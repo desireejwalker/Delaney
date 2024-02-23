@@ -6,11 +6,14 @@ var launch_trail_level_1: GPUParticles2D
 var launch_trail_level_2: GPUParticles2D
 var launch_trail_level_3: GPUParticles2D
 
+@onready var launch_timer = $LaunchTimer
+@onready var heavy_attack_timer = $HeavyAttackTimer
+
 var dust_light: GPUParticles2D
 
 const DEFAULT_SPEED = 600
 const DEFAULT_DAMPING = 3
-const DEFAULT_HEAVY_ATTACK_SPEED = 80
+const DEFAULT_HEAVY_ATTACK_SPEED = 600
 
 var heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED
 
@@ -72,7 +75,7 @@ func _ready():
 
 func _physics_process(delta):
 	if (attack == "none" and launch_level != -1):
-		pass
+		handle_player_launch(launch_level)
 	elif (attack == "heavy" and launch_level != -1):
 		handle_player_movement(delta, get_normalized_mouse_direction(), DEFAULT_SPEED * 0.2, DEFAULT_DAMPING, false, false)
 	elif (attack == "none" and recovery == "none"):
@@ -376,11 +379,14 @@ func handle_player_heavy_attack_start():
 	launch_level = 0
 	
 	heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED
+	# add 45 to the facing angle make the transition from light to heavy smoother
+	angle_degrees += 45
 	
 	dust_light.emitting = true
 	
-	# wait 1.5s to move to launch level 1
-	await get_tree().create_timer(1.5).timeout
+	# wait 1.0s to move to launch level 1
+	heavy_attack_timer.start(1.0)
+	await heavy_attack_timer.timeout
 	if attack != "heavy":
 		launch_level = -1
 		return
@@ -388,10 +394,11 @@ func handle_player_heavy_attack_start():
 	
 	add_child(load("res://scenes/burst/heavy_attack_level_1.tscn").instantiate())
 	
-	heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED * 3
+	heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED * 2
 	
 	# wait another 1.5s to move to launch level 2
-	await get_tree().create_timer(1.5).timeout
+	heavy_attack_timer.start(1.5)
+	await heavy_attack_timer.timeout
 	if attack != "heavy":
 		launch_level = -1
 		return
@@ -399,10 +406,11 @@ func handle_player_heavy_attack_start():
 	
 	add_child(load("res://scenes/burst/heavy_attack_level_2.tscn").instantiate())
 		
-	heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED * 6
+	heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED * 3
 	
 	# wait 2.0s to move to launch level 3
-	await get_tree().create_timer(2.0).timeout
+	heavy_attack_timer.start(2.0)
+	await heavy_attack_timer.timeout
 	if attack != "heavy":
 		launch_level = -1
 		return
@@ -410,7 +418,7 @@ func handle_player_heavy_attack_start():
 	
 	add_child(load("res://scenes/burst/heavy_attack_level_3.tscn").instantiate())
 	
-	heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED * 10	
+	heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED * 4	
 
 func handle_player_heavy_attack(delta):
 	if attack != "heavy":
@@ -438,7 +446,7 @@ func handle_player_heavy_recovery():
 
 func handle_player_launch_start(level, direction):
 	linear_damp = 0
-	apply_central_impulse(direction * 300 * level)
+	apply_central_impulse(direction * 600)
 	
 	# hide sprite and make the player bounce off of walls
 	$sprites.visible = false
@@ -446,17 +454,35 @@ func handle_player_launch_start(level, direction):
 	
 	if level == 3:
 		launch_trail_level_3.emitting = true
-		await get_tree().create_timer(3.0).timeout
-		launch_trail_level_3.emitting = false
+		launch_timer.start(3.0)
+		launch_timer.timeout.connect(func(): handle_player_launch_end(3))
 	elif level == 2:
 		launch_trail_level_2.emitting = true
-		await get_tree().create_timer(3.0).timeout
-		launch_trail_level_2.emitting = false
+		launch_timer.start(2.0)
+		launch_timer.timeout.connect(func(): handle_player_launch_end(2))
 	else:
 		launch_trail_level_1.emitting = true
-		await get_tree().create_timer(3.0).timeout
+		launch_timer.start(1.0)
+		launch_timer.timeout.connect(func(): handle_player_launch_end(1))
+
+func handle_player_launch(level):
+	# set facing angle based on velocity
+	angle_radians = atan2(linear_velocity.y, linear_velocity.x)
+	angle_degrees = rad_to_deg(angle_radians)
+
+func handle_player_launch_end(level):
+	if level == 3:
+		launch_trail_level_3.emitting = false
+	elif level == 2:
+		launch_trail_level_2.emitting = false
+	else:
 		launch_trail_level_1.emitting = false
-		
+	
+	# disconnect all functions connected to the timeout signal
+	var launch_timer_connections = launch_timer.timeout.get_connections()
+	for connection in launch_timer_connections:
+		launch_timer.timeout.disconnect(connection.callable)
+	
 	$sprites.visible = true
 	physics_material_override.bounce = 0
 	

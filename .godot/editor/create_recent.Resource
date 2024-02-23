@@ -1,3 +1,4 @@
+TileSet
 WallSegment
 WallDefinition
 RoomDefinition

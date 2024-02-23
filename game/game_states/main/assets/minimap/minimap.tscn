@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf3ymw06lkkek"]
+
+[ext_resource type="Script" path="res://game/game_states/main/assets/minimap/minimap.gd" id="1_ho4kt"]
+[ext_resource type="Texture2D" uid="uid://cg8ofab88m0uy" path="res://game/game_states/main/assets/minimap/MinimapArrow.png" id="2_w6mu3"]
+
+[node name="Minimap" type="SubViewport"]
+transparent_bg = true
+size = Vector2i(100, 100)
+script = ExtResource("1_ho4kt")
+metadata/_edit_vertical_guides_ = [-330.0, -79.0, 549.0]
+metadata/_edit_horizontal_guides_ = [-130.0, 34.0, 128.0]
+
+[node name="PlayerMarker" type="Node2D" parent="."]
+
+[node name="PlayerMarkerSprite2D" type="Sprite2D" parent="PlayerMarker"]
+texture = ExtResource("2_w6mu3")

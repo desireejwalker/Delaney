@@ -17,12 +17,16 @@ public partial class Floor : Node
 	public FloorGenerationOutput FloorGenerationOutput { get; private set; }
 	private FloorGenerationParameters _floorGenerationParameters;
 
+	private TileMap _markerTileMap;
 	private TileMap _tileMap;
+
+	public TileMap GetMarkerTileMap() => _markerTileMap;
 
 	public void Setup(int level)
 	{
 		Level = level;
 
+		_markerTileMap = GetNode<TileMap>("MarkerTileMap");
 		_tileMap = GetNode<TileMap>("TileMap");
 
 		// create all of the tilemap layers for this floor
@@ -68,6 +72,8 @@ public partial class Floor : Node
 	/*
 	Draws the floor tiles of a Room to the Floor tilemap at ROOM_FLOOR_TILEMAP_LAYER.
 	Will expect all floor tiles of a Room to be on layer 0 of the Room's tilemap.
+
+	Will also copy this to the MarkerTileMap for use with the minimap.
 	*/
 	private void DrawRoomFloors(Room room)
 	{
@@ -100,6 +106,10 @@ public partial class Floor : Node
 
 			// add the tile to the terrainTiles array to pass to DrawTerrainTiles()
 			terrainTiles.Add(roomTileMapCoords);
+
+			// draw tiles to the MarkerTileMap
+			// (0, 0) is a floor tile marker
+			_markerTileMap.SetCell(0, floorTileMapCoords, 0, Vector2I.Zero);
 		}
 		
 		// draw any tiles that are a part of a terrain set
@@ -143,6 +153,10 @@ public partial class Floor : Node
 			var floorTileMapCoords = roomTileMapCoords + roomPosition;
 			var atlasCoords = roomTileMap.GetCellAtlasCoords(2, roomTileMapCoords);
 			_tileMap.SetCell(ROOM_WALL_TILEMAP_LAYER, floorTileMapCoords, _floorGenerationParameters.SourceID, atlasCoords);
+
+			// draw tiles to the MarkerTileMap
+			// (1, 0) is a wall tile marker
+			_tileMap.SetCell(0, floorTileMapCoords, 0, new Vector2I(1, 0));
 		}
 	}
 
@@ -160,7 +174,10 @@ public partial class Floor : Node
 			}
 		}
 
-		SetCells(layer, tilesArray, 0, atlasCoords);
+		SetCells(_tileMap, layer, tilesArray, 0, atlasCoords);
+		// draw tiles to the MarkerTileMap
+		// (0, 0) is a floor tile marker
+		SetCells(_markerTileMap, 0, tilesArray, 0, Vector2I.Zero);
 	}
 
 	/*
@@ -208,6 +225,16 @@ public partial class Floor : Node
 			_tileMap.EraseCell(FLOOR_WALL_TILEMAP_LAYER, position);
 		}
 		wallPositions.ExceptWith(wallPositionsToRemove);
+
+		// draw tiles to the MarkerTileMap
+		// (1, 0) is a wall tile marker
+		SetCells(
+			_markerTileMap,
+			0,
+			new Array<Vector2I>(wallPositions),
+			0,
+			new Vector2I(1, 0)
+		);
 
 		// # TALL BACK WALL GENERATION #
 		// // see what tiles we can turn into tall walls (search for walls that border a floor tile on its lower side.)
@@ -303,11 +330,11 @@ public partial class Floor : Node
 		}
 	}
 
-	private void SetCells(int layer, Godot.Collections.Array<Vector2I> coordsArray, int sourceId, Vector2I atlasCoords)
+	private void SetCells(TileMap outputTileMap, int layer, Godot.Collections.Array<Vector2I> coordsArray, int sourceId, Vector2I atlasCoords)
 	{
 		foreach (var coord in coordsArray)
 		{
-			_tileMap.SetCell(layer, coord, sourceId, atlasCoords);
+			outputTileMap.SetCell(layer, coord, sourceId, atlasCoords);
 		}
 	}
 }

@@ -24,11 +24,21 @@ public partial class FloorManager : Node
 	public override void _Ready()
 	{
 		_floorScene = GD.Load<PackedScene>("res://scenes/generation/floor.tscn");
+		_ResetCurrentFloor();
+	}
+
+	private void _ResetCurrentFloor()
+	{
+		if (CurrentFloor != null)
+		{
+			CurrentFloor.QueueFree();
+		}
 		CurrentFloor = _floorScene.Instantiate<Floor>();
 		CurrentFloor.Setup(0);
 	}
 
 	public void GenerateFloor() => _GenerateFloor();
+	public void ClearFloor() => _ClearFloor();
 
 	private async void _GenerateFloor()
 	{
@@ -67,6 +77,11 @@ public partial class FloorManager : Node
 		CurrentFloor.SetFloorData(_floorGenerator.GetOutput());
 
 		EmitSignal(SignalName.FloorMapGenerated);
+	}
+
+	private void _ClearFloor()
+	{
+		_ResetCurrentFloor();
 	}
 
 	private FloorGenerationParameters[] GetFloorGenerationParametersFor(int floorLevel)

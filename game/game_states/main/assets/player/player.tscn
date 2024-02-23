@@ -1233,7 +1233,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_u7nng"]
 resource_name = "player_light_attack_north"
-length = 0.45
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1298,7 +1298,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_tr4gx"]
 resource_name = "player_light_attack_northeast"
-length = 0.45
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1363,7 +1363,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_ednfm"]
 resource_name = "player_light_attack_northwest"
-length = 0.45
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1416,7 +1416,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_v70af"]
 resource_name = "player_light_attack_south"
-length = 0.45
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1481,7 +1481,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_jyulq"]
 resource_name = "player_light_attack_southeast"
-length = 0.45
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1546,7 +1546,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_sfjf3"]
 resource_name = "player_light_attack_southwest"
-length = 0.45
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1611,7 +1611,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_oyokf"]
 resource_name = "player_light_attack_west"
-length = 0.45
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -2135,5 +2135,9 @@ editor_draw_drag_margin = true
 
 [node name="FootstepAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 max_polyphony = 2
+
+[node name="LaunchTimer" type="Timer" parent="."]
+
+[node name="HeavyAttackTimer" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="sprites/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
