@@ -1,3 +1,5 @@
+FSMTransition
+FiniteStateMachine
 Label
 TextureProgressBar
 TextureRect
@@ -11,4 +13,3 @@ CanvasLayer
 SubViewport
 SubViewportContainer
 Sprite2D
-BehaviourToolkit

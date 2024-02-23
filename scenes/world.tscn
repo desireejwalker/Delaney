@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://4ibunjpknikt"]
 
 [ext_resource type="PackedScene" uid="uid://deohlffvl8vow" path="res://game/game_manager.tscn" id="1_3g63i"]
-[ext_resource type="PackedScene" uid="uid://wp77ad1rkslh" path="res://game/game_states/main/assets/player/player.tscn" id="4_xw7hx"]
+[ext_resource type="PackedScene" uid="uid://wp77ad1rkslh" path="res://game/game_states/main/assets/delaney/delaney.tscn" id="4_xw7hx"]
 [ext_resource type="Texture2D" uid="uid://drcpt7cd2t3ex" path="res://icon.svg" id="5_i2oby"]
 
 [node name="World" type="Node2D"]

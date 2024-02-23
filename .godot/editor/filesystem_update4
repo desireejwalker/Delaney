@@ -21,3 +21,16 @@ res://scripts/procedural/generation/floor_generation/RoomDefinition.cs
 res://scripts/procedural/generation/floor_generation/WallDefinition.cs
 res://scripts/procedural/generation/floor_generation/WallSegment.cs
 res://resources/tilesets/TS_markers.tres
+res://examples/assets/tileset.tres
+res://examples/fsm_character_controller/fsm_character_controller.tscn
+res://examples/fsm_character_controller/mr_blacksmith.tscn
+res://game/game_states/main/assets/delaney/player.tscn
+res://game/game_states/main/assets/delaney/delaney.gd
+res://game/game_states/main/assets/delaney/delaney.tscn
+res://game/game_states/main/assets/delaney/states/idle_state.gd
+res://game/game_states/main/assets/delaney/transititons/on_start_walking.gd
+res://game/game_states/main/assets/delaney/transititons/on_start_light_attack.gd
+res://game/game_states/main/assets/delaney/states/walk_state.gd
+res://game/game_states/main/assets/delaney/transititons/on_start_idling.gd
+res://game/game_states/main/assets/delaney/states/light_attack_state.gd
+res://game/game_states/main/assets/delaney/transititons/on_start_light_recovery.gd

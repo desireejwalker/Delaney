@@ -1,3 +1,6 @@
+res://game/game_states/main/assets/delaney/transititons
+res://game/game_states/main/assets/delaney/states
+res://game/game_states/main/assets/delaney
 res://resources/tilesets
 res://game/game_states/main/assets/minimap
 res://game/game_states/main/assets/ui
@@ -18,5 +21,3 @@ res://resources/room_definitions
 C:/Users/admin/Projects/Project-Delaney-Godot-
 res://resources/floor_generation_parameters
 C:/Users/admin/AppData/Local/Programs/Microsoft VS Code
-res://scenes
-res://scenes/burst

@@ -1,13 +1,13 @@
-class_name Player extends RigidBody2D
+class_name Delaney extends RigidBody2D
 
-var animation_player: AnimationPlayer
+
+@onready var launch_timer = $LaunchTimer
+@onready var heavy_attack_timer = $HeavyAttackTimer
+@onready var animation_player: AnimationPlayer = $Sprites/AnimationPlayer
 
 var launch_trail_level_1: GPUParticles2D
 var launch_trail_level_2: GPUParticles2D
 var launch_trail_level_3: GPUParticles2D
-
-@onready var launch_timer = $LaunchTimer
-@onready var heavy_attack_timer = $HeavyAttackTimer
 
 var dust_light: GPUParticles2D
 
@@ -19,12 +19,32 @@ var heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED
 
 var tile_position: Vector2i
 
+# movement
+var movement_direction := Vector2.ZERO
+var mouse_direction := Vector2.ZERO
+
+# facing direction and angle
 var angle_radians = 0
 var angle_degrees = 0
+enum Direction {
+	SOUTH,
+	SOUTH_EAST,
+	EAST,
+	NORTH_EAST,
+	NORTH,
+	NORTH_WEST,
+	WEST,
+	SOUTH_WEST,
+}
+var last_facing_direction := Direction.SOUTH
+var facing_direction := Direction.SOUTH
+var facing_vector := Vector2.DOWN.normalized()
+
+# attack
+
 
 var last_facing = "none"
 var facing = "south"
-var facing_vector = Vector2.DOWN.normalized()
 var did_facing_change = false
 var last_facing_animation_position = 0.0
 
@@ -74,6 +94,9 @@ func _ready():
 	dust_light.translate(Vector2(0, 20))
 
 func _physics_process(delta):
+	movement_direction = get_normalized_input_direction()
+	mouse_direction = get_normalized_mouse_direction()
+	
 	if (attack == "none" and launch_level != -1):
 		handle_player_launch(launch_level)
 	elif (attack == "heavy" and launch_level != -1):
