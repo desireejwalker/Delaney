@@ -8,8 +8,9 @@ func _on_transition(_delta, _actor, _blackboard: Blackboard):
 
 
 # Evaluates true, if the transition conditions are met.
-func is_valid(_actor, _blackboard: Blackboard):
-	return Input.is_action_pressed("recovery")
+func is_valid(_actor, blackboard: Blackboard):
+	# valid only if recovery button is pressed and the light attack animation is active
+	return Input.is_action_pressed("recovery") and blackboard.get_value("light_attack_animation_active")
 
 
 # Add custom configuration warnings

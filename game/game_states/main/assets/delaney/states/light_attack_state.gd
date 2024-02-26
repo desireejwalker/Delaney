@@ -1,16 +1,15 @@
 @tool
-extends FSMState
+class_name LightAttackState extends FSMState
 
-var animation_finished := false
+var _on_light_attack_animation_finished_event_handler
 
 # Executes after the state is entered.
-func _on_enter(actor, _blackboard: Blackboard):
+func _on_enter(actor, blackboard: Blackboard):
 	# cast actor
 	actor = actor as Delaney
 	
-	animation_finished = false
 	_handle_attack(actor)
-	_handle_animation(actor)
+	_handle_animation(actor, blackboard)
 
 
 # Executes every _process call, if the state is active.
@@ -19,12 +18,12 @@ func _on_update(_delta, _actor, _blackboard: Blackboard):
 
 
 # Executes before the state is exited.
-func _on_exit(actor, _blackboard: Blackboard):
+func _on_exit(actor, blackboard: Blackboard):
 	# cast actor
 	actor = actor as Delaney
 	
-	# disconnect _on_animation_player_animation_finished
-	actor.animation_player.animation_finished.disconnect(_on_animation_player_animation_finished)
+	# disconnect _on_light_attack_animation_finished_event_handler
+	actor.animation_player.animation_finished.disconnect(_on_light_attack_animation_finished_event_handler)
 
 
 # Add custom configuration warnings
@@ -44,17 +43,21 @@ func _handle_attack(actor: Delaney):
 	var attack_direction = actor.facing_vector
 	if actor.auto_target_light_attack:
 		attack_direction = actor.mouse_direction
-		actor.angle_radians = atan2(attack_direction.y, attack_direction.x)
-		actor.angle_degrees = rad_to_deg(actor.angle_radians)
+		actor.set_angle_radians(atan2(attack_direction.y, attack_direction.x))
 	
 	# give em a little push
 	actor.apply_central_impulse(attack_direction * 40)
 
-func _handle_animation(actor: Delaney):
-	# connect _on_animation_player_animation_finished
-	actor.animation_player.animation_finished.connect(_on_animation_player_animation_finished)
+func _handle_animation(actor: Delaney, blackboard: Blackboard):
+	# set "light_attack_animation_active" to true on the blackboard
+	# so that we can exit this state when the animation is complete.
+	blackboard.set_value("light_attack_animation_active", true)
 	
-	# play idle animation based on actor.facing_direction
+	# connect _on_light_attack_animation_finished_event_handler
+	_on_light_attack_animation_finished_event_handler = func(_anim_name): _on_light_attack_animation_finished(blackboard)
+	actor.animation_player.animation_finished.connect(_on_light_attack_animation_finished_event_handler)
+	
+	# play attack animation based on actor.facing_direction
 	match actor.facing_direction:
 		Delaney.Direction.SOUTH:
 			actor.animation_player.play("player_light_attack_south")
@@ -73,5 +76,7 @@ func _handle_animation(actor: Delaney):
 		Delaney.Direction.SOUTH_WEST:
 			actor.animation_player.play("player_light_attack_southwest")
 
-func _on_animation_player_animation_finished(_anim_name):
-		animation_finished = true
+func _on_light_attack_animation_finished(blackboard: Blackboard):
+	# set "light_attack_animation_active" to false on the blackboard
+	# so that we can exit this state when the animation is complete.
+	blackboard.set_value("light_attack_animation_active", false)

@@ -1,10 +1,11 @@
 res://game/game_states/main/assets/delaney/transititons
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/game/game_states/main/assets/delaney
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/game/game_states/main/assets/delaney/states
 res://game/game_states/main/assets/delaney/states
 res://game/game_states/main/assets/delaney
 res://resources/tilesets
 res://game/game_states/main/assets/minimap
 res://game/game_states/main/assets/ui
-C:/Users/admin/Projects/Project-Delaney-Godot-/game/game_states/floor_generation
 res://game/game_states/floor_clear
 res://game/game_states/floor_generation
 res://game/game_states/title/assets
@@ -15,9 +16,6 @@ res://addons/wall_segment_rule_plugin/controls
 res://addons/wall_segment_rule_plugin
 res://art/tilesheets
 res://resources/wall_definitions
-C:/Users/admin/Projects/Project-Delaney-Godot-/scripts/procedural/generation/floor_generation
 res://scenes/generation
 res://resources/room_definitions
-C:/Users/admin/Projects/Project-Delaney-Godot-
 res://resources/floor_generation_parameters
-C:/Users/admin/AppData/Local/Programs/Microsoft VS Code

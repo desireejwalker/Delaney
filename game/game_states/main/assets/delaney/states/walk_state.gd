@@ -1,10 +1,15 @@
 @tool
-extends FSMState
+class_name WalkState extends FSMState
 
+var _on_footstep_event_handler
 
 # Executes after the state is entered.
-func _on_enter(_actor, _blackboard: Blackboard):
-	pass
+func _on_enter(actor, _blackboard: Blackboard):
+	# cast actor
+	actor = actor as Delaney
+	
+	_on_footstep_event_handler = func(terrain_type): _on_footstep(actor, terrain_type)
+	actor.on_footstep.connect(_on_footstep_event_handler)
 
 
 # Executes every _process call, if the state is active.
@@ -17,8 +22,11 @@ func _on_update(delta, actor, _blackboard: Blackboard):
 
 
 # Executes before the state is exited.
-func _on_exit(_actor, _blackboard: Blackboard):
-	pass
+func _on_exit(actor, _blackboard: Blackboard):
+	# cast actor
+	actor = actor as Delaney
+	
+	actor.on_footstep.disconnect(_on_footstep_event_handler)
 
 
 # Add custom configuration warnings
@@ -35,19 +43,11 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _handle_movement(actor: Delaney):
 	actor.linear_damp = actor.DEFAULT_DAMPING
 	
-	# check if the linear_velocity is small enough to just set to zero
-	# NOTE: there is likely a better way to do this... search later.
-	#if linear_velocity.length() <= 1:
-		#movement = "idle"
-	#else:	
-		#movement = "walk"
-	
 	# apply forces in movement direction
 	actor.apply_central_force(actor.movement_direction * actor.DEFAULT_SPEED)
 
 	# set facing angle based on velocity
-	actor.angle_radians = atan2(actor.linear_velocity.y, actor.linear_velocity.x)
-	actor.angle_degrees = rad_to_deg(actor.angle_radians)
+	actor.set_angle_radians(atan2(actor.linear_velocity.y, actor.linear_velocity.x))
 	
 	# adjust animation speed to look consistent with speed
 	actor.animation_player.set_speed_scale((actor.linear_velocity.length() / 200) + 1)
@@ -71,3 +71,16 @@ func _handle_animation(actor: Delaney):
 			actor.animation_player.play("player_walk_west")
 		Delaney.Direction.SOUTH_WEST:
 			actor.animation_player.play("player_walk_southwest")
+	
+	if actor.did_facing_change:
+		actor.animation_player.seek(actor.last_facing_animation_position)
+
+func _on_footstep(actor: Delaney, terrain_type: int):
+	# create particle effects
+	var light_footstep := actor.LIGHT_FOOTSTEP_SCENE.instantiate()
+	actor.add_child(light_footstep)
+	light_footstep.position += Vector2(0, 20)
+	
+	# play random footstep sound according to the terrain type underfoot
+	actor.footstep_audio_stream_player_2d.stream = actor.FOOTSTEP_SOUNDS[terrain_type][randi_range(0, 2)]
+	actor.footstep_audio_stream_player_2d.play()

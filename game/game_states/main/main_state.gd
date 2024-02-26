@@ -5,17 +5,17 @@ const PAUSE_SCENE = preload("res://game/game_states/main/assets/pause/pause_scen
 var pause_instance: CanvasLayer
 const MAIN_UI_SCENE = preload("res://game/game_states/main/assets/ui/main_ui.tscn")
 var main_ui_instance: MainUI
-const PLAYER = preload("res://game/game_states/main/assets/player/player.tscn")
-var player_instance: Player
+const DELANEY_SCENE = preload("res://game/game_states/main/assets/delaney/delaney.tscn")
+var delaney_instance: Delaney
 
 # Executes after the state is entered.
 func _on_enter(actor, blackboard: Blackboard):
-	player_instance = PLAYER.instantiate()
+	delaney_instance = DELANEY_SCENE.instantiate()
 	# set the player's position to be in the middle of the CurrentFloor's StartingRoom
 	# multiplied by 16 to account for pixels per unit
 	var player_start_position = actor.floor_manager.CurrentFloor.FloorGenerationOutput.StartingRoom.position * 16
-	player_instance.position = player_start_position
-	actor.add_child(player_instance)
+	delaney_instance.position = player_start_position
+	actor.add_child(delaney_instance)
 	
 	# instantiate the main ui scene
 	main_ui_instance = MAIN_UI_SCENE.instantiate()
@@ -31,8 +31,8 @@ func _on_enter(actor, blackboard: Blackboard):
 # Executes every _process call, if the state is active.
 func _on_update(_delta, actor, blackboard: Blackboard):
 	# update the rotation and position of the player marker on the main ui
-	main_ui_instance.set_player_marker_rotation(player_instance.angle_radians)
-	main_ui_instance.set_player_marker_position(player_instance.position)
+	main_ui_instance.set_player_marker_rotation(delaney_instance.angle_radians)
+	main_ui_instance.set_player_marker_position(delaney_instance.position)
 	
 	# if the menu button was just pressed, toggle paused
 	if Input.is_action_just_pressed("menu"):
@@ -52,8 +52,8 @@ func _on_exit(actor, blackboard: Blackboard):
 	main_ui_instance.queue_free()
 	
 	# remove and free the player
-	actor.remove_child(player_instance)
-	player_instance.queue_free()
+	actor.remove_child(delaney_instance)
+	delaney_instance.queue_free()
 
 # Add custom configuration warnings
 # Note: Can be deleted if you don't want to define your own warnings.

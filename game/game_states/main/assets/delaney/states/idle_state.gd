@@ -1,5 +1,5 @@
 @tool
-extends FSMState
+class_name IdleState extends FSMState
 
 
 # Executes after the state is entered.
@@ -25,6 +25,9 @@ func _on_enter(actor, _blackboard: Blackboard):
 			actor.animation_player.play("player_idle_west")
 		Delaney.Direction.SOUTH_WEST:
 			actor.animation_player.play("player_idle_southwest")
+	
+	if actor.did_facing_change:
+		actor.animation_player.seek(actor.last_facing_animation_position)
 
 
 # Executes every _process call, if the state is active.
