@@ -74,6 +74,10 @@ var did_facing_change := false
 var last_facing_animation_position := 0.0
 
 # attack
+const LIGHT_ATTACK_SOUNDS := [
+	# originates from short-whoosh-13x-14526.mp3 from pixabay.com
+]
+
 @onready var light_dust := $Particles/LightDust
 
 var heavy_attack_speed = DEFAULT_HEAVY_ATTACK_SPEED
