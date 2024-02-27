@@ -76,6 +76,18 @@ var last_facing_animation_position := 0.0
 # attack
 const LIGHT_ATTACK_SOUNDS := [
 	# originates from short-whoosh-13x-14526.mp3 from pixabay.com
+	preload("res://audio/attack/light_attack_1.ogg"),
+	preload("res://audio/attack/light_attack_2.ogg"),
+	preload("res://audio/attack/light_attack_3.ogg"),
+	preload("res://audio/attack/light_attack_4.ogg"),
+	preload("res://audio/attack/light_attack_5.ogg"),
+	preload("res://audio/attack/light_attack_6.ogg"),
+	preload("res://audio/attack/light_attack_7.ogg"),
+	preload("res://audio/attack/light_attack_8.ogg"),
+	preload("res://audio/attack/light_attack_10.ogg"),
+	preload("res://audio/attack/light_attack_11.ogg"),
+	preload("res://audio/attack/light_attack_12.ogg"),
+	preload("res://audio/attack/light_attack_13.ogg")
 ]
 
 @onready var light_dust := $Particles/LightDust

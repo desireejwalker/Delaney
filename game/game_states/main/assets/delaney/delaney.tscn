@@ -1,20 +1,15 @@
-[gd_scene load_steps=66 format=3 uid="uid://wp77ad1rkslh"]
+[gd_scene load_steps=56 format=3 uid="uid://wp77ad1rkslh"]
 
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/delaney.gd" id="1_6dd6f"]
 [ext_resource type="Texture2D" uid="uid://cqtd7k4r2orjc" path="res://art/delaney/Delaney_Sheet.png" id="2_pnxwq"]
 [ext_resource type="Texture2D" uid="uid://dynx1iphfh1vb" path="res://art/hammers/Pwn_Sheet.png" id="3_4bahj"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="4_e0v3o"]
-[ext_resource type="PackedScene" uid="uid://c7u5n7noiflki" path="res://scenes/trails/launch_trail_level_1.tscn" id="4_w7rw4"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state.gd" id="5_nohhb"]
 [ext_resource type="Resource" uid="uid://qbyfmyvynpai" path="res://game/game_states/main/assets/delaney/delaney_blackboard.tres" id="5_nu3aq"]
-[ext_resource type="PackedScene" uid="uid://b72xgr7aegn87" path="res://scenes/trails/launch_trail_level_2.tscn" id="5_uyajs"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="6_073kx"]
-[ext_resource type="PackedScene" uid="uid://q0fhvr3p78fa" path="res://scenes/trails/launch_trail_level_3.tscn" id="6_dexoh"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/states/idle_state.gd" id="6_lld56"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/transititons/on_start_walking.gd" id="7_10lj3"]
-[ext_resource type="PackedScene" uid="uid://djnpi53671v28" path="res://scenes/trails/light_dust.tscn" id="7_kbui7"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/transititons/on_start_light_attack.gd" id="8_5npx0"]
-[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://game/game_states/title/assets/AtlantisInternational-jen0.ttf" id="8_262po"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/states/walk_state.gd" id="8_uctoh"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/states/light_attack_state.gd" id="10_vissa"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/states/light_recovery_state.gd" id="11_6akvn"]
@@ -22,10 +17,7 @@
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/states/heavy_attack_state.gd" id="12_3q646"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/states/launch_state.gd" id="13_rcwif"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/transititons/on_start_light_recovery.gd" id="13_wy2mh"]
-[ext_resource type="Script" path="res://game/game_states/main/assets/delaney/transititons/on_start_heavy_attack.gd" id="14_u6gpk"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/delaney/states/launch_recovery_state.gd" id="14_wlfy2"]
-[ext_resource type="Script" path="res://game/game_states/main/assets/delaney/transititons/on_start_launch.gd" id="17_3ejkq"]
-[ext_resource type="Script" path="res://game/game_states/main/assets/delaney/transititons/on_start_launch_recovery.gd" id="22_5yo1d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l0afq"]
 friction = 0.0
@@ -2111,13 +2103,6 @@ _data = {
 "player_walk_west": SubResource("Animation_kwmcn")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_i3xhy"]
-font = ExtResource("8_262po")
-
-[sub_resource type="LabelSettings" id="LabelSettings_tyexb"]
-line_spacing = -6.0
-font = ExtResource("8_262po")
-
 [node name="Delaney" type="RigidBody2D"]
 process_mode = 1
 physics_material_override = SubResource("PhysicsMaterial_l0afq")
@@ -2155,55 +2140,6 @@ root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_ehje1")
 }
-autoplay = "player_idle_south"
-
-[node name="Particles" type="Node2D" parent="."]
-
-[node name="LaunchLevel1Trail" parent="Particles" instance=ExtResource("4_w7rw4")]
-
-[node name="LaunchLevel2Trail" parent="Particles" instance=ExtResource("5_uyajs")]
-
-[node name="LaunchLevel3Trail" parent="Particles" instance=ExtResource("6_dexoh")]
-position = Vector2(0, -8)
-
-[node name="LightDust" parent="Particles" instance=ExtResource("7_kbui7")]
-position = Vector2(0, 25)
-
-[node name="Debug" type="Node2D" parent="."]
-position = Vector2(-16, 25)
-
-[node name="TitleLabel" type="Label" parent="Debug"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -63.0
-offset_top = -63.0
-offset_bottom = -40.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Delaney"
-label_settings = SubResource("LabelSettings_i3xhy")
-horizontal_alignment = 2
-
-[node name="ContentLabel" type="Label" parent="Debug"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -135.0
-offset_top = -50.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "current_state: nil
-facing_angle_degrees: nil
-linear_velocity: nil
-speed: nil
-"
-label_settings = SubResource("LabelSettings_tyexb")
-horizontal_alignment = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
@@ -2250,8 +2186,10 @@ script = ExtResource("11_owefj")
 next_state = NodePath("../../IdleState")
 
 [node name="onStartLightAttack" type="Node" parent="FiniteStateMachine/WalkState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("8_5npx0")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../LightAttackState")
+use_event = true
+event = "on_start_light_attack"
 
 [node name="onDeath" type="Node" parent="FiniteStateMachine/WalkState" node_paths=PackedStringArray("next_state")]
 script = ExtResource("6_073kx")
@@ -2263,20 +2201,26 @@ event = "on_death"
 script = ExtResource("10_vissa")
 
 [node name="onStartIdling" type="Node" parent="FiniteStateMachine/LightAttackState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("11_owefj")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../IdleState")
+use_event = true
+event = "on_stop_walking"
 
 [node name="onStartWalking" type="Node" parent="FiniteStateMachine/LightAttackState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("7_10lj3")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../WalkState")
+use_event = true
+event = "on_start_walking"
 
 [node name="onStartLightRecovery" type="Node" parent="FiniteStateMachine/LightAttackState" node_paths=PackedStringArray("next_state")]
 script = ExtResource("13_wy2mh")
 next_state = NodePath("../../LightRecoveryState")
 
 [node name="onStartHeavyAttack" type="Node" parent="FiniteStateMachine/LightAttackState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("14_u6gpk")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../HeavyAttackState")
+use_event = true
+event = "on_start_heavy_attack"
 
 [node name="onDeath" type="Node" parent="FiniteStateMachine/LightAttackState" node_paths=PackedStringArray("next_state")]
 script = ExtResource("6_073kx")
@@ -2288,12 +2232,16 @@ event = "on_death"
 script = ExtResource("11_6akvn")
 
 [node name="onStartIdling" type="Node" parent="FiniteStateMachine/LightRecoveryState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("11_owefj")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../IdleState")
+use_event = true
+event = "on_stop_walking"
 
 [node name="onStartWalking" type="Node" parent="FiniteStateMachine/LightRecoveryState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("7_10lj3")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../WalkState")
+use_event = true
+event = "on_start_walking"
 
 [node name="onDeath" type="Node" parent="FiniteStateMachine/LightRecoveryState" node_paths=PackedStringArray("next_state")]
 script = ExtResource("6_073kx")
@@ -2301,23 +2249,26 @@ next_state = NodePath("../../DeathState")
 use_event = true
 event = "on_death"
 
-[node name="LightRecoveryStateTimer" type="Timer" parent="FiniteStateMachine/LightRecoveryState"]
-one_shot = true
-
 [node name="HeavyAttackState" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("12_3q646")
 
 [node name="onStartIdling" type="Node" parent="FiniteStateMachine/HeavyAttackState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("11_owefj")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../IdleState")
+use_event = true
+event = "on_stop_walking"
 
 [node name="onStartWalking" type="Node" parent="FiniteStateMachine/HeavyAttackState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("7_10lj3")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../WalkState")
+use_event = true
+event = "on_start_walking"
 
 [node name="onStartLaunch" type="Node" parent="FiniteStateMachine/HeavyAttackState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("17_3ejkq")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../LaunchState")
+use_event = true
+event = "on_start_launch"
 
 [node name="onDeath" type="Node" parent="FiniteStateMachine/HeavyAttackState" node_paths=PackedStringArray("next_state")]
 script = ExtResource("6_073kx")
@@ -2325,46 +2276,47 @@ next_state = NodePath("../../DeathState")
 use_event = true
 event = "on_death"
 
-[node name="HeavyAttackStateTimer" type="Timer" parent="FiniteStateMachine/HeavyAttackState"]
-one_shot = true
-
 [node name="LaunchState" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("13_rcwif")
 
 [node name="onStartIdling" type="Node" parent="FiniteStateMachine/LaunchState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("11_owefj")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../IdleState")
+use_event = true
+event = "on_stop_walking"
 
 [node name="onStartWalking" type="Node" parent="FiniteStateMachine/LaunchState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("7_10lj3")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../WalkState")
+use_event = true
+event = "on_start_walking"
 
 [node name="onStartLaunchRecovery" type="Node" parent="FiniteStateMachine/LaunchState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("22_5yo1d")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../LaunchRecoveryState")
-
-[node name="LaunchStateTimer" type="Timer" parent="FiniteStateMachine/LaunchState"]
-one_shot = true
+use_event = true
+event = "on_start_launch_recovery"
 
 [node name="LaunchRecoveryState" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("14_wlfy2")
 
 [node name="onStartIdling" type="Node" parent="FiniteStateMachine/LaunchRecoveryState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("11_owefj")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../IdleState")
+use_event = true
+event = "on_stop_walking"
 
 [node name="onStartWalking" type="Node" parent="FiniteStateMachine/LaunchRecoveryState" node_paths=PackedStringArray("next_state")]
-script = ExtResource("7_10lj3")
+script = ExtResource("6_073kx")
 next_state = NodePath("../../WalkState")
+use_event = true
+event = "on_start_walking"
 
 [node name="onDeath" type="Node" parent="FiniteStateMachine/LaunchRecoveryState" node_paths=PackedStringArray("next_state")]
 script = ExtResource("6_073kx")
 next_state = NodePath("../../DeathState")
 use_event = true
 event = "on_death"
-
-[node name="LaunchRecoveryStateTimer" type="Timer" parent="FiniteStateMachine/LaunchRecoveryState"]
-one_shot = true
 
 [node name="DeathState" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("5_nohhb")
