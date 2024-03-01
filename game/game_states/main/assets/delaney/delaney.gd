@@ -35,8 +35,6 @@ const FOOTSTEP_SOUNDS := [
 	]
 ]
 
-@onready var footstep_audio_stream_player_2d = $FootstepAudioStreamPlayer2D
-
 var movement_direction := Vector2.ZERO
 var mouse_direction := Vector2.ZERO
 var tile_position: Vector2i
@@ -76,7 +74,7 @@ var last_facing_animation_position := 0.0
 # attack
 const LIGHT_ATTACK_SOUNDS := [
 	# originates from short-whoosh-13x-14526.mp3 from pixabay.com
-]
+]	
 
 @onready var light_dust := $Particles/LightDust
 

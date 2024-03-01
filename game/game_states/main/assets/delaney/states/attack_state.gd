@@ -1,5 +1,5 @@
 @tool
-class_name HeavyAttackState extends FSMState
+class_name AttackState extends FSMState
 
 @onready var heavy_attack_timer := $HeavyAttackStateTimer
 
@@ -14,8 +14,8 @@ func _on_enter(actor, blackboard: Blackboard):
 	blackboard.set_value("launch_level", 0)
 	
 	heavy_attack_speed = actor.DEFAULT_HEAVY_ATTACK_SPEED
-	# add 45 to the facing angle make the transition from light to heavy smoother
-	actor.angle_degrees += 45
+	
+	actor.angle_degrees -= 45
 	
 	actor.light_dust.emitting = true
 	

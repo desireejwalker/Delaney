@@ -17,16 +17,11 @@ func is_valid(actor, blackboard: Blackboard):
 	if get_parent() is WalkState:
 		# this transititon is valid if the player is not moving (or barely moving at all)
 		return actor.linear_velocity.length() <= 1
-	if get_parent() is LightAttackState:
-		# this transititon is valid if the player is not moving (or barely moving at all)
-		# and the light attack animation is not active
-		# and the player is not holding the attack button
-		return actor.linear_velocity.length() <= 1 and not blackboard.get_value("light_attack_animation_active") and not Input.is_action_pressed("attack")
 	if get_parent() is LightRecoveryState:
 		# this transition is valid if the player is not moving (or barely moving at all)
 		# and the light recovery is inactive
 		return actor.linear_velocity.length() <= 1 and not blackboard.get_value("light_recovery_active")
-	if get_parent() is HeavyAttackState:
+	if get_parent() is AttackState:
 		# this transititon is valid if the player is not holding the attack button
 		# and the the player is not moving (or barely moving at all)
 		# and the launch level is 0

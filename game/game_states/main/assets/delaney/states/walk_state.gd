@@ -1,6 +1,8 @@
 @tool
 class_name WalkState extends FSMState
 
+@onready var footstep_audio_stream_player_2d = $FootstepAudioStreamPlayer2D
+
 var _on_footstep_event_handler
 
 # Executes after the state is entered.
@@ -82,5 +84,5 @@ func _on_footstep(actor: Delaney, terrain_type: int):
 	light_footstep.position += Vector2(0, 20)
 	
 	# play random footstep sound according to the terrain type underfoot
-	actor.footstep_audio_stream_player_2d.stream = actor.FOOTSTEP_SOUNDS[terrain_type][randi_range(0, 2)]
-	actor.footstep_audio_stream_player_2d.play()
+	footstep_audio_stream_player_2d.stream = actor.FOOTSTEP_SOUNDS[terrain_type][randi_range(0, 2)]
+	footstep_audio_stream_player_2d.play()

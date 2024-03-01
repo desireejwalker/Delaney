@@ -1,5 +1,8 @@
-Label
+AnimationTree
+AnimationPlayer
+Sprite2D
 Node2D
+Label
 Timer
 FSMTransition
 FiniteStateMachine
@@ -9,6 +12,3 @@ TextEdit
 Control
 TileMap
 Camera2D
-CanvasLayer
-SubViewport
-SubViewportContainer
