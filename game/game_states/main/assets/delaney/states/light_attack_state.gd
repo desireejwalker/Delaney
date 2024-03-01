@@ -8,9 +8,6 @@ func _on_enter(actor, blackboard: Blackboard):
 	# cast actor
 	actor = actor as Delaney
 	
-	# play sound
-	
-	
 	_handle_attack(actor)
 	_handle_animation(actor, blackboard)
 
