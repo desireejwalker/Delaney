@@ -10,21 +10,21 @@ func _on_enter(actor, _blackboard: Blackboard):
 	# play idle animation based on actor.facing_direction
 	match actor.facing_direction:
 		Delaney.Direction.SOUTH:
-			actor.animation_player.play("player_idle_south")
+			actor.animation_player.play("delaney_delta_idle_south")
 		Delaney.Direction.SOUTH_EAST:
-			actor.animation_player.play("player_idle_southeast")
+			actor.animation_player.play("delaney_delta_idle_south-east")
 		Delaney.Direction.EAST:
-			actor.animation_player.play("player_idle_east")
+			actor.animation_player.play("delaney_delta_idle_east")
 		Delaney.Direction.NORTH_EAST:
-			actor.animation_player.play("player_idle_northeast")
+			actor.animation_player.play("delaney_delta_idle_north-east")
 		Delaney.Direction.NORTH:
-			actor.animation_player.play("player_idle_north")
+			actor.animation_player.play("delaney_delta_idle_north")
 		Delaney.Direction.NORTH_WEST:
-			actor.animation_player.play("player_idle_northwest")
+			actor.animation_player.play("delaney_delta_idle_north-west")
 		Delaney.Direction.WEST:
-			actor.animation_player.play("player_idle_west")
+			actor.animation_player.play("delaney_delta_idle_west")
 		Delaney.Direction.SOUTH_WEST:
-			actor.animation_player.play("player_idle_southwest")
+			actor.animation_player.play("delaney_delta_idle_south-west")
 	
 	if actor.did_facing_change:
 		actor.animation_player.seek(actor.last_facing_animation_position)

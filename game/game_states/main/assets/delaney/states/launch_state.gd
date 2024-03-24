@@ -10,12 +10,12 @@ func _on_enter(actor, blackboard: Blackboard):
 	# cast actor
 	actor = actor as Delaney
 	
-	actor.linear_damp = 0
-	actor.apply_central_impulse(actor.mouse_direction * 600)
+	# give delaney her launch velocity
+	actor.velocity = actor.mouse_direction * 600
 	
-	# hide sprite and make the player bounce off of walls
-	actor.sprites.visible = false
-	actor.physics_material_override.bounce = 1
+	# hide sprites
+	actor.delaney_sprite.visible = false
+	actor.hammer.visible = false
 	
 	match blackboard.get_value("launch_level"):
 		1:
@@ -39,8 +39,15 @@ func _on_enter(actor, blackboard: Blackboard):
 func _on_update(_delta, actor, _blackboard: Blackboard):
 	# cast actor
 	actor = actor as Delaney
+	
+	# move delaney along her velocity vector until collision,
+	# depending on where the collsion was, invert velocity
+	var did_collide = actor.move_and_slide()
+	if did_collide:
+		_handle_ricochet(actor)
+	
 	# set facing angle based on velocity
-	actor.angle_radians = atan2(actor.linear_velocity.y, actor.linear_velocity.x)
+	actor.set_angle_radians(atan2(actor.velocity.y, actor.velocity.x))
 
 
 # Executes before the state is exited.
@@ -52,9 +59,8 @@ func _on_exit(actor, _blackboard: Blackboard):
 	launch_timer.timeout.disconnect(_on_end_launch_event_handler)
 	
 	# show sprites and return player physics values to normal
-	actor.sprites.visible = true
-	actor.linear_damp = actor.DEFAULT_DAMPING
-	actor.physics_material_override.bounce = 0
+	actor.delaney_sprite.visible = true
+	actor.hammer.visible = true
 
 
 # Add custom configuration warnings
@@ -67,6 +73,19 @@ func _get_configuration_warnings() -> PackedStringArray:
 	# Add your own warnings to the array here
 
 	return warnings
+
+func _handle_ricochet(actor: Delaney):
+	var collision = actor.get_last_slide_collision()
+	var collision_normal = collision.get_normal()
+	
+	# since there are no irregular walls (at least not yet @_@)
+	# just check the four cardinal directions and invert velocity
+	# accordingly
+	if (collision_normal == Vector2.DOWN or collision_normal == Vector2.UP):
+		actor.velocity = Vector2(actor.velocity.x, -actor.velocity.y)
+	elif (collision_normal == Vector2.RIGHT or collision_normal == Vector2.LEFT):
+		actor.velocity = Vector2(-actor.velocity.x, actor.velocity.y)
+	print(actor.velocity)
 
 func _on_launch_end(actor: Delaney, blackboard: Blackboard):
 	# stop the trail particle systems from emitting

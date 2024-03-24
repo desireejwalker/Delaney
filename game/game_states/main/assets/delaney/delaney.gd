@@ -1,12 +1,15 @@
-class_name Delaney extends RigidBody2D
+class_name Delaney extends CharacterBody2D
 
-const DEFAULT_SPEED = 600
+const DEFAULT_SPEED = 100
 const DEFAULT_DAMPING = 3
-const DEFAULT_HEAVY_ATTACK_SPEED = 600
+const DEFAULT_HEAVY_ATTACK_SPEED = 400
 
-@onready var sprites := $Sprites
-@onready var animation_player := $Sprites/AnimationPlayer
-@onready var _finite_state_machine := $FiniteStateMachine
+@export var hammer_type: HammerType
+
+@onready var delaney_sprite: Sprite2D = $DelaneySprite
+@onready var hammer_marker: Marker2D = $HammerMarker2D
+@onready var animation_player: AnimationPlayer = $DelaneyAnimationPlayer
+@onready var _control_fsm: FiniteStateMachine = $ControlFSM
 
 # debug
 @onready var debug_content_label := $Debug/ContentLabel
@@ -34,8 +37,6 @@ const FOOTSTEP_SOUNDS := [
 		preload("res://audio/boot_step/boot_step_grassy_3.ogg")
 	]
 ]
-
-@onready var footstep_audio_stream_player_2d = $FootstepAudioStreamPlayer2D
 
 var movement_direction := Vector2.ZERO
 var mouse_direction := Vector2.ZERO
@@ -74,9 +75,14 @@ var did_facing_change := false
 var last_facing_animation_position := 0.0
 
 # attack
+signal on_set_hammer_target_local_position(target_local_position: Vector2)
+signal on_set_hammer_target_rotation(target_rotation_degrees: float)
+
+var hammer: HammerHandle
+
 const LIGHT_ATTACK_SOUNDS := [
 	# originates from short-whoosh-13x-14526.mp3 from pixabay.com
-]
+]	
 
 @onready var light_dust := $Particles/LightDust
 
@@ -95,7 +101,10 @@ const LAUNCH_LEVEL_PARTICLE_SCENES := [
 @onready var launch_level_3_trail := $Particles/LaunchLevel3Trail
 
 func _ready():
-	_finite_state_machine.start()
+	_control_fsm.start()
+	
+	hammer = hammer_type.scene.instantiate()
+	add_child(hammer)
 
 func _physics_process(delta):
 	movement_direction = get_normalized_input_direction()
@@ -105,6 +114,9 @@ func _physics_process(delta):
 func _process(delta):
 	handle_player_rotation()
 	handle_player_animation()
+	
+	hammer.target_position = hammer_marker.position
+	hammer.target_rotation_rad = hammer_marker.rotation
 	
 	debug_content_label.text = get_debug_info()
 
@@ -164,6 +176,9 @@ func handle_player_animation():
 
 # HELPER FUNCTIONS
 func get_tile_position() -> Vector2i:
+	if not GameManager.get_instance():
+		return Vector2i.ZERO 
+	
 	var game_tilemap: TileMap = GameManager.get_instance().get_node("FloorManager/Floor/TileMap")
 	if not game_tilemap:
 		return Vector2i.ZERO
@@ -173,10 +188,10 @@ func get_tile_position() -> Vector2i:
 
 func get_debug_info() -> String:
 	var debug_info_dictionary := {
-		"current_state": _finite_state_machine.active_state.name.to_pascal_case(),
+		"current_state": _control_fsm.active_state.name.to_pascal_case(),
 		"facing_angle_degrees": str(floor(angle_degrees)),
-		"linear_velocity": str(linear_velocity.floor()),
-		"speed": str(floor(linear_velocity.length()))
+		"velocity": str(velocity.floor()),
+		"speed": str(floor(velocity.length()))
 	}
 	
 	var debug_info := ""
