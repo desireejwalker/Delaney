@@ -6,7 +6,7 @@ class_name Hammer extends Node2D
 @export var position_weight := 1.0
 @export var rotation_weight := 1.0
 
-var target_local_position := Vector2i.ZERO
+var target_local_position := Vector2.ZERO
 var target_rotation_degrees := 0.0
 
 enum HammerSpriteRotation
@@ -22,10 +22,14 @@ enum HammerSpriteRotation
 }
 var sprite_rotation := HammerSpriteRotation.SOUTH
 
+func set_target_local_position(target_local_position: Vector2):
+	self.target_local_position = target_local_position
+func set_target_rotation(target_rotation_degrees: float):
+	self.target_rotation_degrees = target_rotation_degrees
 func set_sprite_rotation(sprite_rotation: HammerSpriteRotation):
 	self.sprie_rotation = sprite_rotation
 
 func _process(delta):
-	position.lerp(target_local_position, position_weight * delta)
-	lerpf(rotation_degrees, target_rotation_degrees, rotation_weight * delta)
+	position = position.lerp(target_local_position, position_weight * delta)
+	rotation_degrees = lerpf(rotation_degrees, target_rotation_degrees, rotation_weight * delta)
 

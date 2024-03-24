@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HammerType" load_steps=3 format=3 uid="uid://dool8ro07tbmn"]
+
+[ext_resource type="PackedScene" uid="uid://bmwg2h1wiudf4" path="res://game/game_states/main/assets/hammers/pwnhammer.tscn" id="1_4vqd4"]
+[ext_resource type="Script" path="res://game/game_states/main/assets/hammers/hammer_type.gd" id="1_febuo"]
+
+[resource]
+script = ExtResource("1_febuo")
+scene = ExtResource("1_4vqd4")
+name = "Pwnhammer"
+tooltip = "Strong enough to destroy Demon Altars."
+damage = 1
+attack_speed = 1
+critical_chance = 0.1
+use_auto_aim = true

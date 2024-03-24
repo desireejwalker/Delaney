@@ -19,3 +19,6 @@ Example: TS_my-area-name
 
 Tilesheets: TSH_area-name-here
 Example: TSH_my-area-name
+
+Spritesheets: SPRSH_name-here
+Example: SPRSH_my-name-here

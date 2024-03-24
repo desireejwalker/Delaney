@@ -1,12 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3l6c8ljocwj"]
+[gd_scene load_steps=7 format=3 uid="uid://b3l6c8ljocwj"]
 
 [ext_resource type="Script" path="res://game/game_states/title/title.gd" id="1_0imk2"]
 [ext_resource type="Texture2D" uid="uid://c01as0irktbf4" path="res://game/game_states/title/assets/game_title_indev.png" id="1_jsh8k"]
 [ext_resource type="LabelSettings" uid="uid://b753pxolsphff" path="res://game/game_states/title/assets/title_label_settings.tres" id="2_cknyw"]
 [ext_resource type="Theme" uid="uid://ighvocrdgfhc" path="res://game/game_states/title/assets/title_theme.tres" id="3_4qf20"]
 
+[sub_resource type="Gradient" id="Gradient_r2tjs"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_umpgh"]
+gradient = SubResource("Gradient_r2tjs")
+
 [node name="TitleScene" type="CanvasLayer"]
 script = ExtResource("1_0imk2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_umpgh")
 
 [node name="TitleShadowTextureRect" type="TextureRect" parent="."]
 modulate = Color(0.4, 0.4, 0.4, 1)

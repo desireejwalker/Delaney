@@ -1,3 +1,4 @@
+HammerType
 TileSet
 WallSegment
 WallDefinition

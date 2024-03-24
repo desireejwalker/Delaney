@@ -13,6 +13,9 @@ func _on_enter(actor, blackboard: Blackboard):
 	
 	blackboard.set_value("launch_level", 0)
 	
+	if actor.hammer_type.use_auto_aim:
+		actor.set_angle_radians(atan2(actor.mouse_direction.y, actor.mouse_direction.x))
+	
 	heavy_attack_speed = actor.DEFAULT_HEAVY_ATTACK_SPEED
 	
 	actor.angle_degrees -= 45
@@ -111,27 +114,26 @@ func _handle_spin(delta: float, actor: Delaney):
 	actor.set_angle_degrees(actor.angle_degrees + (heavy_attack_speed * delta))
 
 func _handle_movement(actor: Delaney):
-	actor.linear_damp = actor.DEFAULT_DAMPING * 0.5
-	
-	# apply forces in movement direction
-	actor.apply_central_force(actor.mouse_direction * (actor.DEFAULT_SPEED * 0.2))
+	# apply velocity to delaney
+	actor.velocity = actor.mouse_direction * (actor.DEFAULT_SPEED * 0.2)
+	actor.move_and_slide()
 
 func _handle_animation(actor: Delaney):
 	# play walking animation based on actor.facing_direction
 	match actor.facing_direction:
 		Delaney.Direction.SOUTH:
-			actor.animation_player.play("player_heavy_attack_south")
+			actor.animation_player.play("delaney_delta_attack_south")
 		Delaney.Direction.SOUTH_EAST:
-			actor.animation_player.play("player_heavy_attack_southeast")
+			actor.animation_player.play("delaney_delta_attack_south-east")
 		Delaney.Direction.EAST:
-			actor.animation_player.play("player_heavy_attack_east")
+			actor.animation_player.play("delaney_delta_attack_east")
 		Delaney.Direction.NORTH_EAST:
-			actor.animation_player.play("player_heavy_attack_northeast")
+			actor.animation_player.play("delaney_delta_attack_north-east")
 		Delaney.Direction.NORTH:
-			actor.animation_player.play("player_heavy_attack_north")
+			actor.animation_player.play("delaney_delta_attack_north")
 		Delaney.Direction.NORTH_WEST:
-			actor.animation_player.play("player_heavy_attack_northwest")
+			actor.animation_player.play("delaney_delta_attack_north-west")
 		Delaney.Direction.WEST:
-			actor.animation_player.play("player_heavy_attack_west")
+			actor.animation_player.play("delaney_delta_attack_west")
 		Delaney.Direction.SOUTH_WEST:
-			actor.animation_player.play("player_heavy_attack_southwest")
+			actor.animation_player.play("delaney_delta_attack_south-west")

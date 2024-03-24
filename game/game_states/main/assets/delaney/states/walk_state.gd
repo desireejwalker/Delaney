@@ -5,6 +5,8 @@ class_name WalkState extends FSMState
 
 var _on_footstep_event_handler
 
+var _universal_walk_animation_position: float = 0
+
 # Executes after the state is entered.
 func _on_enter(actor, _blackboard: Blackboard):
 	# cast actor
@@ -13,15 +15,14 @@ func _on_enter(actor, _blackboard: Blackboard):
 	_on_footstep_event_handler = func(terrain_type): _on_footstep(actor, terrain_type)
 	actor.on_footstep.connect(_on_footstep_event_handler)
 
-
 # Executes every _process call, if the state is active.
 func _on_update(delta, actor, _blackboard: Blackboard):
 	# cast actor
 	actor = actor as Delaney
 	
+	_handle_rotation(actor)
 	_handle_movement(actor)
 	_handle_animation(actor)
-
 
 # Executes before the state is exited.
 func _on_exit(actor, _blackboard: Blackboard):
@@ -29,7 +30,6 @@ func _on_exit(actor, _blackboard: Blackboard):
 	actor = actor as Delaney
 	
 	actor.on_footstep.disconnect(_on_footstep_event_handler)
-
 
 # Add custom configuration warnings
 # Note: Can be deleted if you don't want to define your own warnings.
@@ -42,40 +42,49 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	return warnings
 
-func _handle_movement(actor: Delaney):
-	actor.linear_damp = actor.DEFAULT_DAMPING
+func _handle_rotation(actor: Delaney):
+	# dont reset the angle to 0 if movement direction is Vector2.ZERO
+	if actor.movement_direction.is_zero_approx():
+		return
 	
-	# apply forces in movement direction
-	actor.apply_central_force(actor.movement_direction * actor.DEFAULT_SPEED)
+	# set facing angle based on input direct
+	actor.set_angle_radians(atan2(actor.movement_direction.y, actor.movement_direction.x))
 
-	# set facing angle based on velocity
-	actor.set_angle_radians(atan2(actor.linear_velocity.y, actor.linear_velocity.x))
+func _handle_movement(actor: Delaney):
+	# apply velocity to delaney
+	actor.velocity = actor.movement_direction * actor.DEFAULT_SPEED
+	actor.move_and_slide()
 	
-	# adjust animation speed to look consistent with speed
-	actor.animation_player.set_speed_scale((actor.linear_velocity.length() / 200) + 1)
+	actor.animation_player.set_speed_scale((actor.velocity.length() / 120) + 1)
 
 func _handle_animation(actor: Delaney):
+	# update the universal walk animation position to keep walk animations seemless when
+	# switching directions
+	_universal_walk_animation_position = actor.animation_player.current_animation_position
+	
 	# play walking animation based on actor.facing_direction
 	match actor.facing_direction:
 		Delaney.Direction.SOUTH:
-			actor.animation_player.play("player_walk_south")
+			actor.animation_player.play("delaney_delta_run_south")
 		Delaney.Direction.SOUTH_EAST:
-			actor.animation_player.play("player_walk_southeast")
+			actor.animation_player.play("delaney_delta_run_south-east")
 		Delaney.Direction.EAST:
-			actor.animation_player.play("player_walk_east")
+			actor.animation_player.play("delaney_delta_run_east")
 		Delaney.Direction.NORTH_EAST:
-			actor.animation_player.play("player_walk_northeast")
+			actor.animation_player.play("delaney_delta_run_north-east")
 		Delaney.Direction.NORTH:
-			actor.animation_player.play("player_walk_north")
+			actor.animation_player.play("delaney_delta_run_north")
 		Delaney.Direction.NORTH_WEST:
-			actor.animation_player.play("player_walk_northwest")
+			actor.animation_player.play("delaney_delta_run_north-west")
 		Delaney.Direction.WEST:
-			actor.animation_player.play("player_walk_west")
+			actor.animation_player.play("delaney_delta_run_west")
 		Delaney.Direction.SOUTH_WEST:
-			actor.animation_player.play("player_walk_southwest")
+			actor.animation_player.play("delaney_delta_run_south-west")
 	
+	# if the direction was changed in this frame, make sure to seek to the
+	# universal walk animation position to keep walk animations seemless
 	if actor.did_facing_change:
-		actor.animation_player.seek(actor.last_facing_animation_position)
+		actor.animation_player.seek(_universal_walk_animation_position)
 
 func _on_footstep(actor: Delaney, terrain_type: int):
 	# create particle effects

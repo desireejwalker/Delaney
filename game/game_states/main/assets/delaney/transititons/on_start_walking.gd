@@ -20,20 +20,20 @@ func is_valid(actor, blackboard: Blackboard):
 	if get_parent() is LightRecoveryState:
 		# this transition is valid if the player is inputting any direction or they are moving
 		# and the light recovery is inactive
-		return (actor.movement_direction != Vector2.ZERO or actor.linear_velocity.length() > 1) and not blackboard.get_value("light_recovery_active")
+		return (actor.movement_direction != Vector2.ZERO or actor.velocity.length() > 1) and not blackboard.get_value("light_recovery_active")
 	if get_parent() is AttackState:
 		# this transititon is valid if the player is not holding the attack button 
 		# and the player is inputting a direction or they are moving
 		# and the launch level is 0
-		return (actor.movement_direction != Vector2.ZERO or actor.linear_velocity.length() > 1) and not Input.is_action_pressed("attack") and blackboard.get_value("launch_level") == 0
+		return (actor.movement_direction != Vector2.ZERO or actor.velocity.length() > 1) and not Input.is_action_pressed("attack") and blackboard.get_value("launch_level") == 0
 	if get_parent() is LaunchState:
 		# this transition is valid if the player is inputting any direction or they are moving
 		# and the launch level is -1
-		return (actor.movement_direction != Vector2.ZERO or actor.linear_velocity.length() > 1) and blackboard.get_value("launch_level") == -1
+		return (actor.movement_direction != Vector2.ZERO or actor.velocity.length() > 1) and blackboard.get_value("launch_level") == -1
 	if get_parent() is LaunchRecoveryState:
 		# this transition is valid if the player is inputting any direction or they are moving
 		# and launch recovery is active
-		return (actor.movement_direction != Vector2.ZERO or actor.linear_velocity.length() > 1) and not blackboard.get_value("launch_recovery_active")
+		return (actor.movement_direction != Vector2.ZERO or actor.velocity.length() > 1) and not blackboard.get_value("launch_recovery_active")
 	
 	return false
 

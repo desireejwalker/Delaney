@@ -1,11 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmwg2h1wiudf4"]
+[gd_scene load_steps=17 format=3 uid="uid://bmwg2h1wiudf4"]
 
-[ext_resource type="Script" path="res://game/game_states/main/assets/hammers/hammer.gd" id="1_x17e1"]
+[ext_resource type="Script" path="res://game/game_states/main/assets/hammers/hammer_handle.gd" id="1_dnety"]
 [ext_resource type="Texture2D" uid="uid://dynx1iphfh1vb" path="res://art/hammers/Pwn_Sheet.png" id="2_cyx0y"]
+[ext_resource type="Script" path="res://addons/trail_2d/trail_2d.gd" id="3_gtl8q"]
 
-[sub_resource type="Animation" id="Animation_xaafc"]
-resource_name = "normal_south"
-length = 0.1
+[sub_resource type="Animation" id="Animation_wv5nc"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -19,8 +19,73 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_wv5nc"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_s2nso"]
+resource_name = "normal_east"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HammerSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_uejch"]
+resource_name = "normal_north"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HammerSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_a5x77"]
+resource_name = "normal_northeast"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HammerSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_7vtfh"]
+resource_name = "normal_northwest"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HammerSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_xaafc"]
+resource_name = "normal_south"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -50,8 +115,8 @@ tracks/0/keys = {
 "values": [1]
 }
 
-[sub_resource type="Animation" id="Animation_s2nso"]
-resource_name = "normal_east"
+[sub_resource type="Animation" id="Animation_grbmv"]
+resource_name = "normal_southwest"
 length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -63,55 +128,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [2]
-}
-
-[sub_resource type="Animation" id="Animation_a5x77"]
-resource_name = "normal_northeast"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HammerSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [3]
-}
-
-[sub_resource type="Animation" id="Animation_uejch"]
-resource_name = "normal_north"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HammerSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
-
-[sub_resource type="Animation" id="Animation_7vtfh"]
-resource_name = "normal_northwest"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HammerSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [5]
+"values": [7]
 }
 
 [sub_resource type="Animation" id="Animation_wsp18"]
@@ -130,22 +147,6 @@ tracks/0/keys = {
 "values": [6]
 }
 
-[sub_resource type="Animation" id="Animation_grbmv"]
-resource_name = "normal_southwest"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HammerSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [7]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3ym1b"]
 _data = {
 "RESET": SubResource("Animation_wv5nc"),
@@ -159,8 +160,35 @@ _data = {
 "normal_west": SubResource("Animation_wsp18")
 }
 
-[node name="PwnHammer" type="Node2D"]
-script = ExtResource("1_x17e1")
+[sub_resource type="Curve" id="Curve_esuqg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_0ccen"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uf28s"]
+size = Vector2(24, 42)
+
+[node name="PwnHammer" type="Area2D" node_paths=PackedStringArray("sprite", "trail", "hitbox")]
+script = ExtResource("1_dnety")
+sprite = NodePath("HammerSprite2D")
+trail = NodePath("Marker2D/HammerTrail2D")
+hitbox = NodePath("HamerHitboxCollisionShape2D")
+
+[node name="HammerAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3ym1b")
+}
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -37)
+
+[node name="HammerTrail2D" type="Line2D" parent="Marker2D"]
+z_index = -1
+width_curve = SubResource("Curve_esuqg")
+gradient = SubResource("Gradient_0ccen")
+script = ExtResource("3_gtl8q")
 
 [node name="HammerSprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
@@ -168,7 +196,10 @@ texture = ExtResource("2_cyx0y")
 hframes = 4
 vframes = 2
 
-[node name="HammerAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_3ym1b")
-}
+[node name="HamerHitboxCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_uf28s")
+disabled = true
+debug_color = Color(0.694118, 0, 0.2, 0.419608)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
