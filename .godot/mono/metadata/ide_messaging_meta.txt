@@ -1,2 +1,2 @@
-﻿56527
-C:/Users/ayrdr/Saved Games/Godot .NET v4.2.1/Godot_v4.2.1-stable_mono_win64.exe
+﻿57261
+C:/Users/ayrdr/Saved Games/Godot_v4.3-stable_mono_win64/Godot_v4.3-stable_mono_win64.exe
