@@ -1,0 +1,1 @@
+class_name ContactDamageActionComponent extends ActionComponent

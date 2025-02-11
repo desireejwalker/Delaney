@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 @export var age: int = 1
 @export var death_age: int = 100
 @export var movement_speed: float = 200

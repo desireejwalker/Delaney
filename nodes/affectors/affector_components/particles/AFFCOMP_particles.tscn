@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://731we3kn02fs"]
+
+[ext_resource type="Script" path="res://nodes/affectors/affector_components/particles/AFFCOMP_particles.gd" id="1_fwnot"]
+
+[node name="AFFCOMP_Particles" type="Node"]
+script = ExtResource("1_fwnot")

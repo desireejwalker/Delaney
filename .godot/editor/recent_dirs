@@ -1,10 +1,14 @@
-res://resources/hammer_types
-res://game/game_states/main/assets/delaney/transititons
+res://nodes/cards/card_select
+res://nodes/affectors/affector_components/particles
+res://nodes/health
+res://game/game_states/monster_generation
+res://game/game_states/main/assets/ui/launch_arrow
+res://game/game_states/main/assets/ui/combo
+res://game/resources/combo_action_entries/instant_concussion
+res://game/resources/combo_action_entries/poke
+res://game/resources/combo_action_entries
 C:/Users/ayrdr/Projects/Project Delaney (Godot)/game/game_states/main/assets/delaney
 C:/Users/ayrdr/Projects/Project Delaney (Godot)/game/game_states/main/assets/delaney/states
-res://game/game_states/main/assets/delaney/states
-res://game/game_states/main/assets/delaney
-res://resources/tilesets
 res://game/game_states/main/assets/minimap
 res://game/game_states/main/assets/ui
 res://game/game_states/floor_clear
@@ -14,9 +18,3 @@ res://game
 res://addons/behaviour_toolkit
 res://
 res://addons/wall_segment_rule_plugin/controls
-res://addons/wall_segment_rule_plugin
-res://art/tilesheets
-res://resources/wall_definitions
-res://scenes/generation
-res://resources/room_definitions
-res://resources/floor_generation_parameters

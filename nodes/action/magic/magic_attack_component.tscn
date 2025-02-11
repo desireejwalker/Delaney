@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvse6uv7pwfl6"]
+
+[ext_resource type="Script" path="res://nodes/action/magic/magic_attack_component.gd" id="1_v7vt0"]
+[ext_resource type="Resource" path="res://assets/resources/spells/burston/burston.tres" id="2_qrnxs"]
+
+[node name="MagicAttackComponent" type="Node3D"]
+script = ExtResource("1_v7vt0")
+primary_spell = ExtResource("2_qrnxs")
+
+[node name="Timer" type="Timer" parent="."]

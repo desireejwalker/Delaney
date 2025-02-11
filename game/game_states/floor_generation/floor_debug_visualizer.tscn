@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://7t8v7la8w5s5"]
 
-[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/FloorDebugVisualizer.cs" id="1_hwaol"]
+[ext_resource type="Script" path="res://game/scripts/procedural/generation/floor_generation/FloorDebugVisualizer.cs" id="1_hwaol"]
 
 [node name="FloorDebugVisualizer" type="Node2D"]
 position = Vector2(0, 1)

@@ -2,10 +2,11 @@
 extends FSMState
 
 const TITLE_SCENE: PackedScene = preload("res://game/game_states/title/title_scene.tscn")
+
 var title_scene_instance: Title
 
 # Executes after the state is entered.
-func _on_enter(actor, _blackboard: Blackboard):
+func _on_enter(actor, _blackboard: Blackboard):	
 	# instantiate the title scene and add it as child to the GameManager
 	title_scene_instance = TITLE_SCENE.instantiate()
 	actor.add_child.call_deferred(title_scene_instance)

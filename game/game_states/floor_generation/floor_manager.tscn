@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://rmp3memykgyw"]
 
-[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/FloorManager.cs" id="1_a5s4f"]
-[ext_resource type="Resource" uid="uid://ddpvonr1bnr5x" path="res://resources/floor_generation_parameters/FGP_courtyard-overgrowth_A.tres" id="2_5etf6"]
+[ext_resource type="Script" path="res://game/scripts/procedural/generation/floor_generation/FloorManager.cs" id="1_a5s4f"]
+[ext_resource type="Resource" uid="uid://ddpvonr1bnr5x" path="res://game/resources/floor_generation_parameters/FGP_courtyard-overgrowth_A.tres" id="2_5etf6"]
 
 [node name="FloorManager" type="Node"]
 script = ExtResource("1_a5s4f")

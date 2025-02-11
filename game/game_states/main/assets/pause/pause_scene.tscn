@@ -3,12 +3,12 @@
 [ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://game/game_states/title/assets/dpcomic.regular.ttf" id="1_vrs8d"]
 [ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://game/game_states/title/assets/AtlantisInternational-jen0.ttf" id="2_6ovjj"]
 
-[sub_resource type="Gradient" id="Gradient_p31j2"]
+[sub_resource type="Gradient" id="Gradient_e7aly"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 0.784314)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_la346"]
-gradient = SubResource("Gradient_p31j2")
+gradient = SubResource("Gradient_e7aly")
 width = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_nc3w0"]

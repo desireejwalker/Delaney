@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8mr6510ejig2"]
+
+[ext_resource type="Script" path="res://nodes/affectors/periodic_affector.gd" id="1_lxgi3"]
+[ext_resource type="PackedScene" uid="uid://iwdyx33lswki" path="res://nodes/affectors/affector_components/regenerate_health/AFFCOMP_regenerate-health.tscn" id="2_2ni37"]
+
+[node name="CARDAFF-UP_TheFool" type="Node" node_paths=PackedStringArray("_period_timer")]
+script = ExtResource("1_lxgi3")
+_period_timer = NodePath("PeriodTimer")
+
+[node name="PeriodTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AFFCOMP_RegenerateHealth" parent="." instance=ExtResource("2_2ni37")]

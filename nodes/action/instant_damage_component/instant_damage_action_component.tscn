@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://m5enm43xyrgd"]
+
+[ext_resource type="Script" path="res://nodes/action/instant_damage_component/contact_damage_action_component.gd" id="1_xqutv"]
+
+[node name="ContactDamageActionComponent" type="Node"]
+script = ExtResource("1_xqutv")

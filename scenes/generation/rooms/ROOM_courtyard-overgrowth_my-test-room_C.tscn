@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cm7m7gmcks8ef"]
 
-[ext_resource type="TileSet" uid="uid://bterungwyh5jq" path="res://resources/tilesets/TS_courtyard-overgrowth.tres" id="1_l7c0p"]
+[ext_resource type="TileSet" uid="uid://bterungwyh5jq" path="res://game/resources/tilesets/TS_courtyard-overgrowth.tres" id="1_l7c0p"]
 
 [node name="ROOM_CourtyardOvergrowth_MyTestRoom_C" type="Node2D"]
 

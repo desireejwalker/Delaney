@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="RoomDefinition" load_steps=3 format=3 uid="uid://ljvihrw8at4b"]
-
-[ext_resource type="PackedScene" uid="uid://cm7m7gmcks8ef" path="res://scenes/generation/rooms/ROOM_courtyard-overgrowth_my-test-room_C.tscn" id="1_ag10r"]
-[ext_resource type="Script" path="res://scripts/procedural/generation/floor_generation/RoomDefinition.cs" id="2_w5y2o"]
-
-[resource]
-script = ExtResource("2_w5y2o")
-_roomScene = ExtResource("1_ag10r")

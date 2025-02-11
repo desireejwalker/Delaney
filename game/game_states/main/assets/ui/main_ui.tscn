@@ -1,95 +1,1027 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxkbuqdyulqqy"]
+[gd_scene load_steps=63 format=3 uid="uid://cxkbuqdyulqqy"]
 
-[ext_resource type="Texture2D" uid="uid://c6yollxpumbsd" path="res://game/game_states/main/assets/ui/MinimapBackground.png" id="1_damsa"]
+[ext_resource type="Texture2D" uid="uid://c6yollxpumbsd" path="res://game/game_states/main/assets/ui/minimap/MinimapBackground.png" id="1_damsa"]
 [ext_resource type="Script" path="res://game/game_states/main/assets/ui/main_ui.gd" id="1_kiy17"]
 [ext_resource type="Texture2D" uid="uid://do17tvgiwbuv3" path="res://game/game_states/main/assets/health_bar/health_bar.png" id="2_2a64r"]
-[ext_resource type="Texture2D" uid="uid://bjd18wnbeksee" path="res://game/game_states/main/assets/ui/MinimapBorder.png" id="2_o5ujx"]
-[ext_resource type="Texture2D" uid="uid://ckmh7v2v6p3gm" path="res://game/game_states/main/assets/ui/MinimapMask.png" id="2_uaal5"]
+[ext_resource type="Texture2D" uid="uid://bs7aui377ucem" path="res://game/game_states/main/assets/ui/score/delta_score_title.png" id="2_j42m4"]
+[ext_resource type="Texture2D" uid="uid://bjd18wnbeksee" path="res://game/game_states/main/assets/ui/minimap/MinimapBorder.png" id="2_o5ujx"]
+[ext_resource type="Texture2D" uid="uid://ckmh7v2v6p3gm" path="res://game/game_states/main/assets/ui/minimap/MinimapMask.png" id="2_uaal5"]
 [ext_resource type="Texture2D" uid="uid://8fnx4e78aeqj" path="res://game/game_states/main/assets/health_bar/health_bar_outline.png" id="3_vu3w4"]
+[ext_resource type="Texture2D" uid="uid://utxodaqx45ua" path="res://game/game_states/main/assets/ui/score/epsilon_score_title.png" id="4_l44l0"]
 [ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://game/game_states/title/assets/dpcomic.regular.ttf" id="4_qjna8"]
 [ext_resource type="Texture2D" uid="uid://cg8ofab88m0uy" path="res://game/game_states/main/assets/minimap/MinimapArrow.png" id="4_uuuv8"]
+[ext_resource type="Texture2D" uid="uid://0yuw646nobvk" path="res://game/game_states/main/assets/ui/score/lambda_score_title.png" id="5_ur45a"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_oboor"]
+[sub_resource type="Gradient" id="Gradient_cp6ee"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.588235)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j51th"]
+gradient = SubResource("Gradient_cp6ee")
+
+[sub_resource type="Gradient" id="Gradient_6lngv"]
+offsets = PackedFloat32Array(0.1, 0.5)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dgj3u"]
+gradient = SubResource("Gradient_6lngv")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ff5k"]
 font = ExtResource("4_qjna8")
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_0ggje"]
+colors = PackedColorArray(0.968627, 0.929412, 0.47451, 1, 0.215686, 0.0431373, 0.164706, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ngmfg"]
+gradient = SubResource("Gradient_0ggje")
+
+[sub_resource type="Curve" id="Curve_j1ahl"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6r5dl"]
+curve = SubResource("Curve_j1ahl")
+
+[sub_resource type="Curve" id="Curve_48jny"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1qo3a"]
+curve = SubResource("Curve_48jny")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p5mvr"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 20, 1)
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+radial_velocity_min = 40.0
+radial_velocity_max = 100.0
+radial_velocity_curve = SubResource("CurveTexture_6r5dl")
+gravity = Vector3(0, 0, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_1qo3a")
+color_ramp = SubResource("GradientTexture1D_ngmfg")
+
+[sub_resource type="LabelSettings" id="LabelSettings_knd2b"]
+font = ExtResource("4_qjna8")
+font_size = 32
+font_color = Color(0.968627, 0.929412, 0.47451, 1)
+outline_size = 4
+outline_color = Color(0.156863, 0.207843, 0.25098, 1)
+
+[sub_resource type="Animation" id="Animation_gftww"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeltaComboLevelTitleControl/Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gec1n"]
+resource_name = "default"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeltaComboLevelTitleControl/Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_th8sq"]
+_data = {
+"RESET": SubResource("Animation_gftww"),
+"default": SubResource("Animation_gec1n")
+}
+
+[sub_resource type="Animation" id="Animation_ejsok"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:scale:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureProgressBar:scale:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureProgressBar:value")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_dtrd7"]
+resource_name = "show"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:scale:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureProgressBar:scale:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.8)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureProgressBar:value")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.2, 0.831218, 1, -0.3, -0.0760153, 0.25, 0),
+"times": PackedFloat32Array(0.2, 0.8)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wa1sv"]
+_data = {
+"RESET": SubResource("Animation_ejsok"),
+"show": SubResource("Animation_dtrd7")
+}
+
+[sub_resource type="Gradient" id="Gradient_66iak"]
+colors = PackedColorArray(0.482353, 0.796078, 0.760784, 1, 0.0980392, 0.0352941, 0.254902, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c8lvr"]
+gradient = SubResource("Gradient_66iak")
+
+[sub_resource type="Curve" id="Curve_kacno"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j25jf"]
+curve = SubResource("Curve_kacno")
+
+[sub_resource type="Curve" id="Curve_i1fcy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_m7cdy"]
+curve = SubResource("Curve_i1fcy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q3avw"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 20, 1)
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+angular_velocity_min = -1440.0
+angular_velocity_max = 1440.0
+radial_velocity_min = 40.0
+radial_velocity_max = 100.0
+radial_velocity_curve = SubResource("CurveTexture_j25jf")
+gravity = Vector3(0, 0, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_m7cdy")
+color_ramp = SubResource("GradientTexture1D_c8lvr")
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wq1n"]
+font = ExtResource("4_qjna8")
+font_size = 32
+font_color = Color(0.482353, 0.796078, 0.760784, 1)
+outline_size = 4
+outline_color = Color(0.156863, 0.2, 0.356863, 1)
+
+[sub_resource type="Animation" id="Animation_4h32q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pg5x2"]
+resource_name = "default"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.3, 1.3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_woo2e"]
+_data = {
+"RESET": SubResource("Animation_4h32q"),
+"default": SubResource("Animation_pg5x2")
+}
+
+[sub_resource type="Animation" id="Animation_cqcoh"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureProgressBar:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureProgressBar:value")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_x2sdi"]
+resource_name = "show"
+length = 0.8
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureProgressBar:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.25, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.8)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.25, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.8)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureProgressBar:value")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.2, 0.8)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o51rp"]
+_data = {
+"RESET": SubResource("Animation_cqcoh"),
+"show": SubResource("Animation_x2sdi")
+}
+
+[sub_resource type="Gradient" id="Gradient_0w100"]
+colors = PackedColorArray(0.901961, 0.270588, 0.223529, 1, 0.2, 0.0117647, 0.0784314, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3shlc"]
+gradient = SubResource("Gradient_0w100")
+
+[sub_resource type="Curve" id="Curve_13bqa"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_draao"]
+curve = SubResource("Curve_13bqa")
+
+[sub_resource type="Curve" id="Curve_ywtr8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gq0uj"]
+curve = SubResource("Curve_ywtr8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d0ovv"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 20, 1)
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+angular_velocity_min = -1440.0
+angular_velocity_max = 1440.0
+radial_velocity_min = 80.0
+radial_velocity_max = 100.0
+radial_velocity_curve = SubResource("CurveTexture_draao")
+gravity = Vector3(0, 0, 0)
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_gq0uj")
+color_ramp = SubResource("GradientTexture1D_3shlc")
+
+[sub_resource type="LabelSettings" id="LabelSettings_s4485"]
+font = ExtResource("4_qjna8")
+font_size = 32
 font_color = Color(0.901961, 0.270588, 0.223529, 1)
 outline_size = 4
-outline_color = Color(0, 0, 0, 1)
+outline_color = Color(0.470588, 0.113725, 0.309804, 1)
+
+[sub_resource type="Animation" id="Animation_0uabx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_oif3f"]
+resource_name = "default"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1.4, 1.4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c86ro"]
+_data = {
+"RESET": SubResource("Animation_0uabx"),
+"default": SubResource("Animation_oif3f")
+}
+
+[sub_resource type="Animation" id="Animation_85gm8"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureProgressBar:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureProgressBar:value")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_le46d"]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureProgressBar:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.25, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.25, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureProgressBar:value")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0, 0.762501, 1, -0.3, -0.00517535, 0.25, 0),
+"times": PackedFloat32Array(0.1, 0.5)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rcaxx"]
+_data = {
+"RESET": SubResource("Animation_85gm8"),
+"show": SubResource("Animation_le46d")
+}
+
+[sub_resource type="Animation" id="Animation_l6uwl"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(416, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_s8cn5"]
+resource_name = "hide"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(266, -0.25, 0, 0.2, -1, 415, -0.2, -141, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_points_overlay_offscreen"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_8vdpa"]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(416, -0.25, 0, 0, -146.553, 266, -0.2, 4, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fciox"]
+_data = {
+"RESET": SubResource("Animation_l6uwl"),
+"hide": SubResource("Animation_s8cn5"),
+"show": SubResource("Animation_8vdpa")
+}
 
 [node name="MainUI" type="CanvasLayer"]
+process_mode = 1
 script = ExtResource("1_kiy17")
 metadata/_edit_vertical_guides_ = [178.0]
 metadata/_edit_horizontal_guides_ = [226.0]
 
-[node name="HealthBarControl" type="Control" parent="."]
+[node name="PointsControl" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 56.0
-offset_top = -63.0
-offset_right = 176.0
-offset_bottom = -8.0
-grow_vertical = 0
+offset_left = 416.0
+offset_right = 566.0
+offset_bottom = 1404.0
+grow_horizontal = 0
+grow_vertical = 2
+metadata/_edit_group_ = true
 
-[node name="UnderlayTextureProgressBar" type="TextureProgressBar" parent="HealthBarControl"]
+[node name="ScoreBackgroundTextureRect" type="TextureRect" parent="PointsControl"]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_j51th")
+
+[node name="ComboActionListControl" type="Control" parent="PointsControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 69.0
+offset_right = -8.0
+offset_bottom = 127.0
+grow_horizontal = 2
+
+[node name="MaskTextureRect" type="TextureRect" parent="PointsControl/ComboActionListControl"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_dgj3u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PointsControl/ComboActionListControl/MaskTextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -7.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -4
+alignment = 2
+
+[node name="PointsCounterControl" type="Control" parent="PointsControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_top = 56.0
+offset_right = -8.0
+offset_bottom = 76.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="PointsControl/PointsCounterControl"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0pts"
+label_settings = SubResource("LabelSettings_7ff5k")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DeltaComboLevelTitleControl" type="Control" parent="PointsControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 64.0
+grow_horizontal = 0
+metadata/_edit_group_ = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PointsControl/DeltaComboLevelTitleControl"]
+position = Vector2(67, 23)
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_p5mvr")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="PointsControl/DeltaComboLevelTitleControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+pivot_offset = Vector2(67, 20)
+max_value = 1.0
+step = 0.0
+texture_under = ExtResource("2_j42m4")
+texture_progress = ExtResource("2_j42m4")
+tint_under = Color(0.223529, 0.0470588, 0.345098, 1)
+
+[node name="Label" type="Label" parent="PointsControl/DeltaComboLevelTitleControl"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -32.0
-grow_horizontal = 2
+offset_left = -53.0
+offset_top = -30.0
+grow_horizontal = 0
 grow_vertical = 0
-max_value = 20.0
-value = 20.0
-texture_under = ExtResource("2_2a64r")
-texture_over = ExtResource("3_vu3w4")
-texture_progress = ExtResource("2_2a64r")
-tint_under = Color(0.470588, 0.113725, 0.309804, 1)
-tint_progress = Color(0.678431, 0.184314, 0.270588, 1)
+pivot_offset = Vector2(26.5, 15)
+text = "1.5X"
+label_settings = SubResource("LabelSettings_knd2b")
+horizontal_alignment = 2
 
-[node name="HealthBarTextureProgressBar" type="TextureProgressBar" parent="HealthBarControl"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointsControl/DeltaComboLevelTitleControl/Label"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_th8sq")
+}
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointsControl/DeltaComboLevelTitleControl"]
+libraries = {
+"": SubResource("AnimationLibrary_wa1sv")
+}
+
+[node name="EpsilonComboLevelTitleControl" type="Control" parent="PointsControl"]
+visible = false
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 64.0
+grow_horizontal = 0
+metadata/_edit_group_ = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PointsControl/EpsilonComboLevelTitleControl"]
+position = Vector2(67, 23)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_q3avw")
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="PointsControl/EpsilonComboLevelTitleControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+pivot_offset = Vector2(67, 20)
+max_value = 1.0
+step = 0.0
+texture_under = ExtResource("4_l44l0")
+texture_progress = ExtResource("4_l44l0")
+tint_under = Color(0.223529, 0.0470588, 0.345098, 1)
+
+[node name="Label" type="Label" parent="PointsControl/EpsilonComboLevelTitleControl"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -32.0
-grow_horizontal = 2
+offset_left = -53.0
+offset_top = -30.0
+grow_horizontal = 0
 grow_vertical = 0
-max_value = 20.0
-value = 20.0
-texture_progress = ExtResource("2_2a64r")
-tint_under = Color(0.470588, 0.113725, 0.309804, 1)
-tint_progress = Color(0.901961, 0.270588, 0.223529, 1)
+pivot_offset = Vector2(26.5, 15)
+text = "2.0X"
+label_settings = SubResource("LabelSettings_8wq1n")
+horizontal_alignment = 2
 
-[node name="TitleLabel" type="Label" parent="HealthBarControl"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointsControl/EpsilonComboLevelTitleControl/Label"]
+libraries = {
+"": SubResource("AnimationLibrary_woo2e")
+}
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointsControl/EpsilonComboLevelTitleControl"]
+libraries = {
+"": SubResource("AnimationLibrary_o51rp")
+}
+
+[node name="LambdaComboLevelTitleControl" type="Control" parent="PointsControl"]
+visible = false
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 64.0
+grow_horizontal = 0
+metadata/_edit_group_ = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PointsControl/LambdaComboLevelTitleControl"]
+position = Vector2(67, 23)
+emitting = false
+amount = 48
+process_material = SubResource("ParticleProcessMaterial_d0ovv")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="PointsControl/LambdaComboLevelTitleControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+pivot_offset = Vector2(67, 20)
+max_value = 1.0
+step = 0.0
+texture_under = ExtResource("5_ur45a")
+texture_progress = ExtResource("5_ur45a")
+tint_under = Color(0.223529, 0.0470588, 0.345098, 1)
+
+[node name="Label" type="Label" parent="PointsControl/LambdaComboLevelTitleControl"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 11.0
-offset_top = -42.0
-offset_right = -30.0
-offset_bottom = -19.0
-grow_horizontal = 2
+offset_left = -53.0
+offset_top = -30.0
+grow_horizontal = 0
 grow_vertical = 0
-text = "HP: 999"
-label_settings = SubResource("LabelSettings_oboor")
-vertical_alignment = 2
+pivot_offset = Vector2(26.5, 15)
+text = "3.0X"
+label_settings = SubResource("LabelSettings_s4485")
+horizontal_alignment = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointsControl/LambdaComboLevelTitleControl/Label"]
+libraries = {
+"": SubResource("AnimationLibrary_c86ro")
+}
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PointsControl/LambdaComboLevelTitleControl"]
+libraries = {
+"": SubResource("AnimationLibrary_rcaxx")
+}
+
+[node name="PointsAnimationPlayer" type="AnimationPlayer" parent="PointsControl"]
+libraries = {
+"": SubResource("AnimationLibrary_fciox")
+}
 
 [node name="MinimapControl" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 2
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = -64.0
-offset_right = 64.0
+offset_left = -88.0
+offset_top = -88.0
+offset_right = -8.0
 offset_bottom = -8.0
+grow_horizontal = 0
 grow_vertical = 0
-pivot_offset = Vector2(28, 28)
+pivot_offset = Vector2(40, 40)
 metadata/_edit_group_ = true
 
 [node name="BackgroundTextureRect" type="TextureRect" parent="MinimapControl"]
@@ -127,7 +1059,7 @@ disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(56, 56)
+size = Vector2i(80, 80)
 render_target_update_mode = 4
 
 [node name="PlayerMarker" type="Node2D" parent="MinimapControl/MaskTextureRect/MapSubViewportContainer/SubViewport"]
@@ -149,3 +1081,41 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_o5ujx")
 expand_mode = 5
+
+[node name="UnderlayTextureProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = -40.0
+offset_right = 56.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 20.0
+value = 20.0
+texture_under = ExtResource("2_2a64r")
+texture_over = ExtResource("3_vu3w4")
+texture_progress = ExtResource("2_2a64r")
+tint_under = Color(0.470588, 0.113725, 0.309804, 1)
+tint_progress = Color(0.678431, 0.184314, 0.270588, 1)
+
+[node name="HealthBarTextureProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = -40.0
+offset_right = 56.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 20.0
+value = 20.0
+texture_progress = ExtResource("2_2a64r")
+tint_under = Color(0.470588, 0.113725, 0.309804, 1)
+tint_progress = Color(0.901961, 0.270588, 0.223529, 1)

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://u31mherod2xv"]
+
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://game/game_states/title/assets/AtlantisInternational-jen0.ttf" id="1_aeijr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_smm7a"]
+font = ExtResource("1_aeijr")
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ComboLabel" type="Label"]
+text = "!PLACEHOLDER!"
+label_settings = SubResource("LabelSettings_smm7a")
+horizontal_alignment = 2

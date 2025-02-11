@@ -1,3 +1,31 @@
+Affectors:
+	File Name: AFF_affector-name
+	Example: AFF_my-affector
+	
+	Scene Name: AFF_AffectorName
+	Example: AFF_MyAffector
+
+Affector Components:
+	File Name AFFCOMP_affector-component-name
+	Example: AFFCOMP_my-affector
+	
+	Scene Name: AFFCOMP_AffectorComponentName
+	Example: AFFCOMP_MyAffectorComponent
+
+Cards: 
+	File Name: CARD_card-name-here
+	Example: CARD_my-card
+	
+	Scene Name: CARD_CardNameHere
+	Example: CARD_MyCard
+
+Card Affectors:
+	File Name: CARDAFF-TYPE_card-name-here where "TYPE" = UP (Upright), RE (Reversed)
+	Example: CARDAFF-RE_my-card
+	
+	Scene Name: CARDAFF-TYPE_CardNameHere where "TYPE" = UP (Upright), RE (Reversed)
+	Example: CARDAFF-UP_MyCard
+
 Floor Generation Parameters: FGP_area-name-here_iteration where "iteration" = A, B, C, ...
 Example: FGP_my-area-name_A
 

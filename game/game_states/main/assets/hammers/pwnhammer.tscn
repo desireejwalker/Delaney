@@ -171,6 +171,8 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 size = Vector2(24, 42)
 
 [node name="PwnHammer" type="Area2D" node_paths=PackedStringArray("sprite", "trail", "hitbox")]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_dnety")
 sprite = NodePath("HammerSprite2D")
 trail = NodePath("Marker2D/HammerTrail2D")
@@ -200,6 +202,6 @@ vframes = 2
 position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_uf28s")
 disabled = true
-debug_color = Color(0.694118, 0, 0.2, 0.419608)
+debug_color = Color(0.870588, 0.34902, 0, 0.419608)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

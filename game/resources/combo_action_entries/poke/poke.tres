@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ComboActionEntry" load_steps=2 format=3 uid="uid://c0n0m8bsgdlls"]
+
+[ext_resource type="Script" path="res://game/scripts/combo/combo_action_entry.gd" id="1_rqv46"]
+
+[resource]
+script = ExtResource("1_rqv46")
+name = "Poke"
+points = 10

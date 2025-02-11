@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ComboActionEntry" load_steps=2 format=3 uid="uid://d1o6mmjl8y2ev"]
+
+[ext_resource type="Script" path="res://game/scripts/combo/combo_action_entry.gd" id="1_1va76"]
+
+[resource]
+script = ExtResource("1_1va76")
+name = "Swing 720°"
+points = 50

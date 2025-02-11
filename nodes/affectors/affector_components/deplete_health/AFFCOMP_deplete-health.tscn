@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://lpupa731qwe4"]
+
+[ext_resource type="Script" path="res://nodes/affectors/affector_components/deplete_health/AFFCOMP_deplete-health.gd" id="1_7lqbt"]
+
+[node name="AFFCOMP_DepleteHealth" type="Node"]
+script = ExtResource("1_7lqbt")
+damage_amount = 1

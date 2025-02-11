@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://24w5f7x01r2p"]
+
+[ext_resource type="Script" path="res://nodes/cards/card_select/card_select_screen.gd" id="1_05kiw"]
+
+[sub_resource type="Gradient" id="Gradient_auyds"]
+colors = PackedColorArray(0, 0, 0, 1, 0.192157, 0.0784314, 0.2, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5lbtk"]
+gradient = SubResource("Gradient_auyds")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qbfev"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Curve" id="Curve_be6df"]
+_data = [Vector2(0, 0), 0.0, 6.64109, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hqcjw"]
+curve = SubResource("Curve_be6df")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hcxnq"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(256, 128, 1)
+angle_max = 360.0
+spread = 180.0
+angular_velocity_min = 10.0
+angular_velocity_max = 10.0
+gravity = Vector3(0, 5, 0)
+linear_accel_min = 2.0
+linear_accel_max = 2.0
+scale_min = 50.0
+scale_max = 100.0
+scale_curve = SubResource("CurveTexture_hqcjw")
+color = Color(0.192157, 0.0784314, 0.2, 1)
+turbulence_enabled = true
+turbulence_noise_strength = 5.0
+turbulence_noise_scale = 10.0
+turbulence_noise_speed = Vector3(-100, 0, 0)
+turbulence_influence_max = 1.0
+turbulence_initial_displacement_max = 50.0
+
+[node name="CardSelectScreen" type="CanvasLayer"]
+script = ExtResource("1_05kiw")
+
+[node name="BackgroundTextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_5lbtk")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_qbfev")
+position = Vector2(188, 120)
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_hcxnq")
+lifetime = 10.0
+randomness = 1.0
+
+[node name="Cards" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -72.0
+offset_right = 20.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0

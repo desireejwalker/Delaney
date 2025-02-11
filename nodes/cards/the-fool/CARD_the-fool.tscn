@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://k6lusiad2ij7"]
+
+[ext_resource type="Script" path="res://nodes/cards/card.gd" id="1_w2c74"]
+[ext_resource type="PackedScene" uid="uid://c8mr6510ejig2" path="res://nodes/cards/the-fool/upright_affector/CARDAFF-UP_the-fool.tscn" id="2_1rrni"]
+[ext_resource type="PackedScene" uid="uid://camplvp4uavh5" path="res://nodes/cards/the-fool/reverse_affector/CARDAFF-RE_the-fool.tscn" id="3_t3au8"]
+
+[node name="CARD_TheFool" type="Node" node_paths=PackedStringArray("upright_affector", "reversed_affector")]
+script = ExtResource("1_w2c74")
+upright_description = "The Fool reminds us to recognize the path of personal development within ourselves -- and the stage upon that path where we find ourselves -- in order to energize our movement toward deeper self-realization."
+reversed_description = "You are encountering an unfinished side of yourself, a part still caught in the shadows of ignorance or immaturity. An emotional reflex or psychological attitude could be holding you back from responding authentically and naturally. Release yourself from any dogmas or taboos so your natural truthfulness and instinct for right action can be restored."
+upright_affector = NodePath("CARDAFF-UP_TheFool")
+reversed_affector = NodePath("CARDAFF-RE_TheFool")
+
+[node name="CARDAFF-UP_TheFool" parent="." instance=ExtResource("2_1rrni")]
+
+[node name="CARDAFF-RE_TheFool" parent="." instance=ExtResource("3_t3au8")]

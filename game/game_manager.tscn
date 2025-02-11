@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://rmp3memykgyw" path="res://game/game_states/floor_generation/floor_manager.tscn" id="2_t1eve"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="5_1lqpr"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="5_sc75x"]
-[ext_resource type="Resource" uid="uid://br1do7vkp8rhl" path="res://resources/blackboards/game_blackboard.tres" id="6_b1ygr"]
+[ext_resource type="Resource" uid="uid://br1do7vkp8rhl" path="res://game/resources/blackboards/game_blackboard.tres" id="6_b1ygr"]
 [ext_resource type="Script" path="res://game/game_states/title/title_state.gd" id="7_0lcc2"]
 [ext_resource type="Script" path="res://game/game_states/floor_generation/floor_generation_state.gd" id="7_ikau2"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state.gd" id="7_jy2e4"]
@@ -14,6 +14,7 @@
 [node name="GameManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_jnnxm")
+auto_start = true
 
 [node name="FloorManager" parent="." instance=ExtResource("2_t1eve")]
 
@@ -50,6 +51,10 @@ script = ExtResource("5_sc75x")
 next_state = NodePath("../../FloorClearState")
 use_event = true
 event = "on_paused_and_quitted"
+
+[node name="ComboTimer" type="Timer" parent="GameStateMachine/MainState"]
+process_mode = 1
+one_shot = true
 
 [node name="GameOverState" type="Node" parent="GameStateMachine"]
 script = ExtResource("7_jy2e4")

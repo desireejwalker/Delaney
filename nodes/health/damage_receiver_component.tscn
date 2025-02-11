@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmttflo0d5eu"]
+
+[ext_resource type="Script" path="res://nodes/health/damage_receiver_component.gd" id="1_pbwqr"]
+
+[node name="DamageReceiverComponent" type="Node"]
+script = ExtResource("1_pbwqr")

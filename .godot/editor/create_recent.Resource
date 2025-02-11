@@ -1,3 +1,5 @@
+Card
+ComboActionEntry
 HammerType
 TileSet
 WallSegment
