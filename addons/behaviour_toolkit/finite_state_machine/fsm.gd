@@ -51,7 +51,12 @@ signal state_changed(state: FSMState)
 ## The list of states in the FSM.
 var states: Array[FSMState]
 ## The current active state.
-var active_state: FSMState
+var active_state: FSMState:
+	set(value):
+		last_active_state = active_state
+		active_state = value
+## The last active state.
+var last_active_state: FSMState
 ## The list of current events.
 var current_events: Array[String]
 ## Current BT BTStatus

@@ -36,4 +36,3 @@ func _get_configuration_warnings() -> PackedStringArray:
 	# Add your own warnings to the array here
 
 	return warnings
-

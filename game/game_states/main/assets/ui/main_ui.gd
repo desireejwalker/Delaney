@@ -143,4 +143,3 @@ func set_player_marker_rotation(rotation_radians: float):
 	_player_marker.rotation = rotation_radians
 func set_player_marker_position(position: Vector2):
 	_player_marker.position = position
-

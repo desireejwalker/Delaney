@@ -1,0 +1,189 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxrvpsuh8ql7f"]
+
+[ext_resource type="Texture2D" uid="uid://bghiqrpixv148" path="res://resources/images/textures/kenney_prototype-textures/PNG/Dark/texture_07.png" id="1_hgt71"]
+[ext_resource type="PackedScene" uid="uid://cuki365ekpnya" path="res://nodes/entities/delaney/delaney.tscn" id="1_trr4d"]
+[ext_resource type="Texture2D" uid="uid://0xh7n3wrtt8u" path="res://resources/images/textures/kenney_prototype-textures/PNG/Light/texture_06.png" id="2_fgpup"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ux13y"]
+albedo_texture = ExtResource("1_hgt71")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_adatc"]
+albedo_texture = ExtResource("2_fgpup")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="Environment" id="Environment_olxra"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.1
+
+[node name="TestMap" type="Node3D"]
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGBox3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.249573, 0)
+use_collision = true
+size = Vector3(400, 0.5, 400)
+material = SubResource("StandardMaterial3D_ux13y")
+
+[node name="Jumps" type="Node3D" parent="Geometry"]
+
+[node name="Jump 0_5" type="CSGBox3D" parent="Geometry/Jumps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 4.5)
+use_collision = true
+size = Vector3(4, 0.5, 4)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Jump 1" type="CSGBox3D" parent="Geometry/Jumps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.5, 4.5)
+use_collision = true
+size = Vector3(4, 1, 4)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Jump 1_5" type="CSGBox3D" parent="Geometry/Jumps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.75, 4.5)
+use_collision = true
+size = Vector3(4, 1.5, 4)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Jump 2" type="CSGBox3D" parent="Geometry/Jumps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 1, 4.5)
+use_collision = true
+size = Vector3(4, 2, 4)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Jump 2_5" type="CSGBox3D" parent="Geometry/Jumps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 1.25, 4.5)
+use_collision = true
+size = Vector3(4, 2.5, 4)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Jump 3" type="CSGBox3D" parent="Geometry/Jumps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 1.5, 4.5)
+use_collision = true
+size = Vector3(4, 3, 4)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Slopes" type="Node3D" parent="Geometry"]
+
+[node name="Slope 0_5" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, -7)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 0.5, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Slope 1" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -7)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Slope 1_5" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14, 0, -7)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1.5, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Slope 2" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20, 0, -7)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 2, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Slope 2_5" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -26, 0, -7)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 2.5, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Slope 3" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -32, 0, -7)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 3, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="2Slope 0_5" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, -17)
+use_collision = true
+polygon = PackedVector2Array(-4, 0, -4, 0.5, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="2Slope 1" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -17)
+use_collision = true
+polygon = PackedVector2Array(-4, 0, -4, 1, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="2Slope 1_5" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14, 0, -17)
+use_collision = true
+polygon = PackedVector2Array(-4, 0, -4, 1.5, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="2Slope 2" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20, 0, -17)
+use_collision = true
+polygon = PackedVector2Array(-4, 0, -4, 2, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="2Slope 2_5" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -26, 0, -17)
+use_collision = true
+polygon = PackedVector2Array(-4, 0, -4, 2.5, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="2Slope 3" type="CSGPolygon3D" parent="Geometry/Slopes"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -32, 0, -17)
+use_collision = true
+polygon = PackedVector2Array(-4, 0, -4, 3, 4, 0)
+depth = 4.0
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Walls" type="Node3D" parent="Geometry"]
+
+[node name="Wall" type="CSGBox3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -15, 4.25, 15.5)
+use_collision = true
+size = Vector3(34, 0.5, 8)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Wall3" type="CSGBox3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -15, 13.25, 15.5)
+use_collision = true
+size = Vector3(34, 0.5, 8)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Wall2" type="CSGBox3D" parent="Geometry/Walls"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -15, 8.25, 10.5)
+use_collision = true
+size = Vector3(34, 0.5, 8)
+material = SubResource("StandardMaterial3D_adatc")
+
+[node name="Delaney" parent="." instance=ExtResource("1_trr4d")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_olxra")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
+light_energy = 1.4
+sky_mode = 1

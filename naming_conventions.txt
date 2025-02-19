@@ -50,3 +50,10 @@ Example: TSH_my-area-name
 
 Spritesheets: SPRSH_name-here
 Example: SPRSH_my-name-here
+
+Particle Systems:
+	File Name: PAR_type_name-here where "type" = B, T, ...
+	Example: PAR_B_my-burst-particle-system-name
+	
+	Scene Name: PAR_Type_NameHere where "Type" = B, T, ...
+	Example: PAR_B_MyBurstParticleSystemName

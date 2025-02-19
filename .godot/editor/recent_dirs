@@ -1,3 +1,7 @@
+res://nodes/entities/delaney/states
+res://art/particles
+res://nodes/particle_systems/trails
+res://art/tilesheets
 res://nodes/cards/card_select
 res://nodes/affectors/affector_components/particles
 res://nodes/health
@@ -16,5 +20,3 @@ res://game/game_states/floor_generation
 res://game/game_states/title/assets
 res://game
 res://addons/behaviour_toolkit
-res://
-res://addons/wall_segment_rule_plugin/controls
