@@ -24,11 +24,11 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 	
 	if not actor.is_on_floor():
-		get_parent().fire_event("on_start_falling")
+		get_parent().fire_event("sliding/on_start_falling")
 		return
 	
 	if Input.is_action_pressed("jump") and not _slide_limit_timer.is_stopped():
-		get_parent().fire_event("on_start_long_jump")
+		get_parent().fire_event("sliding/on_start_long_jump")
 	
 	var h_rot = actor.get_camera().get_camera().global_transform.basis.get_euler().y
 	var direction = Vector3(
@@ -41,35 +41,26 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 		actor.velocity = actor.velocity.move_toward((actor.velocity.limit_length(0.2) * actor.get_entity_stats().get_agility()), ACCELERATION * delta)
 	else:
 		actor.velocity = actor.velocity.move_toward((direction * actor.get_entity_stats().get_agility()), ACCELERATION * delta)
+	var velocity_normalized = actor.velocity.normalized()
+	if not actor.velocity.is_zero_approx():
+		actor.rotation.y = atan2(velocity_normalized.x, velocity_normalized.z)
 	
 	if not _slide_limit_timer.is_stopped():
 		return
 	
 	if not Input.is_action_pressed("slide"):
 		if actor.velocity.is_zero_approx():
-			get_parent().fire_event("on_start_idling")
+			get_parent().fire_event("sliding/on_start_idling")
 			return
 
 		if Input.is_action_pressed("run"):
-			get_parent().fire_event("on_start_running")
+			get_parent().fire_event("sliding/on_start_running")
 			return
 		else:
-			get_parent().fire_event("on_start_walking")
+			get_parent().fire_event("sliding/on_start_walking")
 			return
 
 
 # Executes before the state is exited.
 func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
 	pass
-
-
-# Add custom configuration warnings
-# Note: Can be deleted if you don't want to define your own warnings.
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: Array = []
-
-	warnings.append_array(super._get_configuration_warnings())
-
-	# Add your own warnings to the array here
-
-	return warnings

@@ -25,7 +25,7 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 		
 	if Input.is_action_just_pressed("dive"):
-		get_parent().fire_event("on_dive")
+		get_parent().fire_event("wall_jumping/on_dive")
 		return
 	
 	var h_rot = actor.get_camera().get_camera().global_transform.basis.get_euler().y
@@ -40,15 +40,20 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	else:
 		actor.velocity = actor.velocity.move_toward(((direction * actor.get_entity_stats().get_agility()) * 0.8) + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
 	
+	var horizontal_velocity = Vector3(actor.velocity.x, 0, actor.velocity.z)
+	var horizontal_velocity_normalized = horizontal_velocity.normalized()
+	if not horizontal_velocity.is_zero_approx():
+		actor.rotation.y = atan2(horizontal_velocity_normalized.x, horizontal_velocity_normalized.z)
+	
 	if actor.velocity.y < 0:
-		get_parent().fire_event("on_start_falling")
+		get_parent().fire_event("wall_jumping/on_start_falling")
 		return
 	
 	if not _grounded_timer.is_stopped():
 		return
 	
 	if actor.is_on_floor():
-		get_parent().fire_event("on_landing")
+		get_parent().fire_event("wall_jumping/on_landing")
 
 # Executes before the state is exited.
 func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:

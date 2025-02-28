@@ -30,6 +30,11 @@ func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	var vertical_velocity = Vector3.UP * VERTICAL_FORCE
 	
 	actor.velocity = horizontal_velocity + vertical_velocity
+	#var horizontal_velocity = Vector3(actor.velocity.x, 0, actor.velocity.z)
+	var horizontal_velocity_normalized = horizontal_velocity.normalized()
+	if not horizontal_velocity.is_zero_approx():
+		actor.rotation.y = atan2(horizontal_velocity_normalized.x, horizontal_velocity_normalized.z)
+	
 	_grounded_timer.start()
 	
 	#get_parent().fire_event("on_start_falling")
@@ -39,7 +44,7 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 	
 	if Input.is_action_just_pressed("dive"):
-		get_parent().fire_event("on_dive")
+		get_parent().fire_event("long_jumping/on_dive")
 		return
 	
 	var h_rot = actor.get_camera().get_camera().global_transform.basis.get_euler().y
@@ -56,14 +61,14 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	actor.velocity = actor.velocity.move_toward(horizontal_velocity + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
 	
 	if actor.velocity.y < 0:
-		get_parent().fire_event("on_start_falling")
+		get_parent().fire_event("long_jumping/on_start_falling")
 		return
 	
 	if not _grounded_timer.is_stopped():
 		return
 	
 	if actor.is_on_floor():
-		get_parent().fire_event("on_landing")
+		get_parent().fire_event("long_jumping/on_landing")
 
 
 # Executes before the state is exited.

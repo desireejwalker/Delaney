@@ -5,6 +5,7 @@ const WALL_PULL_FORCE: int = 1
 const GRAVITY: float = 2
 const ACCELERATION: int = 40
 const VERTICAL_STAMINA_MAX: float = 5.0
+const VERTICAL_SPEED: float = 6.5
 
 var _vertical_stamina = VERTICAL_STAMINA_MAX
 
@@ -16,7 +17,7 @@ func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	
 	var last_slide_collision = actor.get_last_slide_collision()
 	if not last_slide_collision:
-		get_parent().fire_event("on_start_falling")
+		get_parent().fire_event("wallrunning/on_start_falling")
 		return
 	
 	blackboard.set_value("current_wall_normal", last_slide_collision.get_normal())
@@ -28,10 +29,10 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 
 	if Input.is_action_just_pressed("jump"):
-		get_parent().fire_event("on_wall_jump")
+		get_parent().fire_event("wallrunning/on_wall_jump")
 	
 	if not actor.is_on_wall_only():
-		get_parent().fire_event("on_start_falling")
+		get_parent().fire_event("wallrunning/on_start_falling")
 		return
 	
 	var wall_pull = -blackboard.get_value("current_wall_normal") * WALL_PULL_FORCE
@@ -47,10 +48,10 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	var dot = wall_pull.normalized().dot(direction)
 	
 	horizontal_speed = remap(dot, 0, 1, 2.2, 1.5)
-	var vertical_speed = gravity + dot * 5
+	var vertical_speed = gravity + dot * VERTICAL_SPEED
 	if _vertical_stamina <= 0:
 		dot = remap(dot, -1, 1, -1, 0)
-		vertical_speed = gravity + dot * 5
+		vertical_speed = gravity + dot * VERTICAL_SPEED
 	
 	var velocity = actor.velocity.move_toward(
 		Vector3(
@@ -66,19 +67,13 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	
 	actor.velocity = velocity
 	
+	var horizontal_velocity = Vector3(actor.velocity.x, 0, actor.velocity.z)
+	var horizontal_velocity_normalized = horizontal_velocity.normalized()
+	if not horizontal_velocity.is_zero_approx():
+		actor.rotation.y = atan2(horizontal_velocity_normalized.x, horizontal_velocity_normalized.z)
+	
 	blackboard.set_value("current_wall_normal", actor.get_last_slide_collision().get_normal())
 
 # Executes before the state is exited.
 func _on_exit(actor: Node, _blackboard: Blackboard) -> void:
 	pass
-
-# Add custom configuration warnings
-# Note: Can be deleted if you don't want to define your own warnings.
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: Array = []
-
-	warnings.append_array(super._get_configuration_warnings())
-
-	# Add your own warnings to the array here
-
-	return warnings

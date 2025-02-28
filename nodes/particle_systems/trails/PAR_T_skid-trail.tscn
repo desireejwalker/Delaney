@@ -6,30 +6,32 @@
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.67876, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_xaf0y"]
+[sub_resource type="CurveTexture" id="CurveTexture_vb3oi"]
 curve = SubResource("Curve_vbx38")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j3vxe"]
 lifetime_randomness = 1.0
-emission_shape = 1
-emission_sphere_radius = 0.5
 angle_min = -360.0
 angle_max = 360.0
+inherit_velocity_ratio = 0.2
 direction = Vector3(0, 1, 0)
+spread = 30.0
 initial_velocity_min = 1.0
-initial_velocity_max = 3.0
-angular_velocity_min = -300.0
-angular_velocity_max = 300.0
+initial_velocity_max = 1.5
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.4
-scale_max = 1.2
-scale_curve = SubResource("CurveTexture_xaf0y")
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_vb3oi")
 anim_speed_max = 1.0
 anim_offset_max = 1.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sewyy"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tjmkm"]
 transparency = 1
 shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
 albedo_texture = ExtResource("1_fy0ry")
 texture_filter = 0
 texture_repeat = false
@@ -40,37 +42,7 @@ particles_anim_v_frames = 2
 particles_anim_loop = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_08kw3"]
-material = SubResource("StandardMaterial3D_sewyy")
-
-[sub_resource type="Animation" id="Animation_0yiob"]
-resource_name = "start_emitting"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GPUParticles3D:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0666667),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_fgn31"]
-resource_name = "stop_emitting"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GPUParticles3D:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
+material = SubResource("StandardMaterial3D_tjmkm")
 
 [sub_resource type="Animation" id="Animation_o4235"]
 length = 0.001
@@ -83,7 +55,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [true]
 }
 
@@ -99,7 +71,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0.0333333),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [false]
 }
 tracks/1/type = "method"
@@ -117,6 +89,36 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_0yiob"]
+resource_name = "start_emitting"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_fgn31"]
+resource_name = "stop_emitting"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3hr1t"]
 _data = {
 "RESET": SubResource("Animation_o4235"),
@@ -128,13 +130,15 @@ _data = {
 [node name="PAR_T_SkidTrail" type="Node3D"]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-amount = 20
-lifetime = 0.5
+amount = 100
 randomness = 1.0
+fixed_fps = 12
+interpolate = false
 process_material = SubResource("ParticleProcessMaterial_j3vxe")
 draw_pass_1 = SubResource("QuadMesh_08kw3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_3hr1t")
 }

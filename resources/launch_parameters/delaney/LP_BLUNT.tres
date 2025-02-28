@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LaunchParameters" load_steps=4 format=3 uid="uid://g4e32hm4iott"]
+
+[ext_resource type="Script" path="res://resources/launch_parameters/launch_parameters.gd" id="1_7y0vs"]
+[ext_resource type="PackedScene" uid="uid://movh7p1a4het" path="res://nodes/particle_systems/trails/PAR_T_blunt-launch-trail.tscn" id="1_c5u4f"]
+[ext_resource type="Material" uid="uid://b24744lr4h4uh" path="res://resources/materials/launch_trajectory_materials/LPMAT_BLUNT.tres" id="1_j1ae0"]
+
+[resource]
+script = ExtResource("1_7y0vs")
+_trail_particle_system = ExtResource("1_c5u4f")
+_launch_trajectory_indicator_material = ExtResource("1_j1ae0")
+_speed = 20.0
+_duration_seconds = 0.5
+_does_ricochet = false

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://o3ox8x3v2o8p"]
+
+[ext_resource type="Script" path="res://nodes/launch_indicator/launch_trajectory_indicator.gd" id="1_g2q4v"]
+[ext_resource type="Material" uid="uid://b0lf8ilxrvyik" path="res://resources/materials/launch_trajectory_materials/LPMAT_LAMDA.tres" id="2_6t5a0"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sgf1h"]
+material = ExtResource("2_6t5a0")
+top_radius = 0.0
+bottom_radius = 0.4
+radial_segments = 4
+cap_top = false
+
+[node name="LaunchTrajectoryIndicator" type="Node3D"]
+script = ExtResource("1_g2q4v")
+
+[node name="IndicatorPivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="IndicatorPivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -4.37114e-08, -1)
+mesh = SubResource("CylinderMesh_sgf1h")
+skeleton = NodePath("../..")

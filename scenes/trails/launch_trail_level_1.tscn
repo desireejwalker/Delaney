@@ -46,7 +46,6 @@ anim_offset_max = 1.0
 
 [node name="LaunchLevel1Trail" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_8nebg")
-emitting = false
 amount = 300
 process_material = SubResource("ParticleProcessMaterial_ogqw0")
 texture = ExtResource("1_l8pd3")

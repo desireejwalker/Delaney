@@ -1,6 +1,11 @@
+res://addons/draw_line_3d
+res://resources/materials/launch_trajectory_materials
+res://resources/launch_parameters/delaney
+res://nodes/entities/delaney/flow_states
+res://nodes/particle_systems/trails
 res://nodes/entities/delaney/states
 res://art/particles
-res://nodes/particle_systems/trails
+res://nodes/hammers
 res://art/tilesheets
 res://nodes/cards/card_select
 res://nodes/affectors/affector_components/particles
@@ -15,8 +20,3 @@ C:/Users/ayrdr/Projects/Project Delaney (Godot)/game/game_states/main/assets/del
 C:/Users/ayrdr/Projects/Project Delaney (Godot)/game/game_states/main/assets/delaney/states
 res://game/game_states/main/assets/minimap
 res://game/game_states/main/assets/ui
-res://game/game_states/floor_clear
-res://game/game_states/floor_generation
-res://game/game_states/title/assets
-res://game
-res://addons/behaviour_toolkit

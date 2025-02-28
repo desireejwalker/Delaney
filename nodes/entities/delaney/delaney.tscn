@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cuki365ekpnya"]
+[gd_scene load_steps=50 format=3 uid="uid://cuki365ekpnya"]
 
 [ext_resource type="Script" path="res://nodes/entities/delaney/delaney.gd" id="1_6dd6f"]
 [ext_resource type="PackedScene" uid="uid://wmf2eu0uuhrg" path="res://addons/third-person-camera/third_person_camera/ThirdPersonCamera.tscn" id="1_anc0c"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state.gd" id="4_wus0j"]
 [ext_resource type="Script" path="res://nodes/entities/delaney/states/idle.gd" id="5_jh5c5"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="5_k0e47"]
+[ext_resource type="PackedScene" uid="uid://coxb2rpbeklbg" path="res://nodes/hammers/hammer.tscn" id="6_86gsf"]
 [ext_resource type="Script" path="res://nodes/entities/delaney/states/walking.gd" id="7_c7vki"]
 [ext_resource type="Script" path="res://nodes/entities/delaney/states/running.gd" id="10_wraot"]
 [ext_resource type="Script" path="res://nodes/entities/delaney/states/skidding.gd" id="11_4jp86"]
@@ -20,6 +21,19 @@
 [ext_resource type="Script" path="res://nodes/entities/delaney/states/wall_jumping.gd" id="18_cddn6"]
 [ext_resource type="Script" path="res://nodes/entities/delaney/states/diving.gd" id="18_mdagi"]
 [ext_resource type="Script" path="res://nodes/entities/delaney/states/wallrunning.gd" id="18_w6500"]
+[ext_resource type="Script" path="res://nodes/entities/delaney/states/hammer_launching.gd" id="19_rbpsj"]
+[ext_resource type="Resource" uid="uid://boo4jdo3sur8p" path="res://resources/launch_parameters/delaney/LP_DELTA.tres" id="20_4pd7x"]
+[ext_resource type="Resource" uid="uid://xtw0jvqgveu" path="res://resources/launch_parameters/delaney/LP_EPSILON.tres" id="21_ymfni"]
+[ext_resource type="Script" path="res://nodes/entities/delaney/states/arial_hammer_launching.gd" id="22_cl0u4"]
+[ext_resource type="Resource" uid="uid://bjldedmpg3kum" path="res://resources/launch_parameters/delaney/LP_LAMBDA.tres" id="22_tjwao"]
+[ext_resource type="Script" path="res://nodes/entities/delaney/states/launching.gd" id="23_kwqsu"]
+[ext_resource type="Resource" uid="uid://g4e32hm4iott" path="res://resources/launch_parameters/delaney/LP_BLUNT.tres" id="27_8014k"]
+[ext_resource type="PackedScene" uid="uid://o3ox8x3v2o8p" path="res://nodes/launch_indicator/launch_trajectory_indicator.tscn" id="28_24rc6"]
+[ext_resource type="Script" path="res://nodes/entities/delaney/flow_states/blunt.gd" id="30_nl4mj"]
+[ext_resource type="Script" path="res://nodes/entities/delaney/flow_states/delta.gd" id="31_r4pp6"]
+[ext_resource type="Script" path="res://nodes/entities/delaney/flow_states/epsilon.gd" id="32_664ht"]
+[ext_resource type="Script" path="res://nodes/entities/delaney/flow_states/lambda.gd" id="33_mygn5"]
+[ext_resource type="Texture2D" uid="uid://djc4pm55g6omf" path="res://art/particles/puffs.png" id="34_yrd37"]
 
 [sub_resource type="Resource" id="Resource_upkpa"]
 script = ExtResource("2_rxkh6")
@@ -34,15 +48,274 @@ script = ExtResource("3_w6txb")
 script = ExtResource("4_vfl7e")
 content = {}
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4lc5b"]
-radius = 0.4
-height = 1.5
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_11pj7"]
 radius = 0.4
 height = 1.5
 radial_segments = 8
 rings = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4lc5b"]
+radius = 0.4
+height = 1.5
+
+[sub_resource type="Animation" id="Animation_fetle"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Hammer:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Hammer:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Hammer:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Hammer:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivot/Hammer:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Pivot/Hammer:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_y7pb8"]
+resource_name = "hammer_launching"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Hammer:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.0993599, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Hammer:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.811572, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Hammer:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.734877, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Hammer:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-4.37114e-08, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivot/Hammer:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.0472, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Pivot/Hammer:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.5708, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_g2rbv"]
+resource_name = "rest"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Hammer:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot/Hammer:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.688602, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Pivot/Hammer:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.591518, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Pivot/Hammer:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Pivot/Hammer:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Pivot/Hammer:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.89712, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3y3xx"]
+_data = {
+"RESET": SubResource("Animation_fetle"),
+"hammer_launching": SubResource("Animation_y7pb8"),
+"rest": SubResource("Animation_g2rbv")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g14ot"]
+radius = 0.4
+
+[sub_resource type="Curve" id="Curve_ovklk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.67876, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hhior"]
+curve = SubResource("Curve_ovklk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oul5x"]
+lifetime_randomness = 1.0
+angle_min = -360.0
+angle_max = 360.0
+inherit_velocity_ratio = 0.2
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.5
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_hhior")
+anim_speed_max = 1.0
+anim_offset_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2jfgm"]
+transparency = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("34_yrd37")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_6sym0"]
+material = SubResource("StandardMaterial3D_2jfgm")
 
 [node name="Delaney" type="CharacterBody3D"]
 script = ExtResource("1_6dd6f")
@@ -50,18 +323,28 @@ _stats = SubResource("Resource_upkpa")
 _status = SubResource("Resource_vfr2f")
 _blackboard = SubResource("Resource_bphg5")
 
+[node name="Pivot" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("CapsuleMesh_11pj7")
+skeleton = NodePath("../..")
+
+[node name="Hammer" parent="Pivot" instance=ExtResource("6_86gsf")]
+unique_name_in_owner = true
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 shape = SubResource("CapsuleShape3D_4lc5b")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-mesh = SubResource("CapsuleMesh_11pj7")
-
 [node name="ThirdPersonCamera" parent="." instance=ExtResource("1_anc0c")]
 unique_name_in_owner = true
-distance_from_pivot = 6.0
-pivot_offset = Vector2(0, 0.5)
+distance_from_pivot = 5.0
+pivot_offset = Vector2(0, 1)
+camera_speed = 0.15
 current = true
 mouse_follow = true
 mouse_x_sensitiveness = 10.0
@@ -72,440 +355,605 @@ unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
 
-[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
+[node name="HammerAnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_3y3xx")
+}
+autoplay = "rest"
+
+[node name="LaunchTrajectoryIndicator" parent="." instance=ExtResource("28_24rc6")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+visible = false
+
+[node name="MovementFiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
 unique_name_in_owner = true
 script = ExtResource("3_1nxo2")
-process_type = 0
 active = false
 initial_state = NodePath("Idle")
 actor = NodePath("..")
 blackboard = SubResource("Resource_bphg5")
 
-[node name="Idle" type="Node" parent="FiniteStateMachine"]
+[node name="Idle" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("5_jh5c5")
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Walking")
 use_event = true
-event = "on_start_walking"
+event = "idle/on_start_walking"
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Running")
 use_event = true
-event = "on_start_running"
+event = "idle/on_start_running"
 
-[node name="onJump" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
+[node name="onJump" type="Node" parent="MovementFiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Jumping")
 use_event = true
-event = "on_jump"
+event = "idle/on_jump"
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
+[node name="onStartHammerLaunching" type="Node" parent="MovementFiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
-next_state = NodePath("../../Falling")
+next_state = NodePath("../../HammerLaunching")
 use_event = true
-event = "on_start_falling"
+event = "idle/on_start_hammer_launching"
 
-[node name="Walking" type="Node" parent="FiniteStateMachine"]
+[node name="Walking" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("7_c7vki")
 
-[node name="onStartIdling" type="Node" parent="FiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
+[node name="onStartIdling" type="Node" parent="MovementFiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Idle")
 use_event = true
-event = "on_start_idling"
+event = "walking/on_start_idling"
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Running")
 use_event = true
-event = "on_start_running"
+event = "walking/on_start_running"
 
-[node name="onJump" type="Node" parent="FiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
+[node name="onJump" type="Node" parent="MovementFiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Jumping")
 use_event = true
-event = "on_jump"
+event = "walking/on_jump"
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "walking/on_start_falling"
 
-[node name="Running" type="Node" parent="FiniteStateMachine"]
+[node name="onStartHammerLaunching" type="Node" parent="MovementFiniteStateMachine/Walking" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../HammerLaunching")
+use_event = true
+event = "walking/on_start_hammer_launching"
+
+[node name="Running" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("10_wraot")
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
+[node name="AllowSkiddingDelayTimer" type="Timer" parent="MovementFiniteStateMachine/Running"]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Walking")
 use_event = true
-event = "on_start_walking"
+event = "running/on_start_walking"
 
-[node name="onStartIdling" type="Node" parent="FiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
+[node name="onStartIdling" type="Node" parent="MovementFiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Idle")
 use_event = true
-event = "on_start_idling"
+event = "running/on_start_idling"
 
-[node name="onStartSkid" type="Node" parent="FiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
+[node name="onStartSkid" type="Node" parent="MovementFiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Skidding")
 use_event = true
-event = "on_start_skidding"
+event = "running/on_start_skidding"
 
-[node name="onJump" type="Node" parent="FiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
+[node name="onJump" type="Node" parent="MovementFiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Jumping")
 use_event = true
-event = "on_jump"
+event = "running/on_jump"
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "running/on_start_falling"
 
-[node name="onStartSliding" type="Node" parent="FiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
+[node name="onStartSliding" type="Node" parent="MovementFiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Sliding")
 use_event = true
-event = "on_start_sliding"
+event = "running/on_start_sliding"
 
-[node name="Skidding" type="Node" parent="FiniteStateMachine"]
+[node name="onStartHammerLaunching" type="Node" parent="MovementFiniteStateMachine/Running" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../HammerLaunching")
+use_event = true
+event = "running/on_start_hammer_launching"
+
+[node name="Skidding" type="Node" parent="MovementFiniteStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("11_4jp86")
 
-[node name="SkidTimer" type="Timer" parent="FiniteStateMachine/Skidding"]
+[node name="SkidTimer" type="Timer" parent="MovementFiniteStateMachine/Skidding"]
 unique_name_in_owner = true
 wait_time = 0.4
 one_shot = true
 
-[node name="SkidCooldownTimer" type="Timer" parent="FiniteStateMachine/Skidding"]
+[node name="SkidCooldownTimer" type="Timer" parent="MovementFiniteStateMachine/Skidding"]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="onStartIdling" type="Node" parent="FiniteStateMachine/Skidding" node_paths=PackedStringArray("next_state")]
+[node name="onStartIdling" type="Node" parent="MovementFiniteStateMachine/Skidding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Idle")
 use_event = true
-event = "on_start_idling"
+event = "skidding/on_start_idling"
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/Skidding" node_paths=PackedStringArray("next_state")]
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/Skidding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Walking")
 use_event = true
-event = "on_start_walking"
+event = "skidding/on_start_walking"
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/Skidding" node_paths=PackedStringArray("next_state")]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/Skidding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Running")
 use_event = true
-event = "on_start_running"
+event = "skidding/on_start_running"
 
-[node name="Jumping" type="Node" parent="FiniteStateMachine"]
+[node name="Jumping" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("12_tbpe0")
 
-[node name="onStartArialHammerLaunching" type="Node" parent="FiniteStateMachine/Jumping"]
-script = ExtResource("5_k0e47")
-
-[node name="onDive" type="Node" parent="FiniteStateMachine/Jumping" node_paths=PackedStringArray("next_state")]
+[node name="onDive" type="Node" parent="MovementFiniteStateMachine/Jumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Diving")
 use_event = true
-event = "on_dive"
+event = "jumping/on_dive"
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/Jumping"]
+[node name="onStartGroundSlamming" type="Node" parent="MovementFiniteStateMachine/Jumping"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/Jumping" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/Jumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "jumping/on_start_falling"
 
-[node name="onLanding" type="Node" parent="FiniteStateMachine/Jumping" node_paths=PackedStringArray("next_state")]
+[node name="onLanding" type="Node" parent="MovementFiniteStateMachine/Jumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Landing")
 use_event = true
-event = "on_landing"
+event = "jumping/on_landing"
 
-[node name="Falling" type="Node" parent="FiniteStateMachine"]
+[node name="Falling" type="Node" parent="MovementFiniteStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("11_tndi3")
 
-[node name="onStartWallrunning" type="Node" parent="FiniteStateMachine/Falling" node_paths=PackedStringArray("next_state")]
+[node name="onStartWallrunning" type="Node" parent="MovementFiniteStateMachine/Falling" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Wallrunning")
 use_event = true
-event = "on_start_wallrunning"
+event = "falling/on_start_wallrunning"
 
-[node name="onStartArialHammerLaunching" type="Node" parent="FiniteStateMachine/Falling"]
+[node name="onStartArialHammerLaunching" type="Node" parent="MovementFiniteStateMachine/Falling" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../ArialHammerLaunching")
+use_event = true
+event = "falling/on_start_arial_hammer_launching"
 
-[node name="onDive" type="Node" parent="FiniteStateMachine/Falling" node_paths=PackedStringArray("next_state")]
+[node name="onDive" type="Node" parent="MovementFiniteStateMachine/Falling" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Diving")
 use_event = true
-event = "on_dive"
+event = "falling/on_dive"
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/Falling"]
+[node name="onStartGroundSlamming" type="Node" parent="MovementFiniteStateMachine/Falling"]
 script = ExtResource("5_k0e47")
 
-[node name="onLanding" type="Node" parent="FiniteStateMachine/Falling" node_paths=PackedStringArray("next_state")]
+[node name="onLanding" type="Node" parent="MovementFiniteStateMachine/Falling" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Landing")
 use_event = true
-event = "on_landing"
+event = "falling/on_landing"
 
-[node name="Landing" type="Node" parent="FiniteStateMachine"]
+[node name="Landing" type="Node" parent="MovementFiniteStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("14_attm6")
 
-[node name="onStartIdling" type="Node" parent="FiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
+[node name="onStartIdling" type="Node" parent="MovementFiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Idle")
 use_event = true
-event = "on_start_idling"
+event = "landing/on_start_idling"
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Walking")
 use_event = true
-event = "on_start_walking"
+event = "landing/on_start_walking"
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Running")
 use_event = true
-event = "on_start_running"
+event = "landing/on_start_running"
 
-[node name="onJump" type="Node" parent="FiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
+[node name="onJump" type="Node" parent="MovementFiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Jumping")
 use_event = true
-event = "on_jump"
+event = "landing/on_jump"
 
-[node name="onStartSliding" type="Node" parent="FiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
+[node name="onStartSliding" type="Node" parent="MovementFiniteStateMachine/Landing" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Sliding")
 use_event = true
-event = "on_start_sliding"
+event = "landing/on_start_sliding"
 
-[node name="onStartHammerPogo" type="Node" parent="FiniteStateMachine/Landing"]
+[node name="onStartHammerPogo" type="Node" parent="MovementFiniteStateMachine/Landing"]
 script = ExtResource("5_k0e47")
 
-[node name="Sliding" type="Node" parent="FiniteStateMachine"]
+[node name="Sliding" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("15_bmje6")
 
-[node name="SlideLimitTimer" type="Timer" parent="FiniteStateMachine/Sliding"]
+[node name="SlideLimitTimer" type="Timer" parent="MovementFiniteStateMachine/Sliding"]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="onStartLongJump" type="Node" parent="FiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
+[node name="onStartLongJump" type="Node" parent="MovementFiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../LongJumping")
 use_event = true
-event = "on_start_long_jump"
+event = "sliding/on_start_long_jump"
 
-[node name="onStartIdling" type="Node" parent="FiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
+[node name="onStartIdling" type="Node" parent="MovementFiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Idle")
 use_event = true
-event = "on_start_idling"
+event = "sliding/on_start_idling"
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Walking")
 use_event = true
-event = "on_start_walking"
+event = "sliding/on_start_walking"
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Running")
 use_event = true
-event = "on_start_running"
+event = "sliding/on_start_running"
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "sliding/on_start_falling"
 
-[node name="LongJumping" type="Node" parent="FiniteStateMachine"]
+[node name="LongJumping" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("16_vkmj7")
 
-[node name="onStartArialHammerLaunching" type="Node" parent="FiniteStateMachine/LongJumping"]
-script = ExtResource("5_k0e47")
-
-[node name="onDive" type="Node" parent="FiniteStateMachine/LongJumping" node_paths=PackedStringArray("next_state")]
+[node name="onDive" type="Node" parent="MovementFiniteStateMachine/LongJumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Diving")
 use_event = true
-event = "on_dive"
+event = "long_jumping/on_dive"
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/LongJumping"]
+[node name="onStartGroundSlamming" type="Node" parent="MovementFiniteStateMachine/LongJumping"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/LongJumping" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/LongJumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "long_jumping/on_start_falling"
 
-[node name="onLanding" type="Node" parent="FiniteStateMachine/LongJumping" node_paths=PackedStringArray("next_state")]
+[node name="onLanding" type="Node" parent="MovementFiniteStateMachine/LongJumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Landing")
 use_event = true
-event = "on_landing"
+event = "long_jumping/on_landing"
 
-[node name="HammerVaulting" type="Node" parent="FiniteStateMachine"]
+[node name="HammerVaulting" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("4_wus0j")
 
-[node name="onStartWallrunning" type="Node" parent="FiniteStateMachine/HammerVaulting"]
+[node name="onStartWallrunning" type="Node" parent="MovementFiniteStateMachine/HammerVaulting"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartArialHammerLaunching" type="Node" parent="FiniteStateMachine/HammerVaulting"]
+[node name="onStartArialHammerLaunching" type="Node" parent="MovementFiniteStateMachine/HammerVaulting"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartDive" type="Node" parent="FiniteStateMachine/HammerVaulting"]
+[node name="onStartDive" type="Node" parent="MovementFiniteStateMachine/HammerVaulting"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/HammerVaulting"]
+[node name="onStartGroundSlamming" type="Node" parent="MovementFiniteStateMachine/HammerVaulting"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/HammerVaulting"]
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/HammerVaulting"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/HammerVaulting"]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/HammerVaulting"]
 script = ExtResource("5_k0e47")
 
-[node name="onStopMoving" type="Node" parent="FiniteStateMachine/HammerVaulting"]
+[node name="onStopMoving" type="Node" parent="MovementFiniteStateMachine/HammerVaulting"]
 script = ExtResource("5_k0e47")
 
-[node name="HammerFlinging" type="Node" parent="FiniteStateMachine"]
+[node name="HammerFlinging" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("4_wus0j")
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/HammerFlinging"]
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/HammerFlinging"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/HammerFlinging"]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/HammerFlinging"]
 script = ExtResource("5_k0e47")
 
-[node name="onStopMoving" type="Node" parent="FiniteStateMachine/HammerFlinging"]
+[node name="onStopMoving" type="Node" parent="MovementFiniteStateMachine/HammerFlinging"]
 script = ExtResource("5_k0e47")
 
-[node name="HammerLaunching" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("4_wus0j")
+[node name="HammerLaunching" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("19_rbpsj")
+_blunt_launch_parameters = ExtResource("27_8014k")
+_delta_launch_parameters = ExtResource("20_4pd7x")
+_epsilon_launch_parameters = ExtResource("21_ymfni")
+_lambda_launch_parameters = ExtResource("22_tjwao")
 
-[node name="onStartWalking" type="Node" parent="FiniteStateMachine/HammerLaunching"]
+[node name="FlowStateChangeTimer" type="Timer" parent="MovementFiniteStateMachine/HammerLaunching"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="onStartArialHammerLaunching" type="Node" parent="MovementFiniteStateMachine/HammerLaunching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../ArialHammerLaunching")
+use_event = true
+event = "hammer_launching/on_start_arial_hammer_launching"
 
-[node name="onStartRunning" type="Node" parent="FiniteStateMachine/HammerLaunching"]
+[node name="onLaunch" type="Node" parent="MovementFiniteStateMachine/HammerLaunching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../Launching")
+use_event = true
+event = "hammer_launching/on_launch"
 
-[node name="onStopMoving" type="Node" parent="FiniteStateMachine/HammerLaunching"]
+[node name="onStartIdling" type="Node" parent="MovementFiniteStateMachine/HammerLaunching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../Idle")
+use_event = true
+event = "hammer_launching/on_start_idling"
 
-[node name="HammerPogo" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("4_wus0j")
-
-[node name="onStartArialHammerLaunching" type="Node" parent="FiniteStateMachine/HammerPogo"]
+[node name="onStartWalking" type="Node" parent="MovementFiniteStateMachine/HammerLaunching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../Walking")
+use_event = true
+event = "hammer_launching/on_start_walking"
 
-[node name="onStartDive" type="Node" parent="FiniteStateMachine/HammerPogo"]
+[node name="onStartRunning" type="Node" parent="MovementFiniteStateMachine/HammerLaunching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../Running")
+use_event = true
+event = "hammer_launching/on_start_running"
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/HammerPogo"]
-script = ExtResource("5_k0e47")
+[node name="Launching" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("23_kwqsu")
+_launch_shape_3D = SubResource("SphereShape3D_g14ot")
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/HammerPogo" node_paths=PackedStringArray("next_state")]
+[node name="LaunchTimer" type="Timer" parent="MovementFiniteStateMachine/Launching"]
+unique_name_in_owner = true
+
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/Launching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "launching/on_start_falling"
 
-[node name="Wallrunning" type="Node" parent="FiniteStateMachine"]
+[node name="HammerPogo" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("4_wus0j")
+
+[node name="onStartArialHammerLaunching" type="Node" parent="MovementFiniteStateMachine/HammerPogo"]
+script = ExtResource("5_k0e47")
+
+[node name="onStartDive" type="Node" parent="MovementFiniteStateMachine/HammerPogo"]
+script = ExtResource("5_k0e47")
+
+[node name="onStartGroundSlamming" type="Node" parent="MovementFiniteStateMachine/HammerPogo"]
+script = ExtResource("5_k0e47")
+
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/HammerPogo" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Falling")
+use_event = true
+event = "hammer_pogo/on_start_falling"
+
+[node name="Wallrunning" type="Node" parent="MovementFiniteStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("18_w6500")
 
-[node name="onWallJump" type="Node" parent="FiniteStateMachine/Wallrunning" node_paths=PackedStringArray("next_state")]
+[node name="onWallJump" type="Node" parent="MovementFiniteStateMachine/Wallrunning" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../WallJumping")
 use_event = true
-event = "on_wall_jump"
+event = "wallrunning/on_wall_jump"
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/Wallrunning" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/Wallrunning" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "wallrunning/on_start_falling"
 
-[node name="WallJumping" type="Node" parent="FiniteStateMachine"]
+[node name="WallJumping" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("18_cddn6")
 
-[node name="onStartArialHammerLaunching" type="Node" parent="FiniteStateMachine/WallJumping"]
-script = ExtResource("5_k0e47")
-
-[node name="onDive" type="Node" parent="FiniteStateMachine/WallJumping" node_paths=PackedStringArray("next_state")]
+[node name="onDive" type="Node" parent="MovementFiniteStateMachine/WallJumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Diving")
 use_event = true
-event = "on_dive"
+event = "wall_jumping/on_dive"
 
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/WallJumping" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/WallJumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "wall_jumping/on_start_falling"
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/WallJumping"]
+[node name="onStartGroundSlamming" type="Node" parent="MovementFiniteStateMachine/WallJumping"]
 script = ExtResource("5_k0e47")
 
-[node name="onLanding" type="Node" parent="FiniteStateMachine/WallJumping" node_paths=PackedStringArray("next_state")]
+[node name="onLanding" type="Node" parent="MovementFiniteStateMachine/WallJumping" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Landing")
 use_event = true
-event = "on_landing"
+event = "wall_jumping/on_landing"
 
-[node name="ArialHammerLaunching" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("4_wus0j")
+[node name="ArialHammerLaunching" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("22_cl0u4")
+_blunt_launch_parameters = ExtResource("27_8014k")
+_delta_launch_parameters = ExtResource("20_4pd7x")
+_epsilon_launch_parameters = ExtResource("21_ymfni")
+_lambda_launch_parameters = ExtResource("22_tjwao")
 
-[node name="onStartDive" type="Node" parent="FiniteStateMachine/ArialHammerLaunching"]
+[node name="ArialHammerLaunchDelayTimer" type="Timer" parent="MovementFiniteStateMachine/ArialHammerLaunching"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/ArialHammerLaunching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../Falling")
+use_event = true
+event = "arial_hammer_launching/on_start_falling"
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/ArialHammerLaunching"]
+[node name="onStartHammerLaunching" type="Node" parent="MovementFiniteStateMachine/ArialHammerLaunching" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
+next_state = NodePath("../../HammerLaunching")
+use_event = true
+event = "arial_hammer_launching/on_start_hammer_launching"
 
-[node name="Diving" type="Node" parent="FiniteStateMachine"]
+[node name="onLaunch" type="Node" parent="MovementFiniteStateMachine/ArialHammerLaunching" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Launching")
+use_event = true
+event = "arial_hammer_launching/on_launch"
+
+[node name="Diving" type="Node" parent="MovementFiniteStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("18_mdagi")
 
-[node name="onStartWallrunning" type="Node" parent="FiniteStateMachine/Diving" node_paths=PackedStringArray("next_state")]
+[node name="onStartWallrunning" type="Node" parent="MovementFiniteStateMachine/Diving" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Wallrunning")
 use_event = true
-event = "on_start_wallrunning"
+event = "diving/on_start_wallrunning"
 
-[node name="onStartWallJumping" type="Node" parent="FiniteStateMachine/Diving"]
+[node name="onStartGroundSlamming" type="Node" parent="MovementFiniteStateMachine/Diving"]
 script = ExtResource("5_k0e47")
 
-[node name="onStartGroundSlamming" type="Node" parent="FiniteStateMachine/Diving"]
-script = ExtResource("5_k0e47")
-
-[node name="onStartFalling" type="Node" parent="FiniteStateMachine/Diving" node_paths=PackedStringArray("next_state")]
+[node name="onStartFalling" type="Node" parent="MovementFiniteStateMachine/Diving" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
-event = "on_start_falling"
+event = "diving/on_start_falling"
 
-[node name="onLanding" type="Node" parent="FiniteStateMachine/Diving" node_paths=PackedStringArray("next_state")]
+[node name="onLanding" type="Node" parent="MovementFiniteStateMachine/Diving" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_k0e47")
 next_state = NodePath("../../Landing")
 use_event = true
-event = "on_landing"
+event = "diving/on_landing"
 
-[node name="GroundSlamming" type="Node" parent="FiniteStateMachine"]
+[node name="GroundSlamming" type="Node" parent="MovementFiniteStateMachine"]
+unique_name_in_owner = true
 script = ExtResource("4_wus0j")
+
+[node name="FlowStateFiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
+script = ExtResource("3_1nxo2")
+process_type = 0
+active = false
+initial_state = NodePath("Blunt")
+actor = NodePath("..")
+blackboard = SubResource("Resource_bphg5")
+
+[node name="Blunt" type="Node" parent="FlowStateFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("30_nl4mj")
+
+[node name="onAdvanceToDelta" type="Node" parent="FlowStateFiniteStateMachine/Blunt" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Delta")
+use_event = true
+event = "on_advance_to_delta"
+
+[node name="Delta" type="Node" parent="FlowStateFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("31_r4pp6")
+
+[node name="onAdvanceToEpsilon" type="Node" parent="FlowStateFiniteStateMachine/Delta" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Epsilon")
+use_event = true
+event = "on_advance_to_epsilon"
+
+[node name="onDecayToBlunt" type="Node" parent="FlowStateFiniteStateMachine/Delta" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Blunt")
+use_event = true
+event = "on_decay_to_blunt"
+
+[node name="Epsilon" type="Node" parent="FlowStateFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("32_664ht")
+
+[node name="onAdvanceToLambda" type="Node" parent="FlowStateFiniteStateMachine/Epsilon" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Lambda")
+use_event = true
+event = "on_advance_to_lambda"
+
+[node name="onDecayToDelta" type="Node" parent="FlowStateFiniteStateMachine/Epsilon" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Delta")
+use_event = true
+event = "on_decay_to_delta"
+
+[node name="Lambda" type="Node" parent="FlowStateFiniteStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("33_mygn5")
+
+[node name="onDecayToEpsilon" type="Node" parent="FlowStateFiniteStateMachine/Lambda" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Epsilon")
+use_event = true
+event = "on_decay_to_epsilon"
+
+[node name="RunningDustTrail" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 100
+randomness = 1.0
+fixed_fps = 12
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_oul5x")
+draw_pass_1 = SubResource("QuadMesh_6sym0")

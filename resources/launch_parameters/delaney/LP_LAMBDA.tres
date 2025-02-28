@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LaunchParameters" load_steps=4 format=3 uid="uid://bjldedmpg3kum"]
+
+[ext_resource type="Script" path="res://resources/launch_parameters/launch_parameters.gd" id="1_4w8gw"]
+[ext_resource type="PackedScene" uid="uid://dnicygufdr1eb" path="res://nodes/particle_systems/trails/PAR_T_lambda-launch-trail.tscn" id="1_7ydax"]
+[ext_resource type="Material" uid="uid://b0lf8ilxrvyik" path="res://resources/materials/launch_trajectory_materials/LPMAT_LAMDA.tres" id="1_gx8wj"]
+
+[resource]
+script = ExtResource("1_4w8gw")
+_trail_particle_system = ExtResource("1_7ydax")
+_launch_trajectory_indicator_material = ExtResource("1_gx8wj")
+_speed = 45.0
+_duration_seconds = 3.0
+_does_ricochet = true

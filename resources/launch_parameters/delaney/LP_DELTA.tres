@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LaunchParameters" load_steps=4 format=3 uid="uid://boo4jdo3sur8p"]
+
+[ext_resource type="Material" uid="uid://cetar01umeb65" path="res://resources/materials/launch_trajectory_materials/LPMAT_DELTA.tres" id="1_3m1a1"]
+[ext_resource type="Script" path="res://resources/launch_parameters/launch_parameters.gd" id="1_g48q5"]
+[ext_resource type="PackedScene" uid="uid://bnckl63c35ahn" path="res://nodes/particle_systems/trails/PAR_T_delta-launch-trail.tscn" id="1_hrdrf"]
+
+[resource]
+script = ExtResource("1_g48q5")
+_trail_particle_system = ExtResource("1_hrdrf")
+_launch_trajectory_indicator_material = ExtResource("1_3m1a1")
+_speed = 20.0
+_duration_seconds = 3.0
+_does_ricochet = true

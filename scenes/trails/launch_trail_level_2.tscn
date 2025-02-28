@@ -47,7 +47,6 @@ load_path = "res://.godot/imported/shapes.png-95ee948f8275872deee5c6748d0d80f0.c
 
 [node name="LaunchLevel2Trail" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_4h7hj")
-emitting = false
 amount = 400
 process_material = SubResource("ParticleProcessMaterial_uvg3x")
 texture = SubResource("CompressedTexture2D_hrn05")

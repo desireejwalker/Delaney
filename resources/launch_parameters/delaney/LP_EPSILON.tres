@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LaunchParameters" load_steps=4 format=3 uid="uid://xtw0jvqgveu"]
+
+[ext_resource type="Script" path="res://resources/launch_parameters/launch_parameters.gd" id="1_hcdgu"]
+[ext_resource type="Material" uid="uid://bpmcpb651yu6k" path="res://resources/materials/launch_trajectory_materials/LPMAT_EPSILON.tres" id="1_i5e2i"]
+[ext_resource type="PackedScene" uid="uid://crs2mnusc15o2" path="res://nodes/particle_systems/trails/PAR_T_epsilon-launch-trail.tscn" id="1_xok6g"]
+
+[resource]
+script = ExtResource("1_hcdgu")
+_trail_particle_system = ExtResource("1_xok6g")
+_launch_trajectory_indicator_material = ExtResource("1_i5e2i")
+_speed = 30.0
+_duration_seconds = 3.0
+_does_ricochet = true
