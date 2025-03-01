@@ -46,10 +46,8 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	var velocity_normalized = velocity.normalized()
 	
 	actor.velocity = velocity
-	if velocity_normalized.is_zero_approx():
-		return
-	
-	actor.rotation.y = atan2(velocity_normalized.x, velocity_normalized.z)
+	if not velocity_normalized.is_zero_approx():
+		actor.rotation.y = atan2(velocity_normalized.x, velocity_normalized.z)
 	
 	var transitioned = _handle_transition_events(actor, blackboard)
 	if transitioned:

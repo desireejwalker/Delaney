@@ -34,7 +34,7 @@ func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor.velocity = trajectory
 	
 	if _launch_parameters.does_ricochet():
-		actor._do_move_and_slide = false
+		actor.set_do_move_and_slide(false)
 	
 	_launch_timer.timeout.connect(_on_launch_timer_timeout)
 	_launch_timer.start(_launch_parameters.get_duration_seconds())
@@ -52,7 +52,7 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 func _on_exit(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 	
-	actor._do_move_and_slide = true
+	actor.set_do_move_and_slide(true)
 	
 	_collider.shape = _saved_shape_3D
 	_saved_shape_3D = null

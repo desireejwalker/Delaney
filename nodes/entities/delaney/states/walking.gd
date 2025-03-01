@@ -3,6 +3,8 @@ extends FSMState
 
 const ACCELERATION: int = 25
 
+@onready var _pivot: Node3D = %Pivot
+
 # Executes after the state is entered.
 func _on_enter(_actor: Node, blackboard: Blackboard) -> void:
 	pass
@@ -17,10 +19,8 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	var velocity_normalized = velocity.normalized()
 	
 	actor.velocity = velocity
-	if velocity_normalized.is_zero_approx():
-		return
-	
-	actor.rotation.y = atan2(velocity_normalized.x, velocity_normalized.z)
+	if not velocity_normalized.is_zero_approx():
+		_pivot.rotation.y = atan2(velocity_normalized.x, velocity_normalized.z)
 	
 	var transitioned = _handle_transition_events(actor)
 	if transitioned:

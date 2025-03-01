@@ -9,44 +9,57 @@ const MAX_HORIZONTAL_VELOCITY: float = 20.0
 
 @onready var _grounded_timer: Timer = %GroundedTimer
 
-# Executes after the state is entered.
 func _on_enter(actor: Node, blackboard: Blackboard) -> void:
-	blackboard.set_value("is_moving", true)
-	
 	actor = actor as DelaneyEntity
 	
-	var h_rot = actor.get_camera().get_camera().global_transform.basis.get_euler().y
-	var direction = Vector3(
-		Input.get_action_strength("strafe_right") - Input.get_action_strength("strafe_left"),
-		0,
-		Input.get_action_strength("backwards") - Input.get_action_strength("forwards"))
-	direction = direction.rotated(Vector3.UP, h_rot).normalized()
-	
+	var direction = _handle_direction_input(actor)
 	if direction.is_zero_approx():
 		direction = actor.velocity.normalized()
-	
-	var horizontal_velocity = Vector3(direction.x, 0.0, direction.z) * HORIZONTAL_FORCE
-	horizontal_velocity = horizontal_velocity.limit_length(MAX_HORIZONTAL_VELOCITY)
-	var vertical_velocity = Vector3.UP * VERTICAL_FORCE
-	
-	actor.velocity = horizontal_velocity + vertical_velocity
-	#var horizontal_velocity = Vector3(actor.velocity.x, 0, actor.velocity.z)
+	var velocity = _handle_long_jump_force(direction)
+	var horizontal_velocity = Vector3(velocity.x, 0, velocity.z)
 	var horizontal_velocity_normalized = horizontal_velocity.normalized()
+	
+	actor.velocity = velocity
 	if not horizontal_velocity.is_zero_approx():
 		actor.rotation.y = atan2(horizontal_velocity_normalized.x, horizontal_velocity_normalized.z)
 	
 	_grounded_timer.start()
-	
-	#get_parent().fire_event("on_start_falling")
 
-# Executes every _process call, if the state is active.
-func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
+func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 	
+	var direction = _handle_direction_input(actor)
+	var speed = actor.get_entity_stats().get_agility() * 0.6
+	var velocity = _handle_long_jumping(actor.velocity, direction, speed, delta)
+	
+	actor.velocity = velocity
+	
+	var transitioned = _handle_transition_events(actor, blackboard)
+	if transitioned:
+		return
+
+func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
+	pass
+
+func _handle_transition_events(actor: Node, blackboard: Blackboard) -> bool:
 	if Input.is_action_just_pressed("dive"):
 		get_parent().fire_event("long_jumping/on_dive")
-		return
+		return true
 	
+	if actor.velocity.y < 0:
+		get_parent().fire_event("long_jumping/on_start_falling")
+		return true
+	
+	if not _grounded_timer.is_stopped():
+		return false
+	
+	if actor.is_on_floor():
+		get_parent().fire_event("long_jumping/on_landing")
+		return true
+	
+	return false
+
+func _handle_direction_input(actor: Node) -> Vector3:
 	var h_rot = actor.get_camera().get_camera().global_transform.basis.get_euler().y
 	var direction = Vector3(
 		Input.get_action_strength("strafe_right") - Input.get_action_strength("strafe_left"),
@@ -54,35 +67,22 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 		Input.get_action_strength("backwards") - Input.get_action_strength("forwards"))
 	direction = direction.rotated(Vector3.UP, h_rot).normalized()
 	
-	var horizontal_velocity = (direction * actor.get_entity_stats().get_agility()) * 0.6
+	return direction
+
+func _handle_long_jump_force(direction: Vector3) -> Vector3:
+	var horizontal_velocity = Vector3(
+		direction.x * HORIZONTAL_FORCE,
+		0.0,
+		direction.z * HORIZONTAL_FORCE).limit_length(MAX_HORIZONTAL_VELOCITY)
+	var vertical_velocity = Vector3.UP * VERTICAL_FORCE
+	var velocity = horizontal_velocity + vertical_velocity
+	
+	return velocity
+
+func _handle_long_jumping(current_velocity: Vector3, direction: Vector3, speed: float, delta) -> Vector3:
+	var horizontal_velocity = direction * speed
 	if direction.is_zero_approx():
-		horizontal_velocity = actor.velocity.normalized() * 0.6
+		horizontal_velocity = current_velocity.normalized() * speed
+	var velocity = current_velocity.move_toward(horizontal_velocity + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
 	
-	actor.velocity = actor.velocity.move_toward(horizontal_velocity + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
-	
-	if actor.velocity.y < 0:
-		get_parent().fire_event("long_jumping/on_start_falling")
-		return
-	
-	if not _grounded_timer.is_stopped():
-		return
-	
-	if actor.is_on_floor():
-		get_parent().fire_event("long_jumping/on_landing")
-
-
-# Executes before the state is exited.
-func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
-	pass
-
-
-# Add custom configuration warnings
-# Note: Can be deleted if you don't want to define your own warnings.
-func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: Array = []
-
-	warnings.append_array(super._get_configuration_warnings())
-
-	# Add your own warnings to the array here
-
-	return warnings
+	return velocity

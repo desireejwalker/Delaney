@@ -49,8 +49,6 @@ func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 	var flow_state_finite_state_machine: FiniteStateMachine = actor.get_flow_state_finite_state_machine()
 	
-	blackboard.set_value("is_moving", true)
-	
 	var current_flow_state = flow_state_finite_state_machine.active_state
 	if not _get_previous_flow_state(current_flow_state) == current_flow_state:
 		current_flow_state = _get_previous_flow_state(current_flow_state)

@@ -27,10 +27,8 @@ func _on_update(delta: float, actor: Node, blackboard: Blackboard) -> void:
 	var horizontal_velocity_normalized = horizontal_velocity.normalized()
 	
 	actor.velocity = velocity
-	if horizontal_velocity_normalized.is_zero_approx():
-		return
-	
-	actor.rotation.y = atan2(horizontal_velocity_normalized.x, horizontal_velocity_normalized.z)
+	if not horizontal_velocity_normalized.is_zero_approx():
+		actor.rotation.y = atan2(horizontal_velocity_normalized.x, horizontal_velocity_normalized.z)
 	
 	var transitioned = _handle_transition_events(actor, blackboard)
 	if transitioned:
@@ -51,6 +49,7 @@ func _handle_transition_events(actor: Node, blackboard: Blackboard) -> bool:
 	if _grounded_timer.is_stopped():
 		if actor.is_on_floor():
 			get_parent().fire_event("jumping/on_landing")
+			return true
 	
 	return false
 
@@ -69,7 +68,10 @@ func _handle_jump_force(current_velocity: Vector3) -> Vector3:
 	return velocity
 
 func _handle_jumping(current_velocity: Vector3, direction: Vector3, speed: float, delta: float) -> Vector3:
+	var velocity = Vector3.ZERO
 	if direction.is_zero_approx():
-		return current_velocity.move_toward(current_velocity + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
+		velocity = current_velocity.move_toward(current_velocity + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
 	else:
-		return current_velocity.move_toward((direction * speed) + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
+		velocity = current_velocity.move_toward((direction * speed) + (Vector3.DOWN * GRAVITY), ACCELERATION * delta)
+	
+	return velocity

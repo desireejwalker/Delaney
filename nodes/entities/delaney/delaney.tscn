@@ -618,6 +618,7 @@ script = ExtResource("15_bmje6")
 
 [node name="SlideLimitTimer" type="Timer" parent="MovementFiniteStateMachine/Sliding"]
 unique_name_in_owner = true
+wait_time = 0.8
 one_shot = true
 
 [node name="onStartLongJump" type="Node" parent="MovementFiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
@@ -649,6 +650,12 @@ script = ExtResource("5_k0e47")
 next_state = NodePath("../../Falling")
 use_event = true
 event = "sliding/on_start_falling"
+
+[node name="onJump" type="Node" parent="MovementFiniteStateMachine/Sliding" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_k0e47")
+next_state = NodePath("../../Jumping")
+use_event = true
+event = "sliding/on_jump"
 
 [node name="LongJumping" type="Node" parent="MovementFiniteStateMachine"]
 unique_name_in_owner = true

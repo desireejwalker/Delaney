@@ -1,13 +1,5 @@
 class_name DelaneyEntity extends CharacterBody3D
 
-enum FlowState
-{
-	STATE_BLUNT,
-	STATE_DELTA,
-	STATE_EPSILON,
-	STATE_LAMBDA
-}
-
 @export var _stats: EntityStats
 @export var _status: EntityStatus
 
@@ -27,8 +19,6 @@ func _ready():
 	_blackboard.set_value("horizontal_velocity", Vector3.ZERO)
 	_blackboard.set_value("vertical_velocity", Vector3.ZERO)
 	
-	_blackboard.set_value("flow_state", FlowState.STATE_BLUNT)
-	
 	_movement_finite_state_machine.start()
 	_flow_state_finite_state_machine.start()
 	
@@ -38,6 +28,12 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	if _do_move_and_slide:
 		move_and_slide()
+
+func set_do_move_and_slide(enabled: bool):
+	_do_move_and_slide = enabled
+
+func do_move_and_slide() -> bool:
+	return _do_move_and_slide
 
 func get_entity_stats() -> EntityStats:
 	return _stats
