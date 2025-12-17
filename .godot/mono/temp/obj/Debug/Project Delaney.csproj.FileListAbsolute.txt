@@ -1,34 +1,52 @@
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\bin\Debug\Project Delaney.deps.json
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\bin\Debug\Project Delaney.runtimeconfig.json
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\bin\Debug\Project Delaney.dll
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\bin\Debug\Project Delaney.pdb
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\bin\Debug\GodotSharp.dll
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.csproj.AssemblyReference.cache
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.AssemblyInfoInputs.cache
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.AssemblyInfo.cs
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.csproj.CoreCompileInputs.cache
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.csproj.CopyComplete
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.dll
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\refint\Project Delaney.dll
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.pdb
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\Project Delaney.genruntimeconfig.cache
-C:\Users\ayrdr\Projects\Project Delaney (Godot)\.godot\mono\temp\obj\Debug\ref\Project Delaney.dll
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.csproj.AssemblyReference.cache
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.AssemblyInfoInputs.cache
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.AssemblyInfo.cs
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.csproj.CoreCompileInputs.cache
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.dll
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\refint\Project Delaney.dll
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.pdb
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\bin\Debug\Project Delaney.deps.json
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\bin\Debug\Project Delaney.runtimeconfig.json
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\bin\Debug\Project Delaney.dll
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\bin\Debug\Project Delaney.pdb
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\bin\Debug\GodotSharp.dll
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.csproj.CopyComplete
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\Project Delaney.genruntimeconfig.cache
-C:\Users\admin\Projects\Project-Delaney-Godot-\.godot\mono\temp\obj\Debug\ref\Project Delaney.dll
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/bin/Debug/Project Delaney.deps.json
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/bin/Debug/Project Delaney.runtimeconfig.json
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/bin/Debug/Project Delaney.dll
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/bin/Debug/Project Delaney.pdb
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/bin/Debug/GodotSharp.dll
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/bin/Debug/GodotSharpEditor.dll
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.csproj.AssemblyReference.cache
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.AssemblyInfoInputs.cache
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.AssemblyInfo.cs
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.csproj.CoreCompileInputs.cache
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.csproj.CopyComplete
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.dll
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/refint/Project Delaney.dll
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.pdb
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/Project Delaney.genruntimeconfig.cache
+C:/Users/ayrdr/Projects/Project Delaney (Godot)/.godot/mono/temp/obj/Debug/ref/Project Delaney.dll
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.csproj.AssemblyReference.cache
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.AssemblyInfoInputs.cache
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.AssemblyInfo.cs
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.csproj.CoreCompileInputs.cache
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.dll
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/refint/Project Delaney.dll
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.pdb
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/bin/Debug/Project Delaney.deps.json
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/bin/Debug/Project Delaney.runtimeconfig.json
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/bin/Debug/Project Delaney.dll
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/bin/Debug/Project Delaney.pdb
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/bin/Debug/GodotSharp.dll
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/bin/Debug/GodotSharpEditor.dll
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.csproj.CopyComplete
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/Project Delaney.genruntimeconfig.cache
+C:/Users/admin/Projects/Project-Delaney-Godot-/.godot/mono/temp/obj/Debug/ref/Project Delaney.dll
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/bin/Debug/Project Delaney.deps.json
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/bin/Debug/Project Delaney.runtimeconfig.json
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/bin/Debug/Project Delaney.dll
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/bin/Debug/Project Delaney.pdb
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/bin/Debug/GodotSharp.dll
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/bin/Debug/GodotSharpEditor.dll
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.csproj.AssemblyReference.cache
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.GeneratedMSBuildEditorConfig.editorconfig
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.AssemblyInfoInputs.cache
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.AssemblyInfo.cs
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.csproj.CoreCompileInputs.cache
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.sourcelink.json
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project .98528586.Up2Date
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.dll
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/refint/Project Delaney.dll
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.pdb
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/Project Delaney.genruntimeconfig.cache
+/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/Debug/ref/Project Delaney.dll
