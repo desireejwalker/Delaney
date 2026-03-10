@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/dizzydemon/Projects/Project-Delaney/Project Delaney.csproj": {}
+    "C:\\Users\\ayrdr\\Projects\\Delaney\\Project Delaney.csproj": {}
   },
   "projects": {
-    "/home/dizzydemon/Projects/Project-Delaney/Project Delaney.csproj": {
+    "C:\\Users\\ayrdr\\Projects\\Delaney\\Project Delaney.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/dizzydemon/Projects/Project-Delaney/Project Delaney.csproj",
+        "projectUniqueName": "C:\\Users\\ayrdr\\Projects\\Delaney\\Project Delaney.csproj",
         "projectName": "Project Delaney",
-        "projectPath": "/home/dizzydemon/Projects/Project-Delaney/Project Delaney.csproj",
-        "packagesPath": "/home/dizzydemon/.nuget/packages/",
-        "outputPath": "/home/dizzydemon/Projects/Project-Delaney/.godot/mono/temp/obj/",
+        "projectPath": "C:\\Users\\ayrdr\\Projects\\Delaney\\Project Delaney.csproj",
+        "packagesPath": "C:\\Users\\ayrdr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ayrdr\\Projects\\Delaney\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/dizzydemon/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ayrdr\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -46,17 +46,17 @@
           "dependencies": {
             "Godot.SourceGenerators": {
               "target": "Package",
-              "version": "[4.5.1, )",
+              "version": "[4.6.1, )",
               "autoReferenced": true
             },
             "GodotSharp": {
               "target": "Package",
-              "version": "[4.5.1, )",
+              "version": "[4.6.1, )",
               "autoReferenced": true
             },
             "GodotSharpEditor": {
               "target": "Package",
-              "version": "[4.5.1, )",
+              "version": "[4.6.1, )",
               "autoReferenced": true
             }
           },
@@ -74,11 +74,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.22, 8.0.22]"
+              "version": "[8.0.24, 8.0.24]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.22, 8.0.22]"
+              "version": "[8.0.24, 8.0.24]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.24, 8.0.24]"
             }
           ],
           "frameworkReferences": {
@@ -86,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
