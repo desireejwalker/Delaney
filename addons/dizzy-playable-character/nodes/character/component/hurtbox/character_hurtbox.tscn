@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bkoa5ieqbuh"]
+
+[ext_resource type="Script" uid="uid://dsjq6752nqkbx" path="res://addons/dizzy-playable-character/nodes/character/component/hurtbox/character_hurtbox.gd" id="1_hm71c"]
+[ext_resource type="PackedScene" uid="uid://ddis70ff4svng" path="res://addons/dizzy-playable-character/nodes/areas/hurtbox/hurtbox.tscn" id="2_tmnb8"]
+
+[node name="CharacterHurtbox" type="Node3D" unique_id=1559599076]
+script = ExtResource("1_hm71c")
+metadata/_custom_type_script = "uid://dsjq6752nqkbx"
+
+[node name="Hurtbox" parent="." unique_id=1397953834 instance=ExtResource("2_tmnb8")]
+unique_name_in_owner = true

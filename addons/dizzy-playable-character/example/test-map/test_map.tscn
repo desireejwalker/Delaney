@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://gbm0qcuko7hq"]
+
+[ext_resource type="PackedScene" uid="uid://bt1bjf4dys6au" path="res://addons/dizzy-playable-character/example/dummy/nodes/playable-character/dummy_playable_character.tscn" id="1_ujo2c"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ujo2c"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ugd3y"]
+sky_material = SubResource("ProceduralSkyMaterial_ujo2c")
+
+[sub_resource type="Environment" id="Environment_mqfdo"]
+background_mode = 2
+sky = SubResource("Sky_ugd3y")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ujo2c"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="TestMap" type="Node3D" unique_id=751254055]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1756124183]
+environment = SubResource("Environment_mqfdo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=286548012]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="DummyPlayableCharacter" parent="." unique_id=1190937740 instance=ExtResource("1_ujo2c")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=751088691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(50, 1, 50)
+material = SubResource("StandardMaterial3D_ujo2c")

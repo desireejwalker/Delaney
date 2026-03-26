@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b4ghl6i8k761h"]
+
+[ext_resource type="Script" uid="uid://dyt54x736scyj" path="res://addons/dizzy-playable-character/nodes/character/character.gd" id="1_epj0l"]
+[ext_resource type="PackedScene" uid="uid://bkoa5ieqbuh" path="res://addons/dizzy-playable-character/nodes/character/component/hurtbox/character_hurtbox.tscn" id="2_sbfiv"]
+
+[node name="Character" type="Node3D" unique_id=396285665]
+script = ExtResource("1_epj0l")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1179140305]
+unique_name_in_owner = true
+
+[node name="CharacterHurtbox" parent="." unique_id=1559599076 instance=ExtResource("2_sbfiv")]
+unique_name_in_owner = true

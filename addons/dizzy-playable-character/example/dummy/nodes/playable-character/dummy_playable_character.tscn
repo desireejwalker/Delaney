@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bt1bjf4dys6au"]
+
+[ext_resource type="PackedScene" uid="uid://dkfx0d2vw8xj3" path="res://addons/dizzy-playable-character/nodes/playable-character/playable_character.tscn" id="1_poiu6"]
+[ext_resource type="PackedScene" uid="uid://bhthu4ry66vhi" path="res://addons/dizzy-playable-character/example/dummy/nodes/character/dummy_character.tscn" id="2_f4wut"]
+[ext_resource type="PackedScene" uid="uid://dvisdd5i52676" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/controller/playable_character_controller.tscn" id="3_6c8h6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4wut"]
+height = 1.8
+
+[node name="DummyPlayableCharacter" unique_id=1190937740 instance=ExtResource("1_poiu6")]
+
+[node name="PlayableCharacterCollider" parent="." index="0" unique_id=680620827]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_f4wut")
+
+[node name="PlayableCharacterCharacterContainer" parent="." index="1" unique_id=1121792462 node_paths=PackedStringArray("characters")]
+characters = [NodePath("DummyCharacter")]
+
+[node name="DummyCharacter" parent="PlayableCharacterCharacterContainer" index="0" unique_id=396285665 instance=ExtResource("2_f4wut")]
+
+[node name="PlayableCharacterController" parent="." index="6" unique_id=440256155 instance=ExtResource("3_6c8h6")]

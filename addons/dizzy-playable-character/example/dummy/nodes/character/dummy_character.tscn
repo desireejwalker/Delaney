@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bhthu4ry66vhi"]
+
+[ext_resource type="PackedScene" uid="uid://b4ghl6i8k761h" path="res://addons/dizzy-playable-character/nodes/character/character.tscn" id="1_dgjbm"]
+[ext_resource type="Script" uid="uid://5yubos0ls4v" path="res://addons/dizzy-playable-character/nodes/character-model/character_model.gd" id="2_22roy"]
+[ext_resource type="Script" uid="uid://cl70n713b0r6k" path="res://addons/dizzy-playable-character/resources/character-data/character_data.gd" id="2_vi7sg"]
+
+[sub_resource type="Resource" id="Resource_idaep"]
+script = ExtResource("2_vi7sg")
+name = "Dummy"
+internal_name = &"dummy"
+short_description = "This is a short description of the Dummy character."
+long_description = "This is a long description of the Dummy character."
+metadata/_custom_type_script = "uid://cl70n713b0r6k"
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vi7sg"]
+radius = 0.4
+height = 1.75
+
+[node name="DummyCharacter" unique_id=396285665 node_paths=PackedStringArray("model") instance=ExtResource("1_dgjbm")]
+data = SubResource("Resource_idaep")
+model = NodePath("CharacterModel")
+
+[node name="CharacterModel" type="Node3D" parent="." index="1" unique_id=1160718819 node_paths=PackedStringArray("mesh_instance_3d")]
+script = ExtResource("2_22roy")
+mesh_instance_3d = NodePath("MeshInstance3D")
+metadata/_custom_type_script = "uid://5yubos0ls4v"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterModel" index="0" unique_id=1318891829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.90000004, 0)
+mesh = SubResource("CapsuleMesh_vi7sg")

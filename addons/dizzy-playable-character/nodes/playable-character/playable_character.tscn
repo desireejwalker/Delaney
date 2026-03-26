@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dkfx0d2vw8xj3"]
+
+[ext_resource type="Script" uid="uid://b2uujcs8xa3ax" path="res://addons/dizzy-playable-character/nodes/playable-character/playable_character.gd" id="1_xs7et"]
+[ext_resource type="PackedScene" uid="uid://dculnj7jkoi00" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/mover/playable_character_mover.tscn" id="2_yccxv"]
+[ext_resource type="PackedScene" uid="uid://bx38ady0pgith" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/character-container/playable_character_character_container.tscn" id="3_huwy4"]
+[ext_resource type="PackedScene" uid="uid://bfhkqifgthiks" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/hurtbox/playable_character_hurtbox.tscn" id="4_4f582"]
+[ext_resource type="PackedScene" uid="uid://byue2j1jxuog" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/camera/playable_character_camera.tscn" id="4_mx2dc"]
+[ext_resource type="PackedScene" uid="uid://ckspf4td0tgtj" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/status_interface/playable_character_status_interface.tscn" id="5_mx2dc"]
+
+[node name="PlayableCharacter" type="CharacterBody3D" unique_id=1190937740]
+script = ExtResource("1_xs7et")
+metadata/_custom_type_script = "uid://b2uujcs8xa3ax"
+
+[node name="PlayableCharacterCollider" type="CollisionShape3D" parent="." unique_id=680620827]
+
+[node name="PlayableCharacterCharacterContainer" parent="." unique_id=1121792462 instance=ExtResource("3_huwy4")]
+unique_name_in_owner = true
+
+[node name="PlayableCharacterMover" parent="." unique_id=1359295584 instance=ExtResource("2_yccxv")]
+unique_name_in_owner = true
+
+[node name="PlayableCharacterCamera" parent="." unique_id=91815916 instance=ExtResource("4_mx2dc")]
+unique_name_in_owner = true
+
+[node name="PlayableCharacterStatusInterface" parent="." unique_id=1789965660 instance=ExtResource("5_mx2dc")]
+unique_name_in_owner = true
+
+[node name="PlayableCharacterHurtbox" parent="." unique_id=1216338591 instance=ExtResource("4_4f582")]
+unique_name_in_owner = true

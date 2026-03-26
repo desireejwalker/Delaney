@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bx38ady0pgith"]
+
+[ext_resource type="Script" uid="uid://jjjw6joq24p4" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/character-container/playable_character_character_container.gd" id="1_reoae"]
+
+[node name="PlayableCharacterCharacterContainer" type="Node3D" unique_id=1427265099]
+script = ExtResource("1_reoae")
+metadata/_custom_type_script = "uid://jjjw6joq24p4"

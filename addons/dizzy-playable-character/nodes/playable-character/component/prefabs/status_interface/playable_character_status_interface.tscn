@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ckspf4td0tgtj"]
+
+[ext_resource type="Script" uid="uid://dcj3r1ulnqttw" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/status_interface/playable_character_status_interface.gd" id="1_yqsta"]
+
+[node name="PlayableCharacterStatusInterface" type="Node3D" unique_id=1789965660]
+script = ExtResource("1_yqsta")
+metadata/_custom_type_script = "uid://dcj3r1ulnqttw"

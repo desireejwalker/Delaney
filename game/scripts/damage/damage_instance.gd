@@ -1,4 +1,5 @@
-class_name DamageInstance extends Resource
+# class_name DamageInstance
+extends Resource
 
 
 @export var initialDamageAmount: int = 1

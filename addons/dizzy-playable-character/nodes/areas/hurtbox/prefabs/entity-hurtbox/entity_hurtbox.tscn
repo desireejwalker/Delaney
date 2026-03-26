@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://qidsnpuib6v0"]
+
+[ext_resource type="PackedScene" uid="uid://ddis70ff4svng" path="res://addons/dizzy-playable-character/nodes/areas/hurtbox/hurtbox.tscn" id="1_nvem6"]
+[ext_resource type="Script" uid="uid://dek1njuhj2mh0" path="res://addons/dizzy-playable-character/nodes/areas/hurtbox/prefabs/entity-hurtbox/entity_hurtbox.gd" id="2_tx1dy"]
+
+[node name="EntityHurtbox" instance=ExtResource("1_nvem6")]
+script = ExtResource("2_tx1dy")

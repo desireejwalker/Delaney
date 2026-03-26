@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://kbu6wtu4nsm3"]
+
+[ext_resource type="Script" uid="uid://y5dan6i4p320" path="res://addons/dizzy-playable-character/nodes/areas/hitbox/hitbox.gd" id="1_oyf7b"]
+
+[node name="Hitbox" type="Area3D"]
+collision_layer = 8
+collision_mask = 16
+monitorable = false
+script = ExtResource("1_oyf7b")
+metadata/_custom_type_script = "uid://y5dan6i4p320"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+debug_color = Color(1, 0, 0, 0.419608)

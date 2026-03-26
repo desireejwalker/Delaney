@@ -1,2 +1,2 @@
-﻿60761
+﻿57689
 C:/Users/ayrdr/Applications/Godot_v4.6.1-stable_mono_windows_arm64/Godot_v4.6.1-stable_mono_windows_arm64.exe

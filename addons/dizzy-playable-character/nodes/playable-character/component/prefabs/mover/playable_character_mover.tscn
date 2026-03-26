@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dculnj7jkoi00"]
+
+[ext_resource type="Script" uid="uid://bypteqhc270m4" path="res://addons/dizzy-playable-character/nodes/playable-character/component/prefabs/mover/playable_character_mover.gd" id="1_ws2ut"]
+
+[node name="PlayableCharacterMover" type="Node3D" unique_id=1335925560]
+script = ExtResource("1_ws2ut")
+metadata/_custom_type_script = "uid://bypteqhc270m4"
