@@ -72,6 +72,15 @@ func initialize() -> void:
 # 	var cross = direction.cross(get_front_direction())
 # 	relative_direction = Vector3(cross.y, 0, dot).normalized()
 
+func get_input_direction() -> Vector3:
+	var direction = Vector3(
+		Input.get_action_strength("strafe_right") - Input.get_action_strength("strafe_left"),
+		0,
+		Input.get_action_strength("backwards") - Input.get_action_strength("forwards"))
+	direction = direction.rotated(Vector3.UP, camera.get_horizontal_rotation()).normalized()
+	
+	return direction
+
 func emit_action_performed(action_type: PlayableCharacterAction, holding: bool):
 	action_performed.emit(action_type, holding)
 func emit_action_interrupted(action_type: PlayableCharacterAction):

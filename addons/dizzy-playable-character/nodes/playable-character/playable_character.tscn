@@ -12,6 +12,7 @@ script = ExtResource("1_xs7et")
 metadata/_custom_type_script = "uid://b2uujcs8xa3ax"
 
 [node name="PlayableCharacterCollider" type="CollisionShape3D" parent="." unique_id=680620827]
+unique_name_in_owner = true
 
 [node name="PlayableCharacterCharacterContainer" parent="." unique_id=1121792462 instance=ExtResource("3_huwy4")]
 unique_name_in_owner = true

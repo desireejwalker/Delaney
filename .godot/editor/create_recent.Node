@@ -1,3 +1,6 @@
+FSMState
+FiniteStateMachine
+PlayableCharacterFiniteStateMachine
 PlayableCharacterController
 DirectionalLight3D
 CharacterHurtbox
@@ -9,7 +12,3 @@ SpringArm3D
 MeshInstance3D
 CharacterModel
 AnimationTree
-PlayableCharacter
-PlayableCharacterCamera
-PlayableCharacterStatusInterface
-PlayableCharacterHurtbox

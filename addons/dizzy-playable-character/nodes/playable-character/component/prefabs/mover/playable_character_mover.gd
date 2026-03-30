@@ -27,11 +27,14 @@ var character_container: PlayableCharacterCharacterContainer
 
 # Gameplay Variables
 
-var _direction: Vector3
-var _vertical_velocity: Vector3
-var _turn_speed: float = 10
-var _root_velocity: Vector3 
-var _root_rotation: Quaternion
+## If true, this [PlayableCharacterMover] will automatically call
+## [method CharacterBody3D.move_and_slide] at the end of every [method _physics_process] call.
+var do_move_and_slide: bool = true
+var direction: Vector3
+var vertical_velocity: Vector3
+var turn_speed: float = 10
+var root_velocity: Vector3 
+var root_rotation: Quaternion
 
 # Animation
 
@@ -73,14 +76,14 @@ func set_direction(normalized_direction: Vector3):
 		return
 	if use_root_rotation:
 		return
-	_direction = normalized_direction
+	direction = normalized_direction
 
 func _process(delta: float) -> void:
 	if not is_active:
 		return
-	_root_velocity = _calculate_root_motion(delta)
-	_root_rotation = _calculate_root_rotation()
-	character_container.quaternion *= _root_rotation
+	root_velocity = _calculate_root_motion(delta)
+	root_rotation = _calculate_root_rotation()
+	character_container.quaternion *= root_rotation
 
 func _physics_process(delta: float) -> void:
 	if not is_active:
@@ -89,6 +92,8 @@ func _physics_process(delta: float) -> void:
 	_update_character_container_rotation(delta)
 	_update_playable_character_velocity()
 	
+	if not do_move_and_slide:
+		return
 	playable_character.move_and_slide()
 
 func _setup_for_character(character: Character):
@@ -111,7 +116,7 @@ func _handle_update_animation_parameters():
 	animation_tree.set(start_movement_parameter, _can_move)
 	animation_tree.set(start_idle_parameter, !_can_move)
 
-	_can_move = !_direction.is_zero_approx()
+	_can_move = !direction.is_zero_approx()
 
 func _calculate_root_motion(delta: float) -> Vector3:
 	if not is_active:
@@ -134,8 +139,8 @@ func _update_character_container_rotation(delta: float):
 	if not is_active:
 		return
 	var rotation = character_container.rotation.y
-	if not _direction.is_zero_approx():
-		rotation = lerp_angle(character_container.rotation.y, atan2(_direction.x, _direction.z), _turn_speed * delta)
+	if not direction.is_zero_approx():
+		rotation = lerp_angle(character_container.rotation.y, atan2(direction.x, direction.z), turn_speed * delta)
 	character_container.rotation.y = rotation
 
 func _update_playable_character_velocity():
@@ -143,4 +148,4 @@ func _update_playable_character_velocity():
 		return
 	if not use_root_motion:
 		return
-	playable_character.velocity = _root_velocity
+	playable_character.velocity = root_velocity

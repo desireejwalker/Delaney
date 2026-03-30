@@ -1,6 +1,8 @@
 @tool
 extends FSMState
 
+@export var launch_parameters: LaunchParameters
+
 signal on_update(delta: float, actor: Node, blackboard: Blackboard)
 
 # Executes after the state is entered.

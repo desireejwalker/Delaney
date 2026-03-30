@@ -1,4 +1,5 @@
-res://addons/dizzy-playable-character/example/dummy/character/
+res://nodes/playable-character/states/
+res://nodes/playable-character/states/transitions/
 res://addons/dizzy-playable-character/example/
 C:/Users/ayrdr/AppData/Local/Programs/Microsoft VS Code/
 res://addons/draw_line_3d/
@@ -20,4 +21,3 @@ res://game/resources/combo_action_entries/instant_concussion/
 res://game/resources/combo_action_entries/poke/
 res://game/resources/combo_action_entries/
 res://game/game_states/main/assets/minimap/
-res://game/game_states/main/assets/ui/

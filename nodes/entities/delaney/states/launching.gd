@@ -17,7 +17,6 @@ var _trail_instance: Node3D
 func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as DelaneyEntity
 	
-	
 	_saved_shape_3D = _collider.shape
 	_saved_collider_offset = _collider.position
 	_collider.shape = _launch_shape_3D

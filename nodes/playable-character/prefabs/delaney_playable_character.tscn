@@ -1,0 +1,623 @@
+[gd_scene format=3 uid="uid://cs8iccxun3if5"]
+
+[ext_resource type="PackedScene" uid="uid://dkfx0d2vw8xj3" path="res://addons/dizzy-playable-character/nodes/playable-character/playable_character.tscn" id="1_7xd56"]
+[ext_resource type="PackedScene" uid="uid://m24rdewx3r6a" path="res://nodes/playable-character/components/playable-character-finite-state-machine/playable_character_finite_state_machine.tscn" id="2_cqyrg"]
+[ext_resource type="PackedScene" uid="uid://bhthu4ry66vhi" path="res://addons/dizzy-playable-character/example/dummy/nodes/character/dummy_character.tscn" id="2_de7hl"]
+[ext_resource type="Script" uid="uid://cegvtqpqtv3gm" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="3_532qq"]
+[ext_resource type="Script" uid="uid://dj8a0cq50ikpx" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state.gd" id="4_5py16"]
+[ext_resource type="Script" uid="uid://dgsofm1brlcwe" path="res://addons/behaviour_toolkit/blackboard.gd" id="4_dbhgd"]
+[ext_resource type="Script" uid="uid://csu5xq4i1bhu" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="5_nk7hi"]
+[ext_resource type="Script" uid="uid://isqf56m3l434" path="res://nodes/playable-character/states/idle.gd" id="5_uj7ps"]
+[ext_resource type="Script" uid="uid://drpek2jeqh6uv" path="res://nodes/playable-character/states/transitions/start_walking.gd" id="6_uvnkb"]
+[ext_resource type="Script" uid="uid://lr57pdm5c2bm" path="res://nodes/playable-character/states/transitions/start_running.gd" id="7_0hqb4"]
+[ext_resource type="Script" uid="uid://douv2ftvhk8xa" path="res://nodes/playable-character/states/transitions/start_jumping.gd" id="8_l2j1y"]
+[ext_resource type="Script" uid="uid://bsaornn7q7gc3" path="res://nodes/playable-character/states/walking.gd" id="8_uj7ps"]
+[ext_resource type="Script" uid="uid://cjim6cddrrgpm" path="res://nodes/playable-character/states/running.gd" id="10_0hqb4"]
+[ext_resource type="Script" uid="uid://cksnntugf3edp" path="res://nodes/playable-character/states/transitions/start_idling.gd" id="10_2k84f"]
+[ext_resource type="Script" uid="uid://cde1jklrw1nvf" path="res://nodes/playable-character/states/transitions/start_hammer_launching.gd" id="11_1kp0j"]
+[ext_resource type="Script" uid="uid://b451oc4yqim51" path="res://nodes/playable-character/states/transitions/start_skidding.gd" id="12_uxsmg"]
+[ext_resource type="Script" uid="uid://dc8f6u0vfnxgf" path="res://nodes/playable-character/states/transitions/start_falling.gd" id="13_uxsmg"]
+[ext_resource type="Script" uid="uid://c5an7kas8uig3" path="res://nodes/playable-character/states/skidding.gd" id="15_mvklo"]
+[ext_resource type="Script" uid="uid://cudra2g8w8hlt" path="res://nodes/playable-character/states/jumping.gd" id="16_5ugqo"]
+[ext_resource type="Script" uid="uid://cwi6kav563qni" path="res://nodes/playable-character/states/falling.gd" id="17_42u0n"]
+[ext_resource type="Script" uid="uid://cwvv6m6ef051p" path="res://nodes/playable-character/states/transitions/start_landing.gd" id="17_n6ahl"]
+[ext_resource type="Script" uid="uid://xesll4js3ovq" path="res://nodes/playable-character/states/transitions/start_diving.gd" id="19_ftpfy"]
+[ext_resource type="Script" uid="uid://caewv515w7v" path="res://nodes/playable-character/states/transitions/start_ground_slamming.gd" id="20_3ecuf"]
+[ext_resource type="Script" uid="uid://bjkv0ox7c32a5" path="res://nodes/playable-character/states/transitions/start_sliding.gd" id="21_if8nd"]
+[ext_resource type="Texture2D" uid="uid://djc4pm55g6omf" path="res://art/particles/puffs.png" id="21_t752a"]
+[ext_resource type="Script" uid="uid://coohbupd074eg" path="res://nodes/playable-character/states/sliding.gd" id="22_6ffxi"]
+[ext_resource type="Script" uid="uid://db5yu201iyexw" path="res://nodes/playable-character/states/transitions/start_wall_running.gd" id="22_33vwe"]
+[ext_resource type="Script" uid="uid://dq8edapddn434" path="res://nodes/playable-character/states/transitions/start_long_jumping.gd" id="23_eisf4"]
+[ext_resource type="Script" uid="uid://dqsl554lutldu" path="res://nodes/playable-character/states/transitions/start_hammer_pogoing.gd" id="23_k18sj"]
+[ext_resource type="Script" uid="uid://ct07o86nuj5nu" path="res://nodes/playable-character/states/transitions/start_arial_hammer_launching.gd" id="24_3m8uq"]
+[ext_resource type="Script" uid="uid://elkk2fgfbyax" path="res://nodes/playable-character/states/long_jumping.gd" id="24_nk7hi"]
+[ext_resource type="Script" uid="uid://dsh6okjrr7kpc" path="res://nodes/playable-character/states/hammer_launching.gd" id="25_dnk1r"]
+[ext_resource type="Script" uid="uid://cfpmppd7r26j2" path="res://nodes/playable-character/states/transitions/start_launching.gd" id="26_7s1go"]
+[ext_resource type="PackedScene" uid="uid://o3ox8x3v2o8p" path="res://nodes/launch_indicator/launch_trajectory_indicator.tscn" id="26_kp24p"]
+[ext_resource type="Resource" uid="uid://g4e32hm4iott" path="res://resources/launch_parameters/delaney/LP_BLUNT.tres" id="26_xtepl"]
+[ext_resource type="Script" uid="uid://dws4n851y4ypj" path="res://nodes/entities/delaney/flow_states/blunt.gd" id="26_y5tsj"]
+[ext_resource type="Script" uid="uid://5xjdnsunwrwy" path="res://nodes/entities/delaney/flow_states/delta.gd" id="27_7s1go"]
+[ext_resource type="Resource" uid="uid://boo4jdo3sur8p" path="res://resources/launch_parameters/delaney/LP_DELTA.tres" id="27_sqkvk"]
+[ext_resource type="Resource" uid="uid://xtw0jvqgveu" path="res://resources/launch_parameters/delaney/LP_EPSILON.tres" id="28_xqcxj"]
+[ext_resource type="Script" uid="uid://70woy87gw7kb" path="res://nodes/entities/delaney/flow_states/epsilon.gd" id="28_xtepl"]
+[ext_resource type="Resource" uid="uid://bjldedmpg3kum" path="res://resources/launch_parameters/delaney/LP_LAMBDA.tres" id="29_1kp0j"]
+[ext_resource type="Script" uid="uid://b1oeuggipsyij" path="res://nodes/entities/delaney/flow_states/lambda.gd" id="29_dsifb"]
+[ext_resource type="Script" uid="uid://myaqti47xarr" path="res://nodes/playable-character/states/launching.gd" id="31_xqcxj"]
+[ext_resource type="Script" uid="uid://bdftn8q8bohg3" path="res://nodes/playable-character/states/hammer_pogoing.gd" id="34_33vwe"]
+[ext_resource type="Script" uid="uid://c762bjpm1njv5" path="res://nodes/playable-character/states/wall_running.gd" id="34_lrgvp"]
+[ext_resource type="Script" uid="uid://d4ae67eo241jj" path="res://nodes/playable-character/states/transitions/start_wall_jumping.gd" id="35_lrgvp"]
+[ext_resource type="Script" uid="uid://c87y1a6pwdvqa" path="res://nodes/playable-character/states/wall_jumping.gd" id="36_fwkph"]
+[ext_resource type="Script" uid="uid://qlt41kmulq6m" path="res://nodes/playable-character/states/arial_hammer_launching.gd" id="37_0qiky"]
+[ext_resource type="Script" uid="uid://6syb2brp036v" path="res://nodes/playable-character/states/diving.gd" id="39_ui731"]
+[ext_resource type="Script" uid="uid://bgl1fgylwmbv3" path="res://nodes/playable-character/states/ground_slamming.gd" id="41_fh867"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_de7hl"]
+
+[sub_resource type="Resource" id="Resource_kfto8"]
+script = ExtResource("4_dbhgd")
+metadata/_custom_type_script = "uid://dgsofm1brlcwe"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1kp0j"]
+
+[sub_resource type="Resource" id="Resource_sq7iw"]
+script = ExtResource("4_dbhgd")
+
+[sub_resource type="Curve" id="Curve_if8nd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.67876, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hhior"]
+curve = SubResource("Curve_if8nd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6ffxi"]
+lifetime_randomness = 1.0
+angle_min = -360.0
+angle_max = 360.0
+inherit_velocity_ratio = 0.2
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.5
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_hhior")
+anim_speed_max = 1.0
+anim_offset_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2jfgm"]
+transparency = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("21_t752a")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_eisf4"]
+material = SubResource("StandardMaterial3D_2jfgm")
+
+[node name="DelaneyPlayableCharacter" unique_id=1190937740 instance=ExtResource("1_7xd56")]
+
+[node name="PlayableCharacterCollider" parent="." index="0" unique_id=680620827]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_de7hl")
+
+[node name="PlayableCharacterCharacterContainer" parent="." index="1" unique_id=1121792462 node_paths=PackedStringArray("characters")]
+characters = [NodePath("DummyCharacter")]
+
+[node name="DummyCharacter" parent="PlayableCharacterCharacterContainer" index="0" unique_id=396285665 instance=ExtResource("2_de7hl")]
+
+[node name="PlayableCharacterGameplayFiniteStateMachine" parent="." index="6" unique_id=826857320 instance=ExtResource("2_cqyrg")]
+verbose = true
+
+[node name="FiniteStateMachine" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine" index="0" unique_id=1881629201 node_paths=PackedStringArray("initial_state", "actor")]
+script = ExtResource("3_532qq")
+active = false
+initial_state = NodePath("Idle")
+actor = NodePath("../..")
+blackboard = SubResource("Resource_kfto8")
+metadata/_custom_type_script = "uid://cegvtqpqtv3gm"
+
+[node name="Idle" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="0" unique_id=182921375]
+unique_name_in_owner = true
+script = ExtResource("5_uj7ps")
+metadata/_custom_type_script = "uid://dj8a0cq50ikpx"
+
+[node name="startWalking" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Idle" index="0" unique_id=579810207 node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_uvnkb")
+next_state = NodePath("../../Walking")
+
+[node name="startRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Idle" index="1" unique_id=565272730 node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_0hqb4")
+next_state = NodePath("../../Running")
+
+[node name="startJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Idle" index="2" unique_id=151910374 node_paths=PackedStringArray("next_state")]
+script = ExtResource("8_l2j1y")
+next_state = NodePath("../../Jumping")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Idle" index="3" unique_id=164658110 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Idle" index="4" unique_id=258896575 node_paths=PackedStringArray("next_state")]
+script = ExtResource("11_1kp0j")
+next_state = NodePath("../../HammerLaunching")
+
+[node name="Walking" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="1" unique_id=1702668046]
+unique_name_in_owner = true
+script = ExtResource("8_uj7ps")
+metadata/_custom_type_script = "uid://dj8a0cq50ikpx"
+
+[node name="startIdling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Walking" index="0" unique_id=1691985518 node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_2k84f")
+next_state = NodePath("../../Idle")
+
+[node name="startRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Walking" index="1" unique_id=1192429370 node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_0hqb4")
+next_state = NodePath("../../Running")
+
+[node name="startJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Walking" index="2" unique_id=279267629 node_paths=PackedStringArray("next_state")]
+script = ExtResource("8_l2j1y")
+next_state = NodePath("../../Jumping")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Walking" index="3" unique_id=557442261 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Walking" index="4" unique_id=1122438315 node_paths=PackedStringArray("next_state")]
+script = ExtResource("11_1kp0j")
+next_state = NodePath("../../HammerLaunching")
+
+[node name="Running" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="2" unique_id=800139029]
+unique_name_in_owner = true
+script = ExtResource("10_0hqb4")
+speed = 12.0
+
+[node name="startWalking" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Running" index="0" unique_id=634280839 node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_uvnkb")
+next_state = NodePath("../../Walking")
+
+[node name="startIdling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Running" index="1" unique_id=43620590 node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_2k84f")
+next_state = NodePath("../../Idle")
+
+[node name="startSkidding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Running" index="2" unique_id=58845259 node_paths=PackedStringArray("next_state")]
+script = ExtResource("12_uxsmg")
+next_state = NodePath("../../Skidding")
+
+[node name="startJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Running" index="3" unique_id=396836337 node_paths=PackedStringArray("next_state")]
+script = ExtResource("8_l2j1y")
+next_state = NodePath("../../Jumping")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Running" index="4" unique_id=1380668107 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startSliding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Running" index="5" unique_id=1151437533 node_paths=PackedStringArray("next_state")]
+script = ExtResource("21_if8nd")
+next_state = NodePath("../../Sliding")
+
+[node name="startHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Running" index="6" unique_id=1608050934 node_paths=PackedStringArray("next_state")]
+script = ExtResource("11_1kp0j")
+next_state = NodePath("../../HammerLaunching")
+
+[node name="Skidding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="3" unique_id=2084439358]
+unique_name_in_owner = true
+script = ExtResource("15_mvklo")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Skidding" index="0" unique_id=274185182 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startIdling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Skidding" index="1" unique_id=460358942 node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_2k84f")
+next_state = NodePath("../../Idle")
+
+[node name="startWalking" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Skidding" index="2" unique_id=1945221939 node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_uvnkb")
+next_state = NodePath("../../Walking")
+
+[node name="startRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Skidding" index="3" unique_id=570909899 node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_0hqb4")
+next_state = NodePath("../../Running")
+
+[node name="Jumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="4" unique_id=517716627]
+unique_name_in_owner = true
+script = ExtResource("16_5ugqo")
+
+[node name="startDiving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Jumping" index="0" unique_id=1559034343 node_paths=PackedStringArray("next_state")]
+script = ExtResource("19_ftpfy")
+next_state = NodePath("../../Diving")
+
+[node name="startGroundSlamming" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Jumping" index="1" unique_id=1702031130 node_paths=PackedStringArray("next_state")]
+script = ExtResource("20_3ecuf")
+next_state = NodePath("../../GroundSlamming")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Jumping" index="2" unique_id=238044574 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startLanding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Jumping" index="3" unique_id=2048897032 node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_n6ahl")
+next_state = NodePath("../../Landing")
+
+[node name="Falling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="5" unique_id=1789545576]
+unique_name_in_owner = true
+script = ExtResource("17_42u0n")
+
+[node name="startWallJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Falling" index="0" unique_id=1154333212 node_paths=PackedStringArray("next_state")]
+script = ExtResource("35_lrgvp")
+next_state = NodePath("../../WallJumping")
+
+[node name="startWallRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Falling" index="1" unique_id=379370649 node_paths=PackedStringArray("next_state")]
+script = ExtResource("22_33vwe")
+next_state = NodePath("../../WallRunning")
+
+[node name="startArialHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Falling" index="2" unique_id=570459892 node_paths=PackedStringArray("next_state")]
+script = ExtResource("24_3m8uq")
+next_state = NodePath("../../ArialHammerLaunching")
+
+[node name="startDiving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Falling" index="3" unique_id=455777599 node_paths=PackedStringArray("next_state")]
+script = ExtResource("19_ftpfy")
+next_state = NodePath("../../Diving")
+
+[node name="startGroundSlamming" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Falling" index="4" unique_id=1760020326 node_paths=PackedStringArray("next_state")]
+script = ExtResource("20_3ecuf")
+next_state = NodePath("../../GroundSlamming")
+
+[node name="startLanding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Falling" index="5" unique_id=2139429610 node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_n6ahl")
+next_state = NodePath("../../Landing")
+
+[node name="Landing" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="6" unique_id=1397793568]
+unique_name_in_owner = true
+script = ExtResource("4_5py16")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="0" unique_id=220984410 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="1" unique_id=192526970 node_paths=PackedStringArray("next_state")]
+script = ExtResource("8_l2j1y")
+next_state = NodePath("../../Jumping")
+
+[node name="startIdling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="2" unique_id=1261256314 node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_2k84f")
+next_state = NodePath("../../Idle")
+
+[node name="startWalking" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="3" unique_id=1462367732 node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_uvnkb")
+next_state = NodePath("../../Walking")
+
+[node name="startRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="4" unique_id=1290419207 node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_0hqb4")
+next_state = NodePath("../../Running")
+
+[node name="startSliding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="5" unique_id=345295010 node_paths=PackedStringArray("next_state")]
+script = ExtResource("21_if8nd")
+next_state = NodePath("../../Sliding")
+
+[node name="startHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="6" unique_id=1572798808 node_paths=PackedStringArray("next_state")]
+script = ExtResource("11_1kp0j")
+next_state = NodePath("../../HammerLaunching")
+
+[node name="Sliding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="7" unique_id=459384835]
+unique_name_in_owner = true
+script = ExtResource("22_6ffxi")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Sliding" index="0" unique_id=1898629712 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startLongJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Sliding" index="1" unique_id=1644805548 node_paths=PackedStringArray("next_state")]
+script = ExtResource("23_eisf4")
+next_state = NodePath("../../LongJumping")
+
+[node name="startJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Sliding" index="2" unique_id=382365838 node_paths=PackedStringArray("next_state")]
+script = ExtResource("8_l2j1y")
+next_state = NodePath("../../Jumping")
+
+[node name="startIdling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Sliding" index="3" unique_id=1108621345 node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_2k84f")
+next_state = NodePath("../../Idle")
+
+[node name="startWalking" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Sliding" index="4" unique_id=1899642418 node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_uvnkb")
+next_state = NodePath("../../Walking")
+
+[node name="startRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Sliding" index="5" unique_id=799800578 node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_0hqb4")
+next_state = NodePath("../../Running")
+
+[node name="LongJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="8" unique_id=865224134]
+unique_name_in_owner = true
+script = ExtResource("24_nk7hi")
+horizontal_force = 20.0
+vertical_force = 7.5
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/LongJumping" index="0" unique_id=1057485591 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startDiving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/LongJumping" index="1" unique_id=1806091731 node_paths=PackedStringArray("next_state")]
+script = ExtResource("19_ftpfy")
+next_state = NodePath("../../Diving")
+
+[node name="startGroundSlamming" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/LongJumping" index="2" unique_id=2084904175 node_paths=PackedStringArray("next_state")]
+script = ExtResource("20_3ecuf")
+next_state = NodePath("../../GroundSlamming")
+
+[node name="startLanding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/LongJumping" index="3" unique_id=391402709 node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_n6ahl")
+next_state = NodePath("../../Landing")
+
+[node name="HammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="9" unique_id=1573079230]
+unique_name_in_owner = true
+script = ExtResource("25_dnk1r")
+blunt_launch_parameters = ExtResource("26_xtepl")
+delta_launch_parameters = ExtResource("27_sqkvk")
+epsilon_launch_parameters = ExtResource("28_xqcxj")
+lambda_launch_parameters = ExtResource("29_1kp0j")
+
+[node name="startArialHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerLaunching" index="0" unique_id=853423795 node_paths=PackedStringArray("next_state")]
+script = ExtResource("24_3m8uq")
+next_state = NodePath("../../ArialHammerLaunching")
+
+[node name="startLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerLaunching" index="1" unique_id=1312152650 node_paths=PackedStringArray("next_state")]
+script = ExtResource("26_7s1go")
+next_state = NodePath("../../Launching")
+
+[node name="startIdling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerLaunching" index="2" unique_id=654541675 node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_2k84f")
+next_state = NodePath("../../Idle")
+
+[node name="startWalking" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerLaunching" index="3" unique_id=1482112157 node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_uvnkb")
+next_state = NodePath("../../Walking")
+
+[node name="startRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerLaunching" index="4" unique_id=1723131760 node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_0hqb4")
+next_state = NodePath("../../Running")
+
+[node name="Launching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="10" unique_id=1761529130]
+unique_name_in_owner = true
+script = ExtResource("31_xqcxj")
+launch_shape_3D = SubResource("SphereShape3D_1kp0j")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Launching" index="0" unique_id=1368383157 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="WallRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="11" unique_id=340063173]
+unique_name_in_owner = true
+script = ExtResource("34_lrgvp")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallRunning" index="0" unique_id=1563372789 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startWallJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallRunning" index="1" unique_id=247715402 node_paths=PackedStringArray("next_state")]
+script = ExtResource("35_lrgvp")
+next_state = NodePath("../../WallJumping")
+
+[node name="WallJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="12" unique_id=135075330]
+unique_name_in_owner = true
+script = ExtResource("36_fwkph")
+wall_push_force = null
+force = null
+gravity = null
+acceleration = null
+speed = null
+
+[node name="startDiving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallJumping" index="0" unique_id=1080233951 node_paths=PackedStringArray("next_state")]
+script = ExtResource("19_ftpfy")
+next_state = NodePath("../../Diving")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallJumping" index="1" unique_id=1481111318 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startGroundSlamming" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallJumping" index="2" unique_id=1177704868 node_paths=PackedStringArray("next_state")]
+script = ExtResource("20_3ecuf")
+next_state = NodePath("../../GroundSlamming")
+
+[node name="startLanding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallJumping" index="3" unique_id=1660775203 node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_n6ahl")
+next_state = NodePath("../../Landing")
+
+[node name="ArialHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="13" unique_id=1716563597]
+unique_name_in_owner = true
+script = ExtResource("37_0qiky")
+blunt_launch_parameters = ExtResource("26_xtepl")
+delta_launch_parameters = ExtResource("27_sqkvk")
+epsilon_launch_parameters = ExtResource("28_xqcxj")
+lambda_launch_parameters = ExtResource("29_1kp0j")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/ArialHammerLaunching" index="0" unique_id=1163762690 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/ArialHammerLaunching" index="1" unique_id=1695992358 node_paths=PackedStringArray("next_state")]
+script = ExtResource("11_1kp0j")
+next_state = NodePath("../../HammerLaunching")
+
+[node name="startLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/ArialHammerLaunching" index="2" unique_id=1079088206 node_paths=PackedStringArray("next_state")]
+script = ExtResource("26_7s1go")
+next_state = NodePath("../../Launching")
+
+[node name="Diving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="14" unique_id=1404636050]
+unique_name_in_owner = true
+script = ExtResource("39_ui731")
+horizontal_force = null
+vertical_force = null
+gravity = null
+acceleration = null
+speed = null
+max_horizontal_velocity = null
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Diving" index="0" unique_id=426186419 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="startGroundSlamming" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Diving" index="1" unique_id=164127391 node_paths=PackedStringArray("next_state")]
+script = ExtResource("20_3ecuf")
+next_state = NodePath("../../GroundSlamming")
+
+[node name="startLanding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Diving" index="2" unique_id=1090740537 node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_n6ahl")
+next_state = NodePath("../../Landing")
+
+[node name="GroundSlamming" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="15" unique_id=905123266]
+unique_name_in_owner = true
+script = ExtResource("41_fh867")
+force = null
+
+[node name="startHammerPogoing" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/GroundSlamming" index="0" unique_id=2078132632 node_paths=PackedStringArray("next_state")]
+script = ExtResource("23_k18sj")
+next_state = NodePath("../../HammerPogoing")
+
+[node name="startLanding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/GroundSlamming" index="1" unique_id=309253047 node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_n6ahl")
+next_state = NodePath("../../Landing")
+
+[node name="HammerPogoing" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="16" unique_id=1562702587]
+script = ExtResource("34_33vwe")
+horizontal_force = 15.0
+vertical_force = 15.0
+
+[node name="startArialHammerLaunching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerPogoing" index="0" unique_id=372308685 node_paths=PackedStringArray("next_state")]
+script = ExtResource("24_3m8uq")
+next_state = NodePath("../../ArialHammerLaunching")
+
+[node name="startDiving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerPogoing" index="1" unique_id=782825525 node_paths=PackedStringArray("next_state")]
+script = ExtResource("19_ftpfy")
+next_state = NodePath("../../Diving")
+
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerPogoing" index="2" unique_id=986997355 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
+[node name="PlayableCharacterFlowStateFiniteStateMachine" parent="." index="7" unique_id=925586117 instance=ExtResource("2_cqyrg")]
+unique_name_in_owner = true
+
+[node name="FiniteStateMachine" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine" index="0" unique_id=1243796699 node_paths=PackedStringArray("initial_state", "actor")]
+script = ExtResource("3_532qq")
+process_type = 0
+active = false
+initial_state = NodePath("Blunt")
+actor = NodePath("../..")
+blackboard = SubResource("Resource_sq7iw")
+
+[node name="Blunt" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine" index="0" unique_id=1677134058]
+unique_name_in_owner = true
+script = ExtResource("26_y5tsj")
+launch_parameters = ExtResource("26_xtepl")
+
+[node name="onAdvanceToDelta" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine/Blunt" index="0" unique_id=261795753 node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_nk7hi")
+next_state = NodePath("../../Delta")
+use_event = true
+event = "on_advance_to_delta"
+
+[node name="Delta" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine" index="1" unique_id=385729371]
+unique_name_in_owner = true
+script = ExtResource("27_7s1go")
+launch_parameters = ExtResource("27_sqkvk")
+
+[node name="onAdvanceToEpsilon" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine/Delta" index="0" unique_id=406331842 node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_nk7hi")
+next_state = NodePath("../../Epsilon")
+use_event = true
+event = "on_advance_to_epsilon"
+
+[node name="onDecayToBlunt" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine/Delta" index="1" unique_id=924317868 node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_nk7hi")
+next_state = NodePath("../../Blunt")
+use_event = true
+event = "on_decay_to_blunt"
+
+[node name="Epsilon" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine" index="2" unique_id=1534688107]
+unique_name_in_owner = true
+script = ExtResource("28_xtepl")
+launch_parameters = ExtResource("28_xqcxj")
+
+[node name="onAdvanceToLambda" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine/Epsilon" index="0" unique_id=560199310 node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_nk7hi")
+next_state = NodePath("../../Lambda")
+use_event = true
+event = "on_advance_to_lambda"
+
+[node name="onDecayToDelta" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine/Epsilon" index="1" unique_id=1952159409 node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_nk7hi")
+next_state = NodePath("../../Delta")
+use_event = true
+event = "on_decay_to_delta"
+
+[node name="Lambda" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine" index="3" unique_id=1595220811]
+unique_name_in_owner = true
+script = ExtResource("29_dsifb")
+launch_parameters = ExtResource("29_1kp0j")
+
+[node name="onDecayToEpsilon" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine/FiniteStateMachine/Lambda" index="0" unique_id=405245301 node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_nk7hi")
+next_state = NodePath("../../Epsilon")
+use_event = true
+event = "on_decay_to_epsilon"
+
+[node name="LaunchTrajectoryIndicator" parent="." index="8" unique_id=1735437532 instance=ExtResource("26_kp24p")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+visible = false
+
+[node name="RunningDustTrail" type="GPUParticles3D" parent="." index="9" unique_id=938370193]
+unique_name_in_owner = true
+emitting = false
+amount = 100
+randomness = 1.0
+fixed_fps = 12
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_6ffxi")
+draw_pass_1 = SubResource("QuadMesh_eisf4")
+
+[node name="AllowSkiddingDelayTimer" type="Timer" parent="." index="10" unique_id=1307676742]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="SkidTimer" type="Timer" parent="." index="11" unique_id=1794448177]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SkidCooldownTimer" type="Timer" parent="." index="12" unique_id=1478511493]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="GroundedTimer" type="Timer" parent="." index="13" unique_id=531989329]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
+
+[node name="SlideLimitTimer" type="Timer" parent="." index="14" unique_id=533952730]
+unique_name_in_owner = true
+wait_time = 0.8
+one_shot = true
+
+[node name="FlowStateChangeTimer" type="Timer" parent="." index="15" unique_id=218158534]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="LaunchTimer" type="Timer" parent="." index="16" unique_id=15889931]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ArialHammerLaunchDelayTimer" type="Timer" parent="." index="17" unique_id=1866515107]
+unique_name_in_owner = true
+one_shot = true
