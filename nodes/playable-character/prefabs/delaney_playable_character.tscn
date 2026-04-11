@@ -105,6 +105,7 @@ particles_anim_loop = true
 material = SubResource("StandardMaterial3D_2jfgm")
 
 [node name="DelaneyPlayableCharacter" unique_id=1190937740 instance=ExtResource("1_7xd56")]
+floor_snap_length = 0.5
 
 [node name="PlayableCharacterCollider" parent="." index="0" unique_id=680620827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -114,6 +115,10 @@ shape = SubResource("CapsuleShape3D_de7hl")
 characters = [NodePath("DummyCharacter")]
 
 [node name="DummyCharacter" parent="PlayableCharacterCharacterContainer" index="0" unique_id=396285665 instance=ExtResource("2_de7hl")]
+
+[node name="PlayableCharacterCamera" parent="." index="3" unique_id=91815916]
+mouse_x_sensitivity = 6.0
+mouse_y_sensitivity = 6.0
 
 [node name="PlayableCharacterGameplayFiniteStateMachine" parent="." index="6" unique_id=826857320 instance=ExtResource("2_cqyrg")]
 verbose = true
@@ -399,6 +404,7 @@ next_state = NodePath("../../Falling")
 [node name="WallRunning" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="11" unique_id=340063173]
 unique_name_in_owner = true
 script = ExtResource("34_lrgvp")
+wall_pull_force = 10.0
 
 [node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallRunning" index="0" unique_id=1563372789 node_paths=PackedStringArray("next_state")]
 script = ExtResource("13_uxsmg")
@@ -411,11 +417,6 @@ next_state = NodePath("../../WallJumping")
 [node name="WallJumping" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="12" unique_id=135075330]
 unique_name_in_owner = true
 script = ExtResource("36_fwkph")
-wall_push_force = null
-force = null
-gravity = null
-acceleration = null
-speed = null
 
 [node name="startDiving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/WallJumping" index="0" unique_id=1080233951 node_paths=PackedStringArray("next_state")]
 script = ExtResource("19_ftpfy")
@@ -456,12 +457,6 @@ next_state = NodePath("../../Launching")
 [node name="Diving" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="14" unique_id=1404636050]
 unique_name_in_owner = true
 script = ExtResource("39_ui731")
-horizontal_force = null
-vertical_force = null
-gravity = null
-acceleration = null
-speed = null
-max_horizontal_velocity = null
 
 [node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Diving" index="0" unique_id=426186419 node_paths=PackedStringArray("next_state")]
 script = ExtResource("13_uxsmg")
@@ -478,7 +473,6 @@ next_state = NodePath("../../Landing")
 [node name="GroundSlamming" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="15" unique_id=905123266]
 unique_name_in_owner = true
 script = ExtResource("41_fh867")
-force = null
 
 [node name="startHammerPogoing" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/GroundSlamming" index="0" unique_id=2078132632 node_paths=PackedStringArray("next_state")]
 script = ExtResource("23_k18sj")
@@ -488,7 +482,12 @@ next_state = NodePath("../../HammerPogoing")
 script = ExtResource("17_n6ahl")
 next_state = NodePath("../../Landing")
 
+[node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/GroundSlamming" index="2" unique_id=1507232802 node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_uxsmg")
+next_state = NodePath("../../Falling")
+
 [node name="HammerPogoing" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="16" unique_id=1562702587]
+unique_name_in_owner = true
 script = ExtResource("34_33vwe")
 horizontal_force = 15.0
 vertical_force = 15.0
@@ -504,6 +503,10 @@ next_state = NodePath("../../Diving")
 [node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerPogoing" index="2" unique_id=986997355 node_paths=PackedStringArray("next_state")]
 script = ExtResource("13_uxsmg")
 next_state = NodePath("../../Falling")
+
+[node name="startLanding" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/HammerPogoing" index="3" unique_id=1064010926 node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_n6ahl")
+next_state = NodePath("../../Landing")
 
 [node name="PlayableCharacterFlowStateFiniteStateMachine" parent="." index="7" unique_id=925586117 instance=ExtResource("2_cqyrg")]
 unique_name_in_owner = true

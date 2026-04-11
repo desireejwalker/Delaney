@@ -3,16 +3,17 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6u38m4ddkspu"
+path.s3tc="res://.godot/imported/TSH-markers.png-640dcba692c33a03c79c51f91cea4bae.s3tc.ctex"
 path.etc2="res://.godot/imported/TSH-markers.png-640dcba692c33a03c79c51f91cea4bae.etc2.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://art/tilesheets/TSH-markers.png"
-dest_files=["res://.godot/imported/TSH-markers.png-640dcba692c33a03c79c51f91cea4bae.etc2.ctex"]
+dest_files=["res://.godot/imported/TSH-markers.png-640dcba692c33a03c79c51f91cea4bae.s3tc.ctex", "res://.godot/imported/TSH-markers.png-640dcba692c33a03c79c51f91cea4bae.etc2.ctex"]
 
 [params]
 

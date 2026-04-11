@@ -15,9 +15,14 @@ func is_valid(actor: Node, _blackboard: Blackboard) -> bool:
 		return _handle_launch_state_case(actor)
 	if get_parent() == %WallRunning:
 		return _handle_wall_running_state_case(actor)
-
-	if actor.velocity.y > 0:
-		return false
+	if get_parent() == %Jumping or \
+	   get_parent() == %LongJumping or \
+	   get_parent() == %WallJumping or \
+	   get_parent() == %Diving or \
+	   get_parent() == %HammerPogoing:
+		return _handle_jumping_state_case(actor)
+	if get_parent() == %GroundSlamming:
+		return _handle_ground_slamming_state_case(actor)
 
 	return not actor.is_on_floor()
 
@@ -36,3 +41,11 @@ func _handle_launch_state_case(actor: PlayableCharacter):
 	return not launch_parameters.does_ricochet()
 func _handle_wall_running_state_case(actor: PlayableCharacter):
 	return not actor.is_on_wall_only()
+func _handle_jumping_state_case(actor: PlayableCharacter):
+	if actor.velocity.y > 0:
+		return false
+	return not actor.is_on_floor()
+func _handle_ground_slamming_state_case(actor: PlayableCharacter):
+	if actor.velocity.y < 0:
+		return false
+	return not actor.is_on_floor()

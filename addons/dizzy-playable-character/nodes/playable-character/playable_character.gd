@@ -60,6 +60,12 @@ func _ready() -> void:
 	if auto_initialize:
 		initialize()
 
+func _process(delta) -> void:
+	if Input.is_action_pressed("show_cursor"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		return
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 func initialize() -> void:
 	_setup_components()
 

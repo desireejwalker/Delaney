@@ -37,7 +37,7 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	var input_direction = actor.get_input_direction()
 	
 	var velocity = _handle_wallrunning(
-		-last_slide_collision.get_normal(),
+		last_slide_collision.get_normal(),
 		actor.velocity,
 		input_direction,
 		speed,
@@ -46,7 +46,6 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	
 	# decrease vertical stamina while velocity is positive
 	vertical_stamina = _handle_stamina(velocity.y, delta)
-	print(vertical_stamina)
 	
 	actor.mover.set_velocity(velocity)
 	actor.mover.set_direction(velocity.normalized())
@@ -55,16 +54,18 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
 	pass
 
-func _handle_wallrunning(wall_negative_normal: Vector3, current_velocity: Vector3, direction: Vector3, speed: float, gravity: float, delta) -> Vector3:
-	var wall_pull = wall_negative_normal * wall_pull_force
-	var dot = wall_negative_normal.dot(direction)
+func _handle_wallrunning(wall_normal: Vector3, current_velocity: Vector3, direction: Vector3, speed: float, gravity: float, delta) -> Vector3:
+	var wall_pull = -wall_normal * wall_pull_force
+
+
+
+	var dot = -wall_normal.dot(direction)
 	var horizontal = remap(dot, 0, 1, horizontal_speed_max, horizontal_speed_min) * speed
 	
 	var vertical = gravity + dot * vertical_speed
 	if vertical_stamina <= 0:
 		dot = remap(dot, -1, 1, -1, 0)
 		vertical = gravity + dot * vertical_speed
-	# print(vertical)
 		
 	var target_velocity = Vector3(
 		float(direction.x * horizontal),
