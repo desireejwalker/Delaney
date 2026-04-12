@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cmy8cjdoy77tn"]
+
+[ext_resource type="Script" uid="uid://bgybwpclbxodx" path="res://addons/dizzy-variable-game-resolution/nodes/renderer-camera/renderer_camera.gd" id="1_hlvhe"]
+
+[node name="RendererCamera" type="Camera3D" unique_id=1131842744]
+current = true
+script = ExtResource("1_hlvhe")
+metadata/_custom_type_script = "uid://bgybwpclbxodx"

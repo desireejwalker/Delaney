@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ki6slvof4x6c"]
+
+[node name="GameWorldUI" type="Node3D" unique_id=439337677]
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1340259415]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
+billboard = 1
+text = "This is 3D Text Rendered
+at a different resolution!"

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cu27lxdl8q07g"]
+
+[ext_resource type="Script" uid="uid://bm1eb4qdcgdha" path="res://addons/dizzy-variable-game-resolution/nodes/renderer-marker/renderer-marker.gd" id="1_1yh4g"]
+
+[node name="RendererMarker" type="Node" unique_id=1205518069]
+script = ExtResource("1_1yh4g")
+metadata/_custom_type_script = "uid://bm1eb4qdcgdha"

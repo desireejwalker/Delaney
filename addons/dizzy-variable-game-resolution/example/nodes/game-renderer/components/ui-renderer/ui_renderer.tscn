@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://by4a5bcw3hm4v"]
+
+[ext_resource type="PackedScene" uid="uid://6pkpf3xjjbs1" path="res://addons/dizzy-variable-game-resolution/nodes/renderer/renderer.tscn" id="1_1oem8"]
+
+[node name="UIRenderer" unique_id=1118906799 instance=ExtResource("1_1oem8")]
+disable_3d = true
+transparent_bg = true
+scaling_3d_scale = 0.0
+
+[node name="SubViewportContainer" parent="." index="0" unique_id=112499382]
+mouse_filter = 2

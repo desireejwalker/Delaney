@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://coka2hqmtg2xi"]
+
+[ext_resource type="PackedScene" uid="uid://bt1bjf4dys6au" path="res://addons/dizzy-playable-character/example/dummy/nodes/playable-character/dummy_playable_character.tscn" id="1_vygkw"]
+[ext_resource type="Script" uid="uid://crbwjs6uk5jli" path="res://addons/dizzy-variable-game-resolution/example/nodes/game-world/rotate_around_origin.gd" id="2_il67w"]
+[ext_resource type="PackedScene" uid="uid://cu27lxdl8q07g" path="res://addons/dizzy-variable-game-resolution/nodes/renderer-marker/renderer_marker.tscn" id="3_peqna"]
+[ext_resource type="PackedScene" uid="uid://cdnn4lxtad8bi" path="res://addons/dizzy-variable-game-resolution/example/nodes/game-world/oscillating-progress-bar/oscillating_progress_bar.tscn" id="4_71hm3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_il67w"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ugd3y"]
+sky_material = SubResource("ProceduralSkyMaterial_il67w")
+
+[sub_resource type="Environment" id="Environment_peqna"]
+background_mode = 2
+sky = SubResource("Sky_ugd3y")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_71hm3"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0vlxo"]
+viewport_path = NodePath("SubViewport")
+
+[node name="GameWorld" type="Node3D" unique_id=1346148940]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=341599268]
+environment = SubResource("Environment_peqna")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1781772462]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="DummyPlayableCharacter" parent="." unique_id=1190937740 instance=ExtResource("1_vygkw")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=999277350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(50, 1, 50)
+material = SubResource("StandardMaterial3D_71hm3")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=401431374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -9)
+use_collision = true
+script = ExtResource("2_il67w")
+
+[node name="Label3D" type="Label3D" parent="CSGBox3D2" unique_id=244871459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 1
+text = "This is 3D Text originating from an
+object from another Renderer!"
+
+[node name="RendererMarker" parent="CSGBox3D2/Label3D" unique_id=1205518069 instance=ExtResource("3_peqna")]
+renderer_name = &"WorldUIRenderer"
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1618576574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 9)
+use_collision = true
+script = ExtResource("2_il67w")
+
+[node name="OscillatingProgressBar" parent="CSGBox3D3" unique_id=2003891846 instance=ExtResource("4_71hm3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+texture = SubResource("ViewportTexture_0vlxo")

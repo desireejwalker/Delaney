@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://guvcg1aivb7m"]
+
+[ext_resource type="Texture2D" uid="uid://cpd2t3obylefx" path="res://addons/dizzy-variable-game-resolution/example/resources/textures/crosshair.png" id="1_l10ef"]
+
+[sub_resource type="Gradient" id="Gradient_ag6er"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m7eka"]
+gradient = SubResource("Gradient_ag6er")
+
+[sub_resource type="Gradient" id="Gradient_jk8w6"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rj6cf"]
+gradient = SubResource("Gradient_jk8w6")
+
+[sub_resource type="Gradient" id="Gradient_67r2b"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oihnb"]
+gradient = SubResource("Gradient_67r2b")
+
+[sub_resource type="Gradient" id="Gradient_4b1mk"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0.5019608, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lrdbk"]
+gradient = SubResource("Gradient_4b1mk")
+
+[sub_resource type="Gradient" id="Gradient_sb4q7"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dqlj4"]
+gradient = SubResource("Gradient_sb4q7")
+
+[sub_resource type="Gradient" id="Gradient_u4iri"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.5019608, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sfymu"]
+gradient = SubResource("Gradient_u4iri")
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_n5c38"]
+
+[node name="GameUI" type="Control" unique_id=1721224095]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=617334848]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1008841975]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1712680901]
+layout_mode = 2
+
+[node name="HealthTextureProgressBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=610464351]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 20.0
+value = 20.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_m7eka")
+texture_progress = SubResource("GradientTexture1D_rj6cf")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=5767337]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+
+[node name="HungerTextureProgressBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=537110712]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 20.0
+value = 20.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_oihnb")
+texture_progress = SubResource("GradientTexture1D_lrdbk")
+
+[node name="XPBarTextureProgressBar" type="TextureProgressBar" parent="MarginContainer/VBoxContainer" unique_id=674564930]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_dqlj4")
+texture_progress = SubResource("GradientTexture1D_sfymu")
+
+[node name="HotbarHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1794150326]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Button1" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=636794593]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=589010767]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=188132080]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=392648880]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=199294653]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=1210850976]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button7" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=30591195]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button8" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=768059304]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="Button9" type="Button" parent="MarginContainer/VBoxContainer/HotbarHBoxContainer" unique_id=210152715]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_n5c38")
+
+[node name="CrosshairTextureRect" type="TextureRect" parent="MarginContainer" unique_id=307471643]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_l10ef")

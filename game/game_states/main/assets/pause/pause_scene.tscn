@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqr5022r58pv7"]
+[gd_scene format=3 uid="uid://cqr5022r58pv7"]
 
-[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://game/game_states/title/assets/dpcomic.regular.ttf" id="1_vrs8d"]
-[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://game/game_states/title/assets/AtlantisInternational-jen0.ttf" id="2_6ovjj"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="1_vrs8d"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="2_6ovjj"]
 
 [sub_resource type="Gradient" id="Gradient_e7aly"]
 offsets = PackedFloat32Array(0)

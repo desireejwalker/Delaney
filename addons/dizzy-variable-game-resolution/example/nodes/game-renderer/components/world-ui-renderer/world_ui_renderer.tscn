@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://djw6s2mv2llbb"]
+
+[ext_resource type="PackedScene" uid="uid://6pkpf3xjjbs1" path="res://addons/dizzy-variable-game-resolution/nodes/renderer/renderer.tscn" id="1_kmmho"]
+[ext_resource type="PackedScene" uid="uid://cmy8cjdoy77tn" path="res://addons/dizzy-variable-game-resolution/nodes/renderer-camera/renderer_camera.tscn" id="2_hymjh"]
+
+[sub_resource type="World3D" id="World3D_kx853"]
+
+[node name="WorldUIRenderer" unique_id=1118906799 instance=ExtResource("1_kmmho")]
+world_3d = SubResource("World3D_kx853")
+transparent_bg = true
+
+[node name="SubViewportContainer" parent="." index="0" unique_id=112499382]
+mouse_filter = 2
+
+[node name="RendererCamera" parent="SubViewportContainer/SubViewport" parent_id_path=PackedInt32Array(1220453205) index="0" unique_id=1131842744 node_paths=PackedStringArray("renderer") instance=ExtResource("2_hymjh")]
+renderer = NodePath("../../..")

@@ -1,15 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "egyJ52wnkNw=",
+  "dgSpecHash": "LdLPnntrH3U=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ayrdr\\Projects\\Delaney\\Project Delaney.csproj",
+  "projectFilePath": "/home/dizzydemon/Projects/Project-Delaney/Project Delaney.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ayrdr\\.nuget\\packages\\godot.sourcegenerators\\4.6.1\\godot.sourcegenerators.4.6.1.nupkg.sha512",
-    "C:\\Users\\ayrdr\\.nuget\\packages\\godotsharp\\4.6.1\\godotsharp.4.6.1.nupkg.sha512",
-    "C:\\Users\\ayrdr\\.nuget\\packages\\godotsharpeditor\\4.6.1\\godotsharpeditor.4.6.1.nupkg.sha512",
-    "C:\\Users\\ayrdr\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.24\\microsoft.netcore.app.ref.8.0.24.nupkg.sha512",
-    "C:\\Users\\ayrdr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.24\\microsoft.windowsdesktop.app.ref.8.0.24.nupkg.sha512",
-    "C:\\Users\\ayrdr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.24\\microsoft.aspnetcore.app.ref.8.0.24.nupkg.sha512"
+    "/home/dizzydemon/.nuget/packages/godot.sourcegenerators/4.6.0/godot.sourcegenerators.4.6.0.nupkg.sha512",
+    "/home/dizzydemon/.nuget/packages/godotsharp/4.6.0/godotsharp.4.6.0.nupkg.sha512",
+    "/home/dizzydemon/.nuget/packages/godotsharpeditor/4.6.0/godotsharpeditor.4.6.0.nupkg.sha512",
+    "/home/dizzydemon/.nuget/packages/microsoft.netcore.app.ref/8.0.25/microsoft.netcore.app.ref.8.0.25.nupkg.sha512",
+    "/home/dizzydemon/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.25/microsoft.aspnetcore.app.ref.8.0.25.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://u31mherod2xv"]
+[gd_scene format=3 uid="uid://u31mherod2xv"]
 
-[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://game/game_states/title/assets/AtlantisInternational-jen0.ttf" id="1_aeijr"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="1_aeijr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_smm7a"]
 font = ExtResource("1_aeijr")

@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b3l6c8ljocwj"]
+[gd_scene format=3 uid="uid://b3l6c8ljocwj"]
 
-[ext_resource type="Script" path="res://game/game_states/title/title.gd" id="1_0imk2"]
-[ext_resource type="Texture2D" uid="uid://c01as0irktbf4" path="res://game/game_states/title/assets/game_title_indev.png" id="1_jsh8k"]
+[ext_resource type="Script" uid="uid://dmnoahpndes7g" path="res://game/game_states/title/title.gd" id="1_0imk2"]
+[ext_resource type="Texture2D" uid="uid://c01as0irktbf4" path="res://resources/images/game_title_indev.png" id="1_jsh8k"]
 [ext_resource type="LabelSettings" uid="uid://b753pxolsphff" path="res://game/game_states/title/assets/title_label_settings.tres" id="2_cknyw"]
 [ext_resource type="Theme" uid="uid://ighvocrdgfhc" path="res://game/game_states/title/assets/title_theme.tres" id="3_4qf20"]
 

@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://6pkpf3xjjbs1"]
+
+[ext_resource type="Script" uid="uid://5m1377sgk5iq" path="res://addons/dizzy-variable-game-resolution/nodes/renderer/renderer.gd" id="1_tchil"]
+
+[node name="Renderer" type="Control" unique_id=1118906799]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_tchil")
+metadata/_custom_type_script = "uid://5m1377sgk5iq"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=112499382]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1220453205]
+unique_name_in_owner = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4

@@ -61,10 +61,7 @@ func _ready() -> void:
 		initialize()
 
 func _process(delta) -> void:
-	if Input.is_action_pressed("show_cursor"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		return
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_handle_show_cursor()
 
 func initialize() -> void:
 	_setup_components()
@@ -111,6 +108,14 @@ func _setup_components():
 		var component = child as PlayableCharacterComponent
 		components[component.name] = component
 		component.initialize(self)
+
+func _handle_show_cursor():
+	if Input.is_action_pressed("show_cursor"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		camera.mouse_follow = false
+		return
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	camera.mouse_follow = true
 
 # func _on_died():
 # 	pass

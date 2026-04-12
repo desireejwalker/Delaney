@@ -1,10 +1,13 @@
-C:/Users/ayrdr/Projects/Builds/Delaney v1/
-C:/Users/ayrdr/Projects/Builds/
+res://addons/dizzy-variable-game-resolution/example/game-renderer/components/world-renderer/
+res://addons/dizzy-variable-game-resolution/example/game-renderer/components/world-ui-renderer/
+res://addons/dizzy-variable-game-resolution/example/game-renderer/components/ui-renderer/
+res://addons/dizzy-variable-game-resolution/example/game-renderer/
+res://nodes/game-renderer/
+res://nodes/test_map/
+res://nodes/menus/main-menu/
 res://nodes/playable-character/states/
 res://nodes/playable-character/states/transitions/
 res://addons/dizzy-playable-character/example/
-C:/Users/ayrdr/AppData/Local/Programs/Microsoft VS Code/
-res://addons/draw_line_3d/
 res://resources/materials/launch_trajectory_materials/
 res://resources/launch_parameters/delaney/
 res://nodes/entities/delaney/flow_states/
@@ -17,9 +20,3 @@ res://nodes/cards/card_select/
 res://nodes/affectors/affector_components/particles/
 res://nodes/health/
 res://game/game_states/monster_generation/
-res://game/game_states/main/assets/ui/launch_arrow/
-res://game/game_states/main/assets/ui/combo/
-res://game/resources/combo_action_entries/instant_concussion/
-res://game/resources/combo_action_entries/poke/
-res://game/resources/combo_action_entries/
-res://game/game_states/main/assets/minimap/

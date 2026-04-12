@@ -21,14 +21,14 @@ run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
+[audio]
 
-DrawLine3d="*res://addons/draw_line_3d/DrawLine3D.gd"
+buses/default_bus_layout="uid://cyqit6r38p3q3"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="viewport"
@@ -39,7 +39,7 @@ project/assembly_name="Project Delaney"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg", "res://addons/dizzy-playable-character/plugin.cfg", "res://addons/wall_segment_rule_plugin/plugin.cfg")
+enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg", "res://addons/dizzy-playable-character/plugin.cfg", "res://addons/dizzy-variable-game-resolution/plugin.cfg", "res://addons/maaacks_game_template/plugin.cfg", "res://addons/wall_segment_rule_plugin/plugin.cfg")
 
 [filesystem]
 
@@ -224,6 +224,10 @@ show_cursor={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/translations/menus_translations.en.translation", "res://addons/maaacks_game_template/base/translations/menus_translations.fr.translation")
+
 [layer_names]
 
 2d_physics/layer_1="Environment"
@@ -231,6 +235,12 @@ show_cursor={
 2d_physics/layer_3="Hitboxes"
 2d_physics/layer_4="Player"
 2d_physics/layer_5="Enemy"
+
+[maaacks_game_template]
+
+disable_install_audio_busses=true
+disable_update_check=false
+disable_install_wizard=true
 
 [rendering]
 
