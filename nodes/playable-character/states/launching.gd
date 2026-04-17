@@ -4,10 +4,6 @@ extends FSMState
 const CURRENT_LAUNCH_TRAJECTORY: String = "current_launch_trajectory"
 const ARIAL_ACTIONS_STRING: String = "arial_actions"
 
-@export var launch_shape_3D: Shape3D
-
-var saved_collider_offset: Vector3
-var saved_shape_3D: Shape3D
 var launch_parameters: LaunchParameters
 var trail_instance: Node3D
 
@@ -21,11 +17,6 @@ var trail_instance: Node3D
 # Executes after the state is entered.
 func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
-	
-	saved_shape_3D = collider.shape
-	saved_collider_offset = collider.position
-	collider.shape = launch_shape_3D
-	collider.position = Vector3(0, 1, 0)
 	
 	actor.character_container.visible = false
 	# _hammer.visible = false
@@ -60,11 +51,6 @@ func _on_exit(actor: Node, blackboard: Blackboard) -> void:
 	
 	actor.mover.do_move_and_slide = true
 	
-	collider.shape = saved_shape_3D
-	saved_shape_3D = null
-	collider.position = saved_collider_offset
-	saved_collider_offset = Vector3.ZERO
-	
 	actor.character_container.visible = true
 	# hammer.visible = true
 	
@@ -74,9 +60,9 @@ func _on_exit(actor: Node, blackboard: Blackboard) -> void:
 
 func _handle_ricochet(actor: Node, collision: KinematicCollision3D) -> Vector3:
 	actor = actor as PlayableCharacter
-	if not collision:
-		return actor.velocity
 	if not launch_parameters.does_ricochet():
+		return actor.velocity
+	if not collision:
 		return actor.velocity
 	
 	return actor.velocity.bounce(collision.get_normal())
