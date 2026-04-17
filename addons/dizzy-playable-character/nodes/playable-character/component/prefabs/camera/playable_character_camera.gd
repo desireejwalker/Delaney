@@ -177,7 +177,7 @@ func _unhandled_input(event):
 	
 	if mouse_follow and event is InputEventMouseMotion:
 		camera_horizontal_rotation_deg += event.relative.x * 0.1 * mouse_x_sensitivity
-		camera_tilt_deg -= event.relative.y * 0.07 * mouse_y_sensitivity
+		camera_tilt_deg -= event.relative.y * 0.02 * mouse_y_sensitivity
 		camera_tilt_deg = clampf(camera_tilt_deg, tilt_lower_limit_deg, tilt_upper_limit_deg)
 		return
 

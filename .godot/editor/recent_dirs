@@ -1,12 +1,10 @@
-res://nodes/menus/pause-menu/components/options-overlaid-window/components/audio-tab/
+res://nodes/autoloads/
+res://nodes/playable-character/components/playable-character-camera/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/video/
-res://nodes/menus/pause-menu/components/options-overlaid-window/components/controls-tab/
-res://nodes/menus/pause-menu/components/options-overlaid-window/components/video-tab/
 res://addons/maaacks_menus_template/examples/scenes/menus/options_menu/video/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/audio/
 res://addons/maaacks_menus_template/examples/scenes/menus/options_menu/input/
-res://nodes/menus/pause-menu/components/options-overlaid-window/
 res://addons/maaacks_menus_template/examples/scenes/menus/options_menu/
 res://addons/maaacks_menus_template/examples/scenes/windows/
 res://nodes/menus/pause-menu/components/comfirmation-overlaid-window/

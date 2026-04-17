@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://m24rdewx3r6a" path="res://nodes/playable-character/components/playable-character-finite-state-machine/playable_character_finite_state_machine.tscn" id="2_cqyrg"]
 [ext_resource type="PackedScene" uid="uid://bhthu4ry66vhi" path="res://addons/dizzy-playable-character/example/dummy/nodes/character/dummy_character.tscn" id="2_de7hl"]
 [ext_resource type="Script" uid="uid://cegvtqpqtv3gm" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="3_532qq"]
+[ext_resource type="Script" uid="uid://b5s4anm11iad3" path="res://nodes/playable-character/components/playable-character-camera/playable_character_camera.gd" id="3_qe8fs"]
 [ext_resource type="Script" uid="uid://dj8a0cq50ikpx" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state.gd" id="4_5py16"]
 [ext_resource type="Script" uid="uid://dgsofm1brlcwe" path="res://addons/behaviour_toolkit/blackboard.gd" id="4_dbhgd"]
 [ext_resource type="Script" uid="uid://csu5xq4i1bhu" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="5_nk7hi"]
@@ -117,6 +118,7 @@ characters = [NodePath("DummyCharacter")]
 [node name="DummyCharacter" parent="PlayableCharacterCharacterContainer" index="0" unique_id=396285665 instance=ExtResource("2_de7hl")]
 
 [node name="PlayableCharacterCamera" parent="." index="3" unique_id=91815916]
+script = ExtResource("3_qe8fs")
 mouse_x_sensitivity = 6.0
 mouse_y_sensitivity = 6.0
 
