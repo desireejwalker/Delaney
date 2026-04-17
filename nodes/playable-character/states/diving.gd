@@ -1,6 +1,8 @@
 @tool
 extends FSMState
 
+const ARIAL_ACTIONS_STRING: String = "arial_actions"
+
 @export var horizontal_force: float = 20.0
 @export var vertical_force: float = 7.5
 @export var gravity: float = 9.8
@@ -11,8 +13,10 @@ extends FSMState
 @onready var _grounded_timer: Timer = %GroundedTimer
 
 # Executes after the state is entered.
-func _on_enter(actor: Node, _blackboard: Blackboard) -> void:
+func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
+	
+	_update_arial_actions(blackboard)
 	
 	var input_direction = actor.get_input_direction()
 	if input_direction.is_zero_approx():
@@ -53,3 +57,9 @@ func _handle_diving(current_velocity: Vector3, direction: Vector3, delta: float)
 		horizontal_velocity = current_velocity.normalized() * speed
 	var velocity = current_velocity.move_toward(horizontal_velocity + (Vector3.DOWN * gravity), acceleration * delta)
 	return velocity
+
+func _update_arial_actions(blackboard: Blackboard):
+	if blackboard.get_value(ARIAL_ACTIONS_STRING) == null:
+		blackboard.set_value(ARIAL_ACTIONS_STRING, [name])
+		return
+	blackboard.get_value(ARIAL_ACTIONS_STRING).append(name)

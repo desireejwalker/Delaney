@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://bhthu4ry66vhi" path="res://addons/dizzy-playable-character/example/dummy/nodes/character/dummy_character.tscn" id="2_de7hl"]
 [ext_resource type="Script" uid="uid://cegvtqpqtv3gm" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="3_532qq"]
 [ext_resource type="Script" uid="uid://b5s4anm11iad3" path="res://nodes/playable-character/components/playable-character-camera/playable_character_camera.gd" id="3_qe8fs"]
-[ext_resource type="Script" uid="uid://dj8a0cq50ikpx" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state.gd" id="4_5py16"]
 [ext_resource type="Script" uid="uid://dgsofm1brlcwe" path="res://addons/behaviour_toolkit/blackboard.gd" id="4_dbhgd"]
 [ext_resource type="Script" uid="uid://csu5xq4i1bhu" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="5_nk7hi"]
 [ext_resource type="Script" uid="uid://isqf56m3l434" path="res://nodes/playable-character/states/idle.gd" id="5_uj7ps"]
@@ -38,6 +37,7 @@
 [ext_resource type="Resource" uid="uid://g4e32hm4iott" path="res://resources/launch_parameters/delaney/LP_BLUNT.tres" id="26_xtepl"]
 [ext_resource type="Script" uid="uid://dws4n851y4ypj" path="res://nodes/entities/delaney/flow_states/blunt.gd" id="26_y5tsj"]
 [ext_resource type="Script" uid="uid://5xjdnsunwrwy" path="res://nodes/entities/delaney/flow_states/delta.gd" id="27_7s1go"]
+[ext_resource type="Script" uid="uid://bvx7f5hsinaoc" path="res://nodes/playable-character/states/landing.gd" id="27_qe8fs"]
 [ext_resource type="Resource" uid="uid://boo4jdo3sur8p" path="res://resources/launch_parameters/delaney/LP_DELTA.tres" id="27_sqkvk"]
 [ext_resource type="Resource" uid="uid://xtw0jvqgveu" path="res://resources/launch_parameters/delaney/LP_EPSILON.tres" id="28_xqcxj"]
 [ext_resource type="Script" uid="uid://70woy87gw7kb" path="res://nodes/entities/delaney/flow_states/epsilon.gd" id="28_xtepl"]
@@ -286,7 +286,7 @@ next_state = NodePath("../../Landing")
 
 [node name="Landing" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="6" unique_id=1397793568]
 unique_name_in_owner = true
-script = ExtResource("4_5py16")
+script = ExtResource("27_qe8fs")
 
 [node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Landing" index="0" unique_id=220984410 node_paths=PackedStringArray("next_state")]
 script = ExtResource("13_uxsmg")

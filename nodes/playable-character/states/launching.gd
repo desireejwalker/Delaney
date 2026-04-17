@@ -2,6 +2,7 @@
 extends FSMState
 
 const CURRENT_LAUNCH_TRAJECTORY: String = "current_launch_trajectory"
+const ARIAL_ACTIONS_STRING: String = "arial_actions"
 
 @export var launch_shape_3D: Shape3D
 
@@ -33,6 +34,7 @@ func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	trail_instance = launch_parameters.get_trail_particle_system().instantiate()
 	actor.add_child(trail_instance)
 	
+	_update_arial_actions(blackboard)
 	var trajectory = blackboard.get_value(CURRENT_LAUNCH_TRAJECTORY)
 	actor.mover.set_velocity(trajectory)
 	
@@ -78,3 +80,9 @@ func _handle_ricochet(actor: Node, collision: KinematicCollision3D) -> Vector3:
 		return actor.velocity
 	
 	return actor.velocity.bounce(collision.get_normal())
+
+func _update_arial_actions(blackboard: Blackboard):
+	if blackboard.get_value(ARIAL_ACTIONS_STRING) == null:
+		blackboard.set_value(ARIAL_ACTIONS_STRING, [name])
+		return
+	blackboard.get_value(ARIAL_ACTIONS_STRING).append(name)

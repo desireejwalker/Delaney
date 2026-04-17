@@ -1,4 +1,4 @@
-res://nodes/autoloads/
+res://nodes/playable-character/states/
 res://nodes/playable-character/components/playable-character-camera/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/video/

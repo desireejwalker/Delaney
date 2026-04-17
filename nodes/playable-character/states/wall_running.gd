@@ -1,6 +1,8 @@
 @tool
 extends FSMState
 
+const ARIAL_ACTIONS_STRING: String = "arial_actions"
+
 @export var wall_pull_force: float = 1.0
 @export var gravity: float = 2.0
 @export var acceleration: float = 40.0
@@ -13,14 +15,10 @@ extends FSMState
 var vertical_stamina = vertical_stamina_max
 
 # Executes after the state is entered.
-func _on_enter(actor: Node, _blackboard: Blackboard) -> void:
+func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
 
-	# if not last_slide_collision:
-	# 	get_parent().fire_event("wallrunning/on_start_falling")
-	# 	return
-	
-	# blackboard.set_value("current_wall_normal", last_slide_collision.get_normal())
+	_update_arial_actions(blackboard)
 	
 	vertical_stamina = vertical_stamina_max
 
@@ -29,11 +27,6 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
 	
 	var last_slide_collision = actor.get_last_slide_collision()
-	# if not last_slide_collision:
-	# 	get_parent().fire_event("wallrunning/on_start_falling")
-	# 	return
-	
-	# blackboard.set_value("current_wall_normal", last_slide_collision.get_normal())
 	var input_direction = actor.get_input_direction()
 	
 	var velocity = _handle_wallrunning(
@@ -57,8 +50,6 @@ func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
 func _handle_wallrunning(wall_normal: Vector3, current_velocity: Vector3, direction: Vector3, speed: float, gravity: float, delta) -> Vector3:
 	var wall_pull = -wall_normal * wall_pull_force
 
-
-
 	var dot = -wall_normal.dot(direction)
 	var horizontal = remap(dot, 0, 1, horizontal_speed_max, horizontal_speed_min) * speed
 	
@@ -80,3 +71,9 @@ func _handle_stamina(velocity_y: float, delta: float):
 		stamina = stamina - (velocity_y * delta)
 	
 	return stamina
+
+func _update_arial_actions(blackboard: Blackboard):
+	if blackboard.get_value(ARIAL_ACTIONS_STRING) == null:
+		blackboard.set_value(ARIAL_ACTIONS_STRING, [name])
+		return
+	blackboard.get_value(ARIAL_ACTIONS_STRING).append(name)

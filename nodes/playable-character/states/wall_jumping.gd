@@ -1,6 +1,8 @@
 @tool
 extends FSMState
 
+const ARIAL_ACTIONS_STRING: String = "arial_actions"
+
 @export var wall_push_force: float = 14
 @export var force: float = 12.5
 @export var gravity: float = 9.8
@@ -10,8 +12,10 @@ extends FSMState
 @onready var grounded_timer: Timer = %GroundedTimer
 
 # Executes after the state is entered.
-func _on_enter(actor: Node, _blackboard: Blackboard) -> void:
+func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
+
+	_update_arial_actions(blackboard)
 
 	var last_slide_collision = actor.get_last_slide_collision()
 	
@@ -52,3 +56,9 @@ func _handle_wall_jump(current_velocity: Vector3, direction: Vector3, speed: flo
 		velocity = current_velocity.move_toward((direction * speed) + (Vector3.DOWN * gravity), acceleration * delta)
 	
 	return velocity
+
+func _update_arial_actions(blackboard: Blackboard):
+	if blackboard.get_value(ARIAL_ACTIONS_STRING) == null:
+		blackboard.set_value(ARIAL_ACTIONS_STRING, [name])
+		return
+	blackboard.get_value(ARIAL_ACTIONS_STRING).append(name)

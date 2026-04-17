@@ -2,6 +2,7 @@
 extends FSMState
 
 const IS_MOVING: String = "is_moving"
+const ARIAL_ACTIONS_STRING: String = "arial_actions"
 
 # Gameplay Parameters
 
@@ -17,6 +18,7 @@ func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
 	
 	blackboard.set_value(IS_MOVING, true)
+	_update_arial_actions(blackboard)
 	
 	var velocity = _handle_jump_force(actor.velocity)
 	actor.mover.set_velocity(velocity)
@@ -48,3 +50,9 @@ func _handle_jumping(current_velocity: Vector3, direction: Vector3, delta: float
 		velocity = current_velocity.move_toward((direction * speed) + (Vector3.DOWN * gravity), acceleration * delta)
 	
 	return velocity
+
+func _update_arial_actions(blackboard: Blackboard):
+	if blackboard.get_value(ARIAL_ACTIONS_STRING) == null:
+		blackboard.set_value(ARIAL_ACTIONS_STRING, [name])
+		return
+	blackboard.get_value(ARIAL_ACTIONS_STRING).append(name)

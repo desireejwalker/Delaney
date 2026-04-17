@@ -6,6 +6,7 @@ const ON_ADVANCE_TO_EPSILON: String = "on_advance_to_epsilon"
 const ON_ADVANCE_TO_LAMBDA: String = "on_advance_to_lambda"
 
 const CURRENT_LAUNCH_TRAJECTORY: String = "current_launch_trajectory"
+const ARIAL_ACTIONS_STRING: String = "arial_actions"
 
 # Flow States
 
@@ -59,8 +60,10 @@ var launch_trajectory_vertical_rotation: float
 @onready var arial_hammer_launch_delay_timer: Timer = %ArialHammerLaunchDelayTimer
 
 # Executes after the state is entered.
-func _on_enter(actor: Node, _blackboard: Blackboard) -> void:
+func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
+
+	_update_arial_actions(blackboard)
 	
 	saved_velocity = Vector3(actor.velocity)
 	actor.mover.set_velocity(actor.velocity.limit_length(speed_retained))
@@ -157,3 +160,9 @@ func _on_epsilon_flow_state_update(delta: float, actor: PlayableCharacter, _blac
 func _on_lambda_flow_state_update(delta: float, actor: PlayableCharacter, _blackboard: Blackboard):
 	_handle_launch_trajectory(actor, delta, lambda_launch_parameters.get_speed())
 	_update_launch_trajectory_indicator(launch_trajectory, lambda_launch_parameters.get_launch_trajectory_indicator_material())
+
+func _update_arial_actions(blackboard: Blackboard):
+	if blackboard.get_value(ARIAL_ACTIONS_STRING) == null:
+		blackboard.set_value(ARIAL_ACTIONS_STRING, [name])
+		return
+	blackboard.get_value(ARIAL_ACTIONS_STRING).append(name)
