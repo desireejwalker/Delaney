@@ -1,3 +1,4 @@
+ShapeCast3D
 SubViewport
 Sprite3D
 AnimationPlayer
@@ -12,4 +13,3 @@ CheckBox
 Label
 MarginContainer
 TextureRect
-Panel

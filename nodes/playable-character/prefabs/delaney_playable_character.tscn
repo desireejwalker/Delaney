@@ -61,6 +61,9 @@ metadata/_custom_type_script = "uid://dgsofm1brlcwe"
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1kp0j"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_rw214"]
+size = Vector3(1.2, 0.2, 1.2)
+
 [sub_resource type="Resource" id="Resource_sq7iw"]
 script = ExtResource("4_dbhgd")
 
@@ -125,6 +128,7 @@ mouse_y_sensitivity = 6.0
 
 [node name="PlayableCharacterGameplayFiniteStateMachine" parent="." index="6" unique_id=826857320 instance=ExtResource("2_cqyrg")]
 unique_name_in_owner = true
+verbose = true
 
 [node name="FiniteStateMachine" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine" index="0" unique_id=1881629201 node_paths=PackedStringArray("initial_state", "actor")]
 script = ExtResource("3_532qq")
@@ -511,7 +515,13 @@ next_state = NodePath("../../Falling")
 script = ExtResource("17_n6ahl")
 next_state = NodePath("../../Landing")
 
-[node name="PlayableCharacterFlowStateFiniteStateMachine" parent="." index="7" unique_id=925586117 instance=ExtResource("2_cqyrg")]
+[node name="WallRunningShapeCast3D" type="ShapeCast3D" parent="." index="7" unique_id=1464399360]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_rw214")
+target_position = Vector3(0, 0, 0)
+
+[node name="PlayableCharacterFlowStateFiniteStateMachine" parent="." index="8" unique_id=925586117 instance=ExtResource("2_cqyrg")]
 unique_name_in_owner = true
 
 [node name="FiniteStateMachine" type="Node" parent="PlayableCharacterFlowStateFiniteStateMachine" index="0" unique_id=1243796699 node_paths=PackedStringArray("initial_state", "actor")]
@@ -578,16 +588,16 @@ next_state = NodePath("../../Epsilon")
 use_event = true
 event = "on_decay_to_epsilon"
 
-[node name="PlayableCharacterStaminaWheel" parent="." index="8" unique_id=210171417 instance=ExtResource("50_rw214")]
+[node name="PlayableCharacterStaminaWheel" parent="." index="9" unique_id=210171417 instance=ExtResource("50_rw214")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
 
-[node name="LaunchTrajectoryIndicator" parent="." index="9" unique_id=1735437532 instance=ExtResource("26_kp24p")]
+[node name="LaunchTrajectoryIndicator" parent="." index="10" unique_id=1735437532 instance=ExtResource("26_kp24p")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 visible = false
 
-[node name="RunningDustTrail" type="GPUParticles3D" parent="." index="10" unique_id=938370193]
+[node name="RunningDustTrail" type="GPUParticles3D" parent="." index="11" unique_id=938370193]
 unique_name_in_owner = true
 emitting = false
 amount = 100
@@ -597,37 +607,37 @@ interpolate = false
 process_material = SubResource("ParticleProcessMaterial_6ffxi")
 draw_pass_1 = SubResource("QuadMesh_eisf4")
 
-[node name="AllowSkiddingDelayTimer" type="Timer" parent="." index="11" unique_id=1307676742]
+[node name="AllowSkiddingDelayTimer" type="Timer" parent="." index="12" unique_id=1307676742]
 unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
 
-[node name="SkidTimer" type="Timer" parent="." index="12" unique_id=1794448177]
+[node name="SkidTimer" type="Timer" parent="." index="13" unique_id=1794448177]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="SkidCooldownTimer" type="Timer" parent="." index="13" unique_id=1478511493]
+[node name="SkidCooldownTimer" type="Timer" parent="." index="14" unique_id=1478511493]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="GroundedTimer" type="Timer" parent="." index="14" unique_id=531989329]
+[node name="GroundedTimer" type="Timer" parent="." index="15" unique_id=531989329]
 unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
 
-[node name="SlideLimitTimer" type="Timer" parent="." index="15" unique_id=533952730]
+[node name="SlideLimitTimer" type="Timer" parent="." index="16" unique_id=533952730]
 unique_name_in_owner = true
 wait_time = 0.8
 one_shot = true
 
-[node name="FlowStateChangeTimer" type="Timer" parent="." index="16" unique_id=218158534]
+[node name="FlowStateChangeTimer" type="Timer" parent="." index="17" unique_id=218158534]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="LaunchTimer" type="Timer" parent="." index="17" unique_id=15889931]
+[node name="LaunchTimer" type="Timer" parent="." index="18" unique_id=15889931]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="ArialHammerLaunchDelayTimer" type="Timer" parent="." index="18" unique_id=1866515107]
+[node name="ArialHammerLaunchDelayTimer" type="Timer" parent="." index="19" unique_id=1866515107]
 unique_name_in_owner = true
 one_shot = true

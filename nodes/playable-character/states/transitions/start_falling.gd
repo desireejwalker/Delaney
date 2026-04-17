@@ -1,9 +1,12 @@
 @tool
 extends FSMTransition
 
+# Components
+
 @onready var flow_state_finite_state_machine: PlayableCharacterFiniteStateMachine = %PlayableCharacterFlowStateFiniteStateMachine
 @onready var launch_timer: Timer = %LaunchTimer
 @onready var arial_hammer_launch_delay_timer: Timer = %ArialHammerLaunchDelayTimer
+@onready var shape_cast: ShapeCast3D = %WallRunningShapeCast3D
 
 # Evaluates true, if the transition conditions are met.
 func is_valid(actor: Node, _blackboard: Blackboard) -> bool:
@@ -40,6 +43,10 @@ func _handle_launch_state_case(actor: PlayableCharacter):
 		return false
 	return not launch_parameters.does_ricochet()
 func _handle_wall_running_state_case(actor: PlayableCharacter):
+	if not Input.is_action_pressed("run"):
+		return true
+	if not shape_cast.is_colliding():
+		return true
 	return not actor.is_on_wall_only()
 func _handle_jumping_state_case(actor: PlayableCharacter):
 	if actor.velocity.y > 0:
