@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dqr3g55gikbrx"]
+
+[ext_resource type="PackedScene" uid="uid://6pkpf3xjjbs1" path="res://addons/dizzy-variable-game-resolution/nodes/renderer/renderer.tscn" id="1_ki44l"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ki44l"]
+viewport_path = NodePath("SubViewportTextureRect/SubViewport")
+
+[node name="WorldRenderer" unique_id=1118906799 instance=ExtResource("1_ki44l")]
+process_mode = 1
+
+[node name="SubViewportTextureRect" parent="." index="0" unique_id=1225304059]
+texture = SubResource("ViewportTexture_ki44l")

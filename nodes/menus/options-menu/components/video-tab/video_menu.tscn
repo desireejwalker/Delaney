@@ -1,0 +1,408 @@
+[gd_scene format=3 uid="uid://t6fwkg0b60fo"]
+
+[ext_resource type="Script" uid="uid://b3pabmjggy174" path="res://nodes/menus/options-menu/components/video-tab/video_menu.gd" id="1_3tiut"]
+[ext_resource type="Script" uid="uid://1nf36h0gms3q" path="res://addons/maaacks_menus_template/base/nodes/utilities/capture_focus.gd" id="1_m4cyk"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="2_kfwov"]
+[ext_resource type="PackedScene" uid="uid://bsxh6v7j0257h" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/toggle_option_control.tscn" id="2_pq0wl"]
+[ext_resource type="PackedScene" uid="uid://c01ayjblhcg1t" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/vector_2_list_option_control.tscn" id="3_8nfu6"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="4_0ona8"]
+[ext_resource type="PackedScene" uid="uid://b6bl3n5mp3m1e" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/list_option_control.tscn" id="4_ye01f"]
+[ext_resource type="PackedScene" uid="uid://cl416gdb1fgwr" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/slider_option_control.tscn" id="8_3tiut"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yeqsq"]
+
+[node name="Video" type="MarginContainer" unique_id=2062575639]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3tiut")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1735063608]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="VBoxContainer" unique_id=1643965108]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 24
+text = "(If your computer can't handle it, you can change the video settings here.)"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=966605102]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=1560676963]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 1
+script = ExtResource("1_m4cyk")
+search_depth = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=234955433]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yeqsq")
+
+[node name="GameSectionLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1340792337]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[GAME]"
+
+[node name="ScreenModeControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=21057374 instance=ExtResource("3_8nfu6")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Select a screen size"
+lock_titles = true
+option_values = [0, 1, 2]
+option_titles = Array[String](["(Windowed)", "(Borderless Window)", "(Fullscreen)"])
+option_name = "[SCREEN MODE]"
+option_section = 3
+key = "screen_mode"
+section = "video_settings"
+label_suffix = " "
+property_type = 2
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScreenModeControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[SCREEN MODE] "
+
+[node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/ScreenModeControl" index="1" unique_id=264509485]
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 36
+alignment = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "(Windowed)"
+popup/item_0/id = 0
+popup/item_1/text = "(Borderless Window)"
+popup/item_1/id = 1
+popup/item_2/text = "(Fullscreen)"
+popup/item_2/id = 2
+
+[node name="GameResolutionControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1452290429 instance=ExtResource("3_8nfu6")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Select a screen size"
+lock_titles = true
+option_values = [Vector2i(1024, 768), Vector2i(1152, 864), Vector2i(1440, 1080), Vector2i(1536, 1152), Vector2i(2880, 2160)]
+option_titles = Array[String](["(1024 x 768 (Default))", "(1152 x 864)", "(1440 x 1080)", "(1536 x 1152)", "(2880 x 2160)"])
+option_name = "[GAME RESOLUTION]"
+option_section = 3
+key = "game_resolution"
+section = "video_settings"
+label_suffix = " "
+property_type = 6
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/GameResolutionControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[GAME RESOLUTION] "
+
+[node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/GameResolutionControl" index="1" unique_id=264509485]
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 36
+selected = 0
+item_count = 5
+popup/item_0/text = "(1024 x 768 (Default))"
+popup/item_0/id = 0
+popup/item_1/text = "(1152 x 864)"
+popup/item_1/id = 1
+popup/item_2/text = "(1440 x 1080)"
+popup/item_2/id = 2
+popup/item_3/text = "(1536 x 1152)"
+popup/item_3/id = 3
+popup/item_4/text = "(2880 x 2160)"
+popup/item_4/id = 4
+
+[node name="AntiAliasingControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1238504013 instance=ExtResource("4_ye01f")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_titles = true
+option_values = [0, 1, 2, 3]
+option_titles = Array[String](["(Disabled)", "(2x)", "(4x)", "(8x)"])
+option_name = "[ANTI-ALIASING]"
+option_section = 3
+key = "anti_aliasing"
+section = "video_settings"
+label_suffix = " "
+property_type = 2
+default_value = 0
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/AntiAliasingControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[ANTI-ALIASING] "
+
+[node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/AntiAliasingControl" index="1" unique_id=264509485]
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 36
+selected = 0
+item_count = 4
+popup/item_0/text = "(Disabled)"
+popup/item_0/id = 0
+popup/item_1/text = "(2x)"
+popup/item_1/id = 1
+popup/item_2/text = "(4x)"
+popup/item_2/id = 2
+popup/item_3/text = "(8x)"
+popup/item_3/id = 3
+
+[node name="VSyncControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=16284350 instance=ExtResource("4_ye01f")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_titles = true
+option_values = [0, 1, 2, 3]
+option_titles = Array[String](["(Disabled)", "(Enabled)", "(Adaptive)", "(Mailbox)"])
+option_name = "[V-SYNC]"
+option_section = 3
+key = "v_sync"
+section = "video_settings"
+label_suffix = " "
+property_type = 2
+default_value = 0
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/VSyncControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[V-SYNC] "
+
+[node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/VSyncControl" index="1" unique_id=264509485]
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 36
+selected = 0
+item_count = 4
+popup/item_0/text = "(Disabled)"
+popup/item_0/id = 0
+popup/item_1/text = "(Enabled)"
+popup/item_1/id = 1
+popup/item_2/text = "(Adaptive)"
+popup/item_2/id = 2
+popup/item_3/text = "(Mailbox)"
+popup/item_3/id = 3
+
+[node name="BrightnessControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1557081957 instance=ExtResource("8_3tiut")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_config_names = true
+option_name = "[BRIGHTNESS]"
+option_section = 3
+key = "brightness"
+section = "video_settings"
+label_suffix = " "
+default_value = 0.5
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/BrightnessControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[BRIGHTNESS] "
+
+[node name="HSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer/BrightnessControl" index="1" unique_id=424108384]
+tick_count = 0
+
+[node name="WorldSectionLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=2127631822]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[WORLD]"
+
+[node name="WorldResolutionControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1634031356 instance=ExtResource("3_8nfu6")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Select a screen size"
+lock_titles = true
+option_values = [Vector2i(160, 120), Vector2i(320, 240), Vector2i(640, 480), Vector2i(800, 600), Vector2i(1024, 768), Vector2i(-1, -1)]
+option_titles = Array[String](["(160 x 120)", "(320 x 240 (Default))", "(640 x 480)", "(800 x 600)", "(1024 x 768)", "(Same as game)"])
+lock_config_names = true
+option_name = "[WORLD RESOLUTION]"
+option_section = 3
+key = "world_resolution"
+section = "video_settings"
+label_suffix = " "
+property_type = 6
+default_value = Vector2i(320, 240)
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/WorldResolutionControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[WORLD RESOLUTION] "
+
+[node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/WorldResolutionControl" index="1" unique_id=264509485]
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 36
+selected = 0
+item_count = 6
+popup/item_0/text = "(160 x 120)"
+popup/item_0/id = 0
+popup/item_1/text = "(320 x 240 (Default))"
+popup/item_1/id = 1
+popup/item_2/text = "(640 x 480)"
+popup/item_2/id = 2
+popup/item_3/text = "(800 x 600)"
+popup/item_3/id = 3
+popup/item_4/text = "(1024 x 768)"
+popup/item_4/id = 4
+popup/item_5/text = "(Same as game)"
+popup/item_5/id = 5
+
+[node name="ColorLimitControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=262239127 instance=ExtResource("2_pq0wl")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_config_names = true
+option_name = "[COLOR LIMIT]"
+key = "color_limit"
+section = "video_settings"
+label_suffix = " "
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/ColorLimitControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[COLOR LIMIT] "
+
+[node name="AffineMappingControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=991908363 instance=ExtResource("2_pq0wl")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_config_names = true
+option_name = "[AFFINE MAPPING]"
+key = "affine_mapping"
+section = "video_settings"
+label_suffix = " "
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/AffineMappingControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[AFFINE MAPPING] "
+
+[node name="JitterControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1301186979 instance=ExtResource("8_3tiut")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_config_names = true
+option_name = "[JITTER]"
+key = "jitter"
+section = "video_settings"
+label_suffix = " "
+default_value = 0.0
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/JitterControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[JITTER] "
+
+[node name="HSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer/JitterControl" index="1" unique_id=424108384]
+tick_count = 10
+
+[node name="CameraShakeControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=846664353 instance=ExtResource("4_ye01f")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_titles = true
+option_values = [1.0, 0.75, 0.5, 0.0]
+option_titles = Array[String](["(Normal)", "(Reduced)", "(Minimal)", "(None)"])
+lock_config_names = true
+option_name = "[CAMERA SHAKE]"
+option_section = 3
+key = "camera_shake"
+section = "video_settings"
+label_suffix = " "
+property_type = 3
+default_value = 1.0
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/CameraShakeControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[CAMERA SHAKE] "
+
+[node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/CameraShakeControl" index="1" unique_id=264509485]
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 36
+selected = 0
+item_count = 4
+popup/item_0/text = "(Normal)"
+popup/item_0/id = 0
+popup/item_1/text = "(Reduced)"
+popup/item_1/id = 1
+popup/item_2/text = "(Minimal)"
+popup/item_2/id = 2
+popup/item_3/text = "(None)"
+popup/item_3/id = 3
+
+[node name="ParticlesControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=265131225 instance=ExtResource("4_ye01f")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(700, 45)
+layout_mode = 2
+size_flags_horizontal = 4
+lock_titles = true
+option_values = [1.0, 0.75, 0.5, 0.0]
+option_titles = Array[String](["(Normal)", "(Reduced)", "(Minimal)", "(None)"])
+lock_config_names = true
+option_name = "[PARTICLES]"
+option_section = 3
+key = "particles"
+section = "video_settings"
+label_suffix = " "
+property_type = 3
+default_value = 1.0
+
+[node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/ParticlesControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("4_0ona8")
+theme_override_font_sizes/font_size = 36
+text = "[PARTICLES] "
+
+[node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/ParticlesControl" index="1" unique_id=264509485]
+theme_override_fonts/font = ExtResource("2_kfwov")
+theme_override_font_sizes/font_size = 36
+selected = 0
+item_count = 4
+popup/item_0/text = "(Normal)"
+popup/item_0/id = 0
+popup/item_1/text = "(Reduced)"
+popup/item_1/id = 1
+popup/item_2/text = "(Minimal)"
+popup/item_2/id = 2
+popup/item_3/text = "(None)"
+popup/item_3/id = 3
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1382357626]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yeqsq")
+
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/ScreenModeControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/GameResolutionControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/AntiAliasingControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/VSyncControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/BrightnessControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/WorldResolutionControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/ColorLimitControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/AffineMappingControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/JitterControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/CameraShakeControl"]
+[editable path="VBoxContainer/ScrollContainer/VBoxContainer/ParticlesControl"]

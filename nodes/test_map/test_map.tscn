@@ -90,3 +90,4 @@ light_energy = 1.4
 sky_mode = 1
 
 [node name="DelaneyPlayableCharacter" parent="." unique_id=1190937740 instance=ExtResource("3_jpcwe")]
+unique_name_in_owner = true

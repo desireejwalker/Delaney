@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bbs30b4lq3gvo"]
+
+[ext_resource type="PackedScene" uid="uid://xvu2k02xdqi6" path="res://addons/maaacks_menus_template/examples/scenes/windows/pause_menu_options_window.tscn" id="1_ojvxe"]
+[ext_resource type="PackedScene" uid="uid://bth32kino2tvg" path="res://nodes/menus/options-menu/components/master_options_menu.tscn" id="2_81iwn"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="3_comgn"]
+
+[node name="OptionsMenu" unique_id=701085877 instance=ExtResource("1_ojvxe")]
+packed_scene = ExtResource("2_81iwn")
+update_content = true
+close_button_text = "[CLOSE]"
+title = "[OPTIONS]"
+title_font_size = 48
+
+[node name="TitleMargin" parent="ContentContainer/BoxContainer" parent_id_path=PackedInt32Array(394030069) index="0" unique_id=1262022916]
+visible = true
+
+[node name="TitleLabel" parent="ContentContainer/BoxContainer/TitleMargin/BoxContainer" parent_id_path=PackedInt32Array(1788474031) index="0" unique_id=1049966061]
+theme_override_fonts/font = ExtResource("3_comgn")
+theme_override_font_sizes/font_size = 48
+text = "[OPTIONS]"
+
+[node name="CloseButton" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" parent_id_path=PackedInt32Array(1371114575) index="0" unique_id=314526102]
+theme_override_fonts/font = ExtResource("3_comgn")
+theme_override_font_sizes/font_size = 36
+text = "[CLOSE]"

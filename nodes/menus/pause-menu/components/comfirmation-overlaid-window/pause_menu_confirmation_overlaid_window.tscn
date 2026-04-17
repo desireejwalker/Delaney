@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://xtuh0qqklh1q"]
+
+[ext_resource type="PackedScene" uid="uid://cwt4p3bufkke5" path="res://addons/maaacks_menus_template/base/nodes/windows/confirmation_overlaid_window.tscn" id="1_hwinb"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="2_n6gkf"]
+
+[node name="PauseMenuConfirmationOverlaidWindow" unique_id=1482267070 instance=ExtResource("1_hwinb")]
+confirm_button_text = "Yeah."
+close_button_text = "Nah."
+title = "[?]"
+title_font_size = 48
+
+[node name="TitleLabel" parent="ContentContainer/BoxContainer/TitleMargin/BoxContainer" parent_id_path=PackedInt32Array(1788474031) index="0" unique_id=1049966061]
+theme_override_fonts/font = ExtResource("2_n6gkf")
+theme_override_font_sizes/font_size = 48
+text = "[?]"
+
+[node name="CloseButton" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" parent_id_path=PackedInt32Array(1371114575) index="0" unique_id=314526102]
+theme_override_fonts/font = ExtResource("2_n6gkf")
+theme_override_font_sizes/font_size = 36
+text = "Nah."
+
+[node name="ConfirmButton" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" parent_id_path=PackedInt32Array(1371114575) index="1" unique_id=1052970550]
+theme_override_fonts/font = ExtResource("2_n6gkf")
+theme_override_font_sizes/font_size = 36
+text = "Yeah."

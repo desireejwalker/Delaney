@@ -1,46 +1,139 @@
 [gd_scene format=3 uid="uid://cvt6o3dcq6o1i"]
 
-[ext_resource type="PackedScene" uid="uid://c6k5nnpbypshi" path="res://addons/maaacks_game_template/base/nodes/menus/main_menu/main_menu.tscn" id="1_psdyr"]
-[ext_resource type="Texture2D" uid="uid://msed4gk4gv6r" path="res://resources/images/game_title.png" id="2_nvqe3"]
+[ext_resource type="PackedScene" uid="uid://c6k5nnpbypshi" path="res://addons/maaacks_menus_template/base/nodes/menus/main_menu/main_menu.tscn" id="1_psdyr"]
+[ext_resource type="Texture2D" uid="uid://c01as0irktbf4" path="res://resources/images/game_title_indev.png" id="2_nvqe3"]
+[ext_resource type="PackedScene" uid="uid://bbs30b4lq3gvo" path="res://nodes/menus/options-menu/options_menu.tscn" id="2_s55wt"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="3_2b4x5"]
 [ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="3_epyc4"]
 
-[sub_resource type="Gradient" id="Gradient_epyc4"]
-colors = PackedColorArray(0, 0, 0, 1, 0.5058824, 0.1254902, 0.3019608, 1)
+[sub_resource type="Gradient" id="Gradient_nvqe3"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_2b4x5"]
-gradient = SubResource("Gradient_epyc4")
-fill_from = Vector2(0, 0.5684931)
-fill_to = Vector2(0, 1)
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_epyc4"]
+gradient = SubResource("Gradient_nvqe3")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2b4x5"]
 
 [node name="MainMenu" unique_id=1890447167 instance=ExtResource("1_psdyr")]
-game_scene_path = "uid://cxrvpsuh8ql7f"
+game_scene_path = "uid://drury8mnnkgtc"
+options_packed_scene = ExtResource("2_s55wt")
+confirm_exit = null
+signal_game_start = null
+signal_game_exit = null
 
-[node name="BackgroundTextureRect" parent="." index="0" unique_id=1025367827]
-texture = SubResource("GradientTexture2D_2b4x5")
+[node name="BackgroundTextureRect" parent="." index="2" unique_id=1940176448]
+texture = SubResource("GradientTexture1D_epyc4")
+expand_mode = 0
 stretch_mode = 0
 
-[node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" parent_id_path=PackedInt32Array(704939549) index="0" unique_id=334107926]
+[node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" parent_id_path=PackedInt32Array(556427956) index="0" unique_id=359406872]
 visible = false
 text = "Delaney"
 
-[node name="TitleTextureRect" type="TextureRect" parent="MenuContainer/TitleMargin/TitleContainer" parent_id_path=PackedInt32Array(704939549) index="1" unique_id=652253437]
+[node name="TextureRect" type="TextureRect" parent="MenuContainer/TitleMargin/TitleContainer" parent_id_path=PackedInt32Array(556427956) index="1" unique_id=1701962118]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 345.0
+offset_bottom = 218.0
 grow_horizontal = 2
 texture = ExtResource("2_nvqe3")
 stretch_mode = 5
 
-[node name="SubTitleMargin" parent="MenuContainer" parent_id_path=PackedInt32Array(785053879) index="1" unique_id=893436372]
-theme_override_constants/margin_top = 300
+[node name="SubTitleLabel" parent="MenuContainer/SubTitleMargin/SubTitleContainer" parent_id_path=PackedInt32Array(930520368) index="0" unique_id=1037003361]
+visible = false
 
-[node name="SubTitleLabel" parent="MenuContainer/SubTitleMargin/SubTitleContainer" parent_id_path=PackedInt32Array(523889664) index="0" unique_id=754291424]
-theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
-theme_override_colors/font_outline_color = Color(0.47058824, 0.11372549, 0.30980393, 1)
+[node name="NewGameButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="0" unique_id=2044537792]
+theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_colors/font_focus_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.78352344, 0.7835234, 0.7835234, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_2b4x5")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2b4x5")
+text = "[LAUNCH]"
+flat = true
+
+[node name="OptionsButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="1" unique_id=1486236076]
+theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_colors/font_focus_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.78352344, 0.7835234, 0.7835234, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_2b4x5")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2b4x5")
+text = "[OPTIONS]"
+flat = true
+
+[node name="CreditsButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="2" unique_id=301223169]
+theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_colors/font_focus_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.78352344, 0.7835234, 0.7835234, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_2b4x5")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2b4x5")
+text = "[CREDITS]"
+flat = true
+
+[node name="ExitButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="3" unique_id=1750454379]
+theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_colors/font_focus_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.78352344, 0.7835234, 0.7835234, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_2b4x5")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2b4x5")
+text = "[QUIT]"
+flat = true
+
+[node name="VersionLabel" parent="VersionMargin/VersionContainer" parent_id_path=PackedInt32Array(1603969262) index="0" unique_id=793266470]
+anchors_preset = 2
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 0.0
+offset_right = 88.0
+grow_horizontal = 1
 theme_override_fonts/font = ExtResource("3_epyc4")
-theme_override_font_sizes/font_size = 100
-text = "[In Development]"
+theme_override_font_sizes/font_size = 36
+text = "ver. 0"
+horizontal_alignment = 0
+version_prefix = "ver. "
 
-[node name="VersionLabel" parent="VersionMargin/VersionContainer" parent_id_path=PackedInt32Array(645412385) index="0" unique_id=321873498]
-text = "v0"
+[node name="CreditsMargin" type="MarginContainer" parent="." index="5" unique_id=124219225]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="CreditsContainer" type="Control" parent="CreditsMargin" index="0" unique_id=1838750010]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CreditsLabel" type="Label" parent="CreditsMargin/CreditsContainer" index="0" unique_id=2080091719]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -322.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_epyc4")
+theme_override_font_sizes/font_size = 36
+text = "*NON-PUBLIC* Manapotion Studios, 2026"
+horizontal_alignment = 2

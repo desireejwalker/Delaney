@@ -4,9 +4,12 @@
 
 [sub_resource type="World3D" id="World3D_de4ca"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_de4ca"]
+viewport_path = NodePath("SubViewportTextureRect/SubViewport")
+
 [node name="WorldRenderer" unique_id=1118906799 instance=ExtResource("1_btl1m")]
 texture_filter = 1
 world_3d = SubResource("World3D_de4ca")
 
-[node name="SubViewportContainer" parent="." index="0" unique_id=112499382]
-mouse_filter = 0
+[node name="SubViewportTextureRect" parent="." index="0" unique_id=1225304059]
+texture = SubResource("ViewportTexture_de4ca")

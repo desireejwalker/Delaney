@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b1smp23ndu7n5"]
+
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="1_1gasg"]
+
+[node name="Gameplay" type="MarginContainer" unique_id=652435128]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=369293593]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_fonts/font = ExtResource("1_1gasg")
+theme_override_font_sizes/font_size = 24
+text = "(...There's nothing here.)"
+horizontal_alignment = 1

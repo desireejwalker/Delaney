@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://dbal5jde45v67"]
+
+[ext_resource type="Script" uid="uid://eborw7q4b07h" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/input/input_options_menu.gd" id="1_ucy4y"]
+[ext_resource type="Script" uid="uid://1nf36h0gms3q" path="res://addons/maaacks_menus_template/base/nodes/utilities/capture_focus.gd" id="1_xofjr"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="2_m8ggq"]
+[ext_resource type="PackedScene" uid="uid://ci6wgl2ngd35n" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/input/input_actions_tree.tscn" id="4_pd4vm"]
+[ext_resource type="PackedScene" uid="uid://b6x6gcqp1517o" path="res://nodes/menus/options-menu/components/controls-tab/input_actions_list.tscn" id="4_ucy4y"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="5_k7sqs"]
+[ext_resource type="PackedScene" uid="uid://cwt4p3bufkke5" path="res://addons/maaacks_menus_template/base/nodes/windows/confirmation_overlaid_window.tscn" id="6_ei0co"]
+[ext_resource type="PackedScene" uid="uid://cl416gdb1fgwr" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/slider_option_control.tscn" id="7_e7udh"]
+[ext_resource type="PackedScene" uid="uid://6gdbfi0172ji" path="res://addons/maaacks_menus_template/base/nodes/windows/overlaid_window.tscn" id="7_umb7q"]
+[ext_resource type="PackedScene" uid="uid://dgravx3vt5g3i" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/input/key_assignment_window.tscn" id="8_tqtkn"]
+[ext_resource type="PackedScene" uid="uid://bcp6f6yysejjk" path="res://addons/maaacks_menus_template/examples/scenes/menus/options_menu/input/input_icon_mapper.tscn" id="9_2acr5"]
+
+[node name="Controls" type="MarginContainer" unique_id=109398865]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ucy4y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=746343816]
+layout_mode = 2
+script = ExtResource("1_xofjr")
+search_depth = 5
+
+[node name="InputMappingContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=1056833102]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MessageLabel" type="Label" parent="VBoxContainer/InputMappingContainer" unique_id=321669641]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_fonts/font = ExtResource("2_m8ggq")
+theme_override_font_sizes/font_size = 24
+text = "(You can change the controls here, if you want.)"
+horizontal_alignment = 1
+
+[node name="InputActionsList" parent="VBoxContainer/InputMappingContainer" unique_id=1135275701 instance=ExtResource("4_ucy4y")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="InputActionsTree" parent="VBoxContainer/InputMappingContainer" unique_id=1082851938 instance=ExtResource("4_pd4vm")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/InputMappingContainer" unique_id=1772771423]
+layout_mode = 2
+alignment = 1
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/InputMappingContainer/HBoxContainer" unique_id=1107448154]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_k7sqs")
+theme_override_font_sizes/font_size = 36
+text = "[RESET]"
+
+[node name="SensitivityControlContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=359860078]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+script = ExtResource("1_xofjr")
+search_depth = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/SensitivityControlContainer" unique_id=1797584984]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SensitivityControlContainer/MarginContainer" unique_id=2000226514]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="MouseSensitivityControl" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer" unique_id=1557081957 instance=ExtResource("7_e7udh")]
+layout_mode = 2
+lock_config_names = true
+option_name = "[MOUSE SENSITIVITY]"
+option_section = 1
+key = "mouse_sensitivity"
+section = "input_settings"
+label_suffix = " "
+
+[node name="OptionLabel" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer/MouseSensitivityControl" index="0" unique_id=1854788461]
+custom_minimum_size = Vector2(400, 0)
+size_flags_horizontal = 1
+theme_override_fonts/font = ExtResource("5_k7sqs")
+theme_override_font_sizes/font_size = 36
+text = "[MOUSE SENSITIVITY] "
+
+[node name="HSlider" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer/MouseSensitivityControl" index="1" unique_id=424108384]
+size_flags_horizontal = 3
+min_value = 0.25
+max_value = 2.0
+tick_count = 8
+
+[node name="ControllerSensitivityControl" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer" unique_id=1859174490 instance=ExtResource("7_e7udh")]
+layout_mode = 2
+lock_config_names = true
+option_name = "[CONTROLLER SENSITIVITY]"
+option_section = 1
+key = "controller_sensitivity"
+section = "input_settings"
+label_suffix = " "
+
+[node name="OptionLabel" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer/ControllerSensitivityControl" index="0" unique_id=1854788461]
+custom_minimum_size = Vector2(400, 0)
+size_flags_horizontal = 1
+theme_override_fonts/font = ExtResource("5_k7sqs")
+theme_override_font_sizes/font_size = 36
+text = "[CONTROLLER SENSITIVITY] "
+
+[node name="HSlider" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer/ControllerSensitivityControl" index="1" unique_id=424108384]
+size_flags_horizontal = 3
+min_value = 0.25
+max_value = 2.0
+tick_count = 8
+
+[node name="KeyDeletionConfirmation" parent="." unique_id=1482267070 instance=ExtResource("6_ei0co")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(420, 200)
+layout_mode = 2
+text = "Are you sure you want to remove KEY from ACTION?"
+title = "Remove Key"
+
+[node name="ResetConfirmation" parent="." unique_id=1315492223 instance=ExtResource("6_ei0co")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(420, 200)
+layout_mode = 2
+text = "Are you sure you want to reset controls back to the defaults?"
+title = "Reset to Default"
+
+[node name="OneInputMinimumMessage" parent="." unique_id=343706911 instance=ExtResource("7_umb7q")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(420, 200)
+layout_mode = 2
+update_content = true
+title = "One Input Minimum"
+
+[node name="AlreadyAssignedMessage" parent="." unique_id=1521064630 instance=ExtResource("7_umb7q")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(420, 200)
+layout_mode = 2
+update_content = true
+title = "Already Assigned"
+
+[node name="KeyAssignmentWindow" parent="." unique_id=1194922714 instance=ExtResource("8_tqtkn")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(420, 200)
+layout_mode = 2
+
+[node name="InputIconMapper" parent="." unique_id=2136107125 instance=ExtResource("9_2acr5")]
+
+[connection signal="already_assigned" from="VBoxContainer/InputMappingContainer/InputActionsList" to="." method="_on_input_actions_list_already_assigned"]
+[connection signal="button_clicked" from="VBoxContainer/InputMappingContainer/InputActionsList" to="." method="_on_input_actions_list_button_clicked"]
+[connection signal="minimum_reached" from="VBoxContainer/InputMappingContainer/InputActionsList" to="." method="_on_input_actions_list_minimum_reached"]
+[connection signal="pressed" from="VBoxContainer/InputMappingContainer/HBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="confirmed" from="KeyDeletionConfirmation" to="." method="_on_key_deletion_confirmation_confirmed"]
+[connection signal="confirmed" from="ResetConfirmation" to="." method="_on_reset_confirmation_confirmed"]
+[connection signal="confirmed" from="KeyAssignmentWindow" to="." method="_on_key_assignment_window_confirmed"]
+
+[editable path="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer/MouseSensitivityControl"]
+[editable path="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer/ControllerSensitivityControl"]

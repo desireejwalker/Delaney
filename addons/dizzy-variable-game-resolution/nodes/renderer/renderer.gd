@@ -26,25 +26,31 @@ signal initialized
 @export var resolution: Vector2i = Vector2i(1920, 1080):
 	set(value):
 		resolution = value
-		_set_when_ready("%SubViewport", &"size_2d_override", resolution)
-## See [member SubViewportContainer.stretch_srink].
-@export var stretch_shrink: int = 1:
-	set(value):
-		stretch_shrink = value
-		_set_when_ready("%SubViewportContainer", &"stretch_shrink", stretch_shrink)
+		_set_when_ready("%SubViewport", &"size", resolution)
+# ## See [member SubViewportContainer.stretch_srink].
+# @export var stretch_shrink: int = 1:
+# 	set(value):
+# 		stretch_shrink = value
+# 		_set_when_ready("%SubViewportContainer", &"stretch_shrink", stretch_shrink)
 ## See [member SubViewportContainer.mouse_target].
 @export var mouse_target: bool = false:
 	set(value):
 		mouse_target = value
 		_set_when_ready("%SubViewport", &"mouse_target", mouse_target)
 
-# SubViewport Properties
+# Input
 
-@export_category("SubViewport")
-## See [member SubViewport.render_target_clear_mode].
-@export var render_target_clear_mode: SubViewport.ClearMode = SubViewport.ClearMode.CLEAR_MODE_ALWAYS
-## See [member SubViewport.render_target_update_mode].
-@export var render_target_update_mode: SubViewport.UpdateMode = SubViewport.UpdateMode.UPDATE_ALWAYS
+@export_group("Input")
+## If true, any input events are pushed through to the child [SubViewport].
+@export var push_input: bool = true
+
+# # SubViewport Properties
+
+# @export_category("SubViewport")
+# ## See [member SubViewport.render_target_clear_mode].
+# @export var render_target_clear_mode: SubViewport.ClearMode = SubViewport.ClearMode.CLEAR_MODE_ALWAYS
+# ## See [member SubViewport.render_target_update_mode].
+# @export var render_target_update_mode: SubViewport.UpdateMode = SubViewport.UpdateMode.UPDATE_ALWAYS
 
 # Viewport
 
@@ -160,9 +166,11 @@ var element_instance
 
 var game_renderer: GameRenderer
 
-# The [SubViewportContainer] node that contains the [member sub_viewport].
-@onready var sub_viewport_container: SubViewportContainer = %SubViewportContainer
-# The [SubViewport] node that renders the UI nodes at the resolution [resolution].
+# ## The [SubViewportContainer] node that contains the [member sub_viewport].
+# @onready var sub_viewport_container: SubViewportContainer = %SubViewportContainer
+## The [TextureRect] node that will display the [member sub_viewport]'s render result.
+@onready var sub_viewport_texture_rect = %SubViewportTextureRect
+## The [SubViewport] node that renders the UI nodes at the resolution [resolution].
 @onready var sub_viewport: SubViewport = %SubViewport
 
 func initialize(game_renderer: GameRenderer):
@@ -172,6 +180,9 @@ func initialize(game_renderer: GameRenderer):
 
 func _process(delta: float) -> void:
 	_update_sub_viewport_properties()
+
+func _input(event: InputEvent) -> void:
+	_handle_push_input(event)
 
 func _instantiate_element_when_ready():
 	if not is_node_ready():
@@ -194,8 +205,8 @@ func _set_when_ready(node_path: NodePath, property_name: StringName, value: Vari
 func _update_sub_viewport_properties():
 	if not is_active:
 		return
-	sub_viewport.render_target_clear_mode = render_target_clear_mode
-	sub_viewport.render_target_update_mode = render_target_update_mode
+	# sub_viewport.render_target_clear_mode = render_target_clear_mode
+	# sub_viewport.render_target_update_mode = render_target_update_mode
 
 	sub_viewport.disable_3d = disable_3d
 	sub_viewport.use_xr = use_xr
@@ -238,4 +249,8 @@ func _update_sub_viewport_properties():
 	sub_viewport.canvas_cull_mask = canvas_cull_mask
 	sub_viewport.oversampling = oversampling
 	sub_viewport.oversampling_override = oversampling_override
-	
+
+func _handle_push_input(event: InputEvent):
+	if not push_input:
+		return
+	sub_viewport.push_input(event, true)

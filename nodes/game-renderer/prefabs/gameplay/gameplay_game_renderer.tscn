@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://drury8mnnkgtc"]
+
+[ext_resource type="PackedScene" uid="uid://copenfo0gklnq" path="res://addons/dizzy-variable-game-resolution/nodes/game-renderer/game_renderer.tscn" id="1_0r7f6"]
+[ext_resource type="PackedScene" uid="uid://c3lthwb0m8dnt" path="res://nodes/game-renderer/components/ui-renderer/ui_renderer.tscn" id="2_3o2hx"]
+[ext_resource type="PackedScene" uid="uid://dqr3g55gikbrx" path="res://nodes/game-renderer/components/world-renderer/world_renderer.tscn" id="2_ljoe6"]
+[ext_resource type="PackedScene" uid="uid://wg7nh0oy0bsg" path="res://nodes/game-renderer/components/world-ui-renderer/world_ui_renderer.tscn" id="3_3qa5s"]
+[ext_resource type="PackedScene" uid="uid://cxrvpsuh8ql7f" path="res://nodes/test_map/test_map.tscn" id="3_tn8rn"]
+[ext_resource type="PackedScene" uid="uid://boiuoy3jpwi1b" path="res://nodes/game-renderer/components/menu-renderer/menu_renderer.tscn" id="6_rv065"]
+[ext_resource type="Script" uid="uid://4iy200vugq5s" path="res://nodes/game-renderer/components/pause-menu-controller/pause_menu_controller.gd" id="6_tn8rn"]
+[ext_resource type="PackedScene" uid="uid://b2mahivklbvbe" path="res://nodes/menus/pause-menu/pause_menu.tscn" id="8_qly26"]
+
+[node name="GameRenderer" unique_id=1250656526 node_paths=PackedStringArray("main_renderer") instance=ExtResource("1_0r7f6")]
+auto_hide_cursor = false
+main_renderer = NodePath("WorldRenderer")
+
+[node name="WorldRenderer" parent="." index="0" unique_id=1118906799 instance=ExtResource("2_ljoe6")]
+unique_name_in_owner = true
+layout_mode = 1
+element = ExtResource("3_tn8rn")
+resolution = Vector2i(320, 240)
+
+[node name="WorldUIRenderer" parent="." index="1" unique_id=1866004435 instance=ExtResource("3_3qa5s")]
+unique_name_in_owner = true
+layout_mode = 1
+resolution = Vector2i(1024, 768)
+push_input = false
+
+[node name="UIRenderer" parent="." index="2" unique_id=1746353655 instance=ExtResource("2_3o2hx")]
+unique_name_in_owner = true
+layout_mode = 1
+resolution = Vector2i(1024, 768)
+push_input = false
+
+[node name="MenuRenderer" parent="." index="3" unique_id=1817127663 instance=ExtResource("6_rv065")]
+unique_name_in_owner = true
+layout_mode = 1
+resolution = Vector2i(1024, 768)
+
+[node name="PauseMenuController" type="Node" parent="." index="4" unique_id=1747961526 node_paths=PackedStringArray("menu_renderer")]
+unique_name_in_owner = true
+script = ExtResource("6_tn8rn")
+pause_menu_packed = ExtResource("8_qly26")
+menu_renderer = NodePath("../MenuRenderer")
+metadata/_custom_type_script = "uid://4iy200vugq5s"

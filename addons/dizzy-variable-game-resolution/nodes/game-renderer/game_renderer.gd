@@ -5,17 +5,21 @@ extends Control
 
 signal initialized
 
-# Input Actions
-
-@export_group("Input Actions")
-## The name of the input action that will show the cursor.
-@export var show_cursor_input_action: StringName = &"show_cursor"
-
 ## If true, this [PlayableCharacter] node will initialize itself on [method _ready].
 @export var auto_initialize: bool = true
 
+# Input Actions
+
+@export_group("Input Actions")
+## If true, this [GameRenderer] will automatically hide the mouse cursor unless the input action
+## [member show_cursor_input_action] is held.
+@export var auto_hide_cursor: bool = true
+## The name of the input action that will show the cursor.
+@export var show_cursor_input_action: StringName = &"show_cursor"
+
 # Components
 
+@export_group("Renderer")
 ## The [Renderer] responsible for rendering the main game scene (usually the scene with the player
 ## controller). All [RendererCameras] under this [GameRenderer] node will copy the properties of
 ## this [Renderer]'s current camera (see [member Camera3D.current] and 
@@ -47,7 +51,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 func initialize() -> void:
 	_setup_renderers()
 
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if auto_hide_cursor:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	is_active = true
 	initialized.emit()
 
@@ -63,6 +68,10 @@ func _setup_renderers():
 
 func _handle_show_cursor():
 	if Engine.is_editor_hint():
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		return
+
+	if not auto_hide_cursor:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		return
 

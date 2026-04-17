@@ -16,13 +16,11 @@ main_renderer = NodePath("WorldRenderer")
 layout_mode = 1
 element = ExtResource("3_oxfe1")
 resolution = Vector2i(480, 270)
-stretch_shrink = 4
 
 [node name="WorldUIRenderer" parent="." index="1" unique_id=1273653586 instance=ExtResource("3_c6brj")]
 layout_mode = 1
 element = ExtResource("5_oxfe1")
 resolution = Vector2i(960, 540)
-stretch_shrink = 2
 
 [node name="UIRenderer" parent="." index="2" unique_id=1098655209 instance=ExtResource("2_ta7k0")]
 layout_mode = 1

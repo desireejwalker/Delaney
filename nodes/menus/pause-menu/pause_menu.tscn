@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://b2mahivklbvbe"]
+
+[ext_resource type="PackedScene" uid="uid://6gdbfi0172ji" path="res://addons/maaacks_menus_template/base/nodes/windows/overlaid_window.tscn" id="1_4jcdj"]
+[ext_resource type="Script" uid="uid://va75lu57j4bk" path="res://nodes/menus/pause-menu/pause_menu.gd" id="2_8t434"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="3_188fv"]
+[ext_resource type="PackedScene" uid="uid://bbs30b4lq3gvo" path="res://nodes/menus/options-menu/options_menu.tscn" id="3_t6cuh"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="4_pgrr8"]
+[ext_resource type="PackedScene" uid="uid://xtuh0qqklh1q" path="res://nodes/menus/pause-menu/components/comfirmation-overlaid-window/pause_menu_confirmation_overlaid_window.tscn" id="5_188fv"]
+[ext_resource type="Script" uid="uid://bukxt50nph26k" path="res://nodes/menus/pause-menu/components/comfirmation-overlaid-window/quit_confirmation_overlaid_window.gd" id="7_t6cuh"]
+
+[node name="PauseMenu" unique_id=343706911 instance=ExtResource("1_4jcdj")]
+process_mode = 3
+script = ExtResource("2_8t434")
+options_menu_scene = ExtResource("3_t6cuh")
+main_menu_scene_path = "uid://caf0nnifxcu0a"
+pauses_game = true
+update_content = true
+close_button_text = "[Resume]"
+title = "[PAUSED]"
+title_font_size = 48
+
+[node name="TitleLabel" parent="ContentContainer/BoxContainer/TitleMargin/BoxContainer" parent_id_path=PackedInt32Array(1788474031) index="0" unique_id=1049966061]
+theme_override_fonts/font = ExtResource("3_188fv")
+theme_override_font_sizes/font_size = 48
+text = "[PAUSED]"
+
+[node name="MenuButtons" parent="ContentContainer/BoxContainer/MenuButtonsMargin" parent_id_path=PackedInt32Array(1413292752) index="0" unique_id=1371114575]
+custom_minimum_size = Vector2(200, 0)
+size_flags_horizontal = 4
+
+[node name="CloseButton" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="0" unique_id=314526102]
+theme_override_fonts/font = ExtResource("3_188fv")
+theme_override_font_sizes/font_size = 36
+text = "[RESUME]"
+
+[node name="RestartButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="1" unique_id=1174096939]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_188fv")
+theme_override_font_sizes/font_size = 36
+text = "[RESTART]"
+
+[node name="OptionsButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="2" unique_id=2145197563]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_188fv")
+theme_override_font_sizes/font_size = 36
+text = "[OPTIONS]"
+
+[node name="QuitButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="3" unique_id=260375939]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_188fv")
+theme_override_font_sizes/font_size = 36
+text = "[QUIT]"
+
+[node name="QuitHintLabel" type="Label" parent="ContentContainer/BoxContainer" parent_id_path=PackedInt32Array(394030069) index="3" unique_id=1037042756]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_fonts/font = ExtResource("4_pgrr8")
+theme_override_font_sizes/font_size = 24
+text = "(You can also smash [q] twice to quit.)"
+
+[node name="RestartConfirmationOverlaidWindow" parent="." index="1" unique_id=1482267070 instance=ExtResource("5_188fv")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+title = "[RESTART?]"
+
+[node name="QuitConfirmationOverlaidWindow" parent="." index="2" unique_id=1532829216 instance=ExtResource("5_188fv")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+script = ExtResource("7_t6cuh")
+title = "[QUIT?]"
+
+[connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/QuitButton" to="." method="_on_quit_button_pressed"]

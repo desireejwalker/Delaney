@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://cx0e8cvq5qnm3"]
-
-[ext_resource type="PackedScene" uid="uid://6pkpf3xjjbs1" path="res://addons/dizzy-variable-game-resolution/nodes/renderer/renderer.tscn" id="1_utfkc"]
-
-[node name="Renderer" unique_id=1118906799 instance=ExtResource("1_utfkc")]

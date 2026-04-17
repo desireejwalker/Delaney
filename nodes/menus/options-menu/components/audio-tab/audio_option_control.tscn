@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cl0v0u1k6dwq5"]
+
+[ext_resource type="PackedScene" uid="uid://cl416gdb1fgwr" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/slider_option_control.tscn" id="1_c8phn"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="2_c2ehp"]
+
+[node name="AudioOptionControl" unique_id=1557081957 instance=ExtResource("1_c8phn")]
+custom_minimum_size = Vector2(0, 45)
+label_suffix = " "
+
+[node name="OptionLabel" parent="." index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("2_c2ehp")
+theme_override_font_sizes/font_size = 36
+text = " "

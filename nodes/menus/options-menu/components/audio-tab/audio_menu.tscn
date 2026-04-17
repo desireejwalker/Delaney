@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://em58wmcnbel"]
+
+[ext_resource type="PackedScene" uid="uid://c8vnncjwqcpab" path="res://addons/maaacks_menus_template/base/nodes/menus/options_menu/audio/audio_options_menu.tscn" id="1_fqjo5"]
+[ext_resource type="PackedScene" uid="uid://cl0v0u1k6dwq5" path="res://nodes/menus/options-menu/components/audio-tab/audio_option_control.tscn" id="2_6m3m0"]
+[ext_resource type="Script" uid="uid://8qiskx50lftd" path="res://nodes/menus/options-menu/components/audio-tab/audio_menu.gd" id="2_cl5on"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="2_vugb1"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="3_garlp"]
+
+[node name="Audio" unique_id=2801527 instance=ExtResource("1_fqjo5")]
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 0
+script = ExtResource("2_cl5on")
+option_name_prefix = "["
+option_name_suffix = "]"
+capitalize_option_name = true
+config_section_name = &"audio_settings"
+audio_control_scene = ExtResource("2_6m3m0")
+
+[node name="MessageLabel" type="Label" parent="." index="0" unique_id=858386897]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_fonts/font = ExtResource("2_vugb1")
+theme_override_font_sizes/font_size = 24
+text = "(Can't handle the sounds? Me neither.)"
+horizontal_alignment = 1
+
+[node name="MuteControl" parent="VBoxContainer" parent_id_path=PackedInt32Array(1265848630) index="1" unique_id=372694560]
+custom_minimum_size = Vector2(0, 45)
+lock_config_names = true
+option_name = "[MUTE]"
+key = "mute"
+section = "audio_settings"
+label_suffix = " "
+
+[node name="OptionLabel" parent="VBoxContainer/MuteControl" index="0" unique_id=1854788461]
+theme_override_fonts/font = ExtResource("3_garlp")
+theme_override_font_sizes/font_size = 36
+text = "[MUTE] "
+
+[editable path="VBoxContainer/MuteControl"]
