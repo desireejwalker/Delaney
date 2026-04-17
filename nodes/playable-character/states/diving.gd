@@ -54,7 +54,11 @@ func _handle_dive_force(direction: Vector3) -> Vector3:
 func _handle_diving(current_velocity: Vector3, direction: Vector3, delta: float) -> Vector3:
 	var horizontal_velocity = direction * speed
 	if direction.is_zero_approx():
-		horizontal_velocity = current_velocity.normalized() * speed
+		horizontal_velocity = Vector3(
+			current_velocity.normalized().x * speed,
+			0,
+			current_velocity.normalized().z * speed
+		)
 	var velocity = current_velocity.move_toward(horizontal_velocity + (Vector3.DOWN * gravity), acceleration * delta)
 	return velocity
 
