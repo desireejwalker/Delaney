@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cnkwsobvqojim"]
+
+[ext_resource type="Script" uid="uid://2gtuu8j32yay" path="res://nodes/playable-character/components/stamina-wheel/playable_character_stamina_wheel.gd" id="1_qkcq6"]
+[ext_resource type="PackedScene" uid="uid://b3bsil0ng3j5p" path="res://nodes/ui/stamina-wheel/stamina_wheel.tscn" id="2_t7djw"]
+[ext_resource type="PackedScene" uid="uid://cu27lxdl8q07g" path="res://addons/dizzy-variable-game-resolution/nodes/renderer-marker/renderer_marker.tscn" id="3_3l5l7"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3l5l7"]
+viewport_path = NodePath("SubViewport")
+
+[node name="PlayableCharacterStaminaWheel" type="Node3D" unique_id=210171417]
+script = ExtResource("1_qkcq6")
+metadata/_custom_type_script = "uid://2gtuu8j32yay"
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1029441822]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_3l5l7")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=28965227]
+transparent_bg = true
+
+[node name="StaminaWheel" parent="SubViewport" unique_id=1218175774 instance=ExtResource("2_t7djw")]
+unique_name_in_owner = true
+
+[node name="RendererMarker" parent="." unique_id=1205518069 instance=ExtResource("3_3l5l7")]
+renderer_name = &"WorldUIRenderer"
+
+[editable path="SubViewport/StaminaWheel"]

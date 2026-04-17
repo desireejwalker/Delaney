@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://m24rdewx3r6a"]
 
-[ext_resource type="Script" uid="uid://d2x50e2qvgik1" path="res://nodes/playable-character/components/playable-character-finite-state-machine/playable_character_finite_state_machine.gd" id="1_wn21l"]
+[ext_resource type="Script" uid="uid://d2x50e2qvgik1" path="res://nodes/playable-character/components/finite-state-machine/playable_character_finite_state_machine.gd" id="1_wn21l"]
 
 [node name="PlayableCharacterFiniteStateMachine" type="Node3D" unique_id=826857320]
 script = ExtResource("1_wn21l")

@@ -14,6 +14,9 @@ const ARIAL_ACTIONS_STRING: String = "arial_actions"
 
 var vertical_stamina = vertical_stamina_max
 
+# Components
+@onready var stamina_wheel: PlayableCharacterStaminaWheel = %PlayableCharacterStaminaWheel
+
 # Executes after the state is entered.
 func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	actor = actor as PlayableCharacter
@@ -21,6 +24,9 @@ func _on_enter(actor: Node, blackboard: Blackboard) -> void:
 	_update_arial_actions(blackboard)
 	
 	vertical_stamina = vertical_stamina_max
+
+	stamina_wheel.stamina_wheel.show_wheel()
+	stamina_wheel.stamina_wheel.max_value = vertical_stamina_max
 
 # Executes every _process call, if the state is active.
 func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
@@ -39,13 +45,14 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	
 	# decrease vertical stamina while velocity is positive
 	vertical_stamina = _handle_stamina(velocity.y, delta)
+	stamina_wheel.stamina_wheel.current_value = vertical_stamina
 	
 	actor.mover.set_velocity(velocity)
 	actor.mover.set_direction(velocity.normalized())
 
 # Executes before the state is exited.
 func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
-	pass
+	stamina_wheel.stamina_wheel.hide_wheel()
 
 func _handle_wallrunning(wall_normal: Vector3, current_velocity: Vector3, direction: Vector3, speed: float, gravity: float, delta) -> Vector3:
 	var wall_pull = -wall_normal * wall_pull_force

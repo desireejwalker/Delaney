@@ -1,3 +1,10 @@
+SubViewport
+Sprite3D
+AnimationPlayer
+Control
+AnimationTree
+PanelContainer
+TextureProgressBar
 VBoxContainer
 HSeparator
 ScrollContainer
@@ -6,9 +13,3 @@ Label
 MarginContainer
 TextureRect
 Panel
-PanelContainer
-Button
-Node
-AnimationPlayer
-TextureProgressBar
-SubViewport

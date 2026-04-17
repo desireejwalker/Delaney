@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://wg7nh0oy0bsg"]
 
 [ext_resource type="PackedScene" uid="uid://6pkpf3xjjbs1" path="res://addons/dizzy-variable-game-resolution/nodes/renderer/renderer.tscn" id="1_gjenn"]
+[ext_resource type="PackedScene" uid="uid://cmy8cjdoy77tn" path="res://addons/dizzy-variable-game-resolution/nodes/renderer-camera/renderer_camera.tscn" id="2_lbu4l"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_gjenn"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_3q32y"]
 viewport_path = NodePath("SubViewportTextureRect/SubViewport")
 
 [node name="WorldUIRenderer" unique_id=1118906799 instance=ExtResource("1_gjenn")]
@@ -10,4 +11,7 @@ process_mode = 1
 transparent_bg = true
 
 [node name="SubViewportTextureRect" parent="." index="0" unique_id=1225304059]
-texture = SubResource("ViewportTexture_gjenn")
+texture = SubResource("ViewportTexture_3q32y")
+
+[node name="RendererCamera" parent="SubViewportTextureRect/SubViewport" parent_id_path=PackedInt32Array(1220453205) index="0" unique_id=1131842744 node_paths=PackedStringArray("renderer") instance=ExtResource("2_lbu4l")]
+renderer = NodePath("../../..")
