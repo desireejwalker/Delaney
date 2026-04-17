@@ -59,10 +59,8 @@
 script = ExtResource("4_dbhgd")
 metadata/_custom_type_script = "uid://dgsofm1brlcwe"
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_1kp0j"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_rw214"]
-size = Vector3(1.2, 0.2, 1.2)
+size = Vector3(1.2, 0.7, 1.2)
 
 [sub_resource type="Resource" id="Resource_sq7iw"]
 script = ExtResource("4_dbhgd")
@@ -402,7 +400,6 @@ next_state = NodePath("../../Running")
 [node name="Launching" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine" index="10" unique_id=1761529130]
 unique_name_in_owner = true
 script = ExtResource("31_xqcxj")
-launch_shape_3D = SubResource("SphereShape3D_1kp0j")
 
 [node name="startFalling" type="Node" parent="PlayableCharacterGameplayFiniteStateMachine/FiniteStateMachine/Launching" index="0" unique_id=1368383157 node_paths=PackedStringArray("next_state")]
 script = ExtResource("13_uxsmg")
@@ -517,7 +514,6 @@ next_state = NodePath("../../Landing")
 
 [node name="WallRunningShapeCast3D" type="ShapeCast3D" parent="." index="7" unique_id=1464399360]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("BoxShape3D_rw214")
 target_position = Vector3(0, 0, 0)
 

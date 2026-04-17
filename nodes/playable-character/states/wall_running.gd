@@ -34,7 +34,7 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	
 	var last_slide_collision = actor.get_last_slide_collision()
 	var input_direction = actor.get_input_direction()
-	
+
 	var velocity = _handle_wallrunning(
 		last_slide_collision.get_normal(),
 		actor.velocity,
@@ -56,6 +56,8 @@ func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
 
 func _handle_wallrunning(wall_normal: Vector3, current_velocity: Vector3, direction: Vector3, speed: float, gravity: float, delta) -> Vector3:
 	var wall_pull = -wall_normal * wall_pull_force
+	if wall_normal.y > 0:
+		wall_pull = Vector3.UP * wall_pull_force
 
 	var dot = -wall_normal.dot(direction)
 	var horizontal = remap(dot, 0, 1, horizontal_speed_max, horizontal_speed_min) * speed
