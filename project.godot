@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Delaney"
-config/version="0"
+config/version="1"
 run/main_scene="uid://caf0nnifxcu0a"
 run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
@@ -36,9 +36,8 @@ ProjectUISoundController="*uid://cc37235kj4384"
 
 window/size/viewport_width=1024
 window/size/viewport_height=768
-window/size/window_width_override=1440
-window/size/window_height_override=1080
-window/stretch/mode="viewport"
+window/size/resizable=false
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

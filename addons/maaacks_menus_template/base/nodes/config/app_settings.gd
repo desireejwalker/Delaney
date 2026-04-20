@@ -1,4 +1,4 @@
-class_name AppSettings
+# class_name AppSettings
 extends Node
 ## Interface to read/write general application settings through [PlayerConfig].
 

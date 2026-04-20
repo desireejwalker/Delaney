@@ -63,7 +63,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Select a screen size"
 lock_titles = true
-option_values = [0, 1, 2]
+option_values = [0, 3, 4]
 option_titles = Array[String](["(Windowed)", "(Borderless Window)", "(Fullscreen)"])
 option_name = "[SCREEN MODE]"
 option_section = 3
@@ -81,7 +81,7 @@ text = "[SCREEN MODE] "
 theme_override_fonts/font = ExtResource("2_kfwov")
 theme_override_font_sizes/font_size = 36
 alignment = 2
-selected = 0
+selected = 1
 item_count = 3
 popup/item_0/text = "(Windowed)"
 popup/item_0/id = 0
@@ -95,7 +95,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(700, 45)
 layout_mode = 2
 size_flags_horizontal = 4
-tooltip_text = "Select a screen size"
+tooltip_text = "(This option is currently disabled.) (Need to see the UI better? turn this up.)"
 lock_titles = true
 option_values = [Vector2i(1024, 768), Vector2i(1152, 864), Vector2i(1440, 1080), Vector2i(1536, 1152), Vector2i(2880, 2160)]
 option_titles = Array[String](["(1024 x 768 (Default))", "(1152 x 864)", "(1440 x 1080)", "(1536 x 1152)", "(2880 x 2160)"])
@@ -104,6 +104,7 @@ option_section = 3
 key = "game_resolution"
 section = "video_settings"
 label_suffix = " "
+editable = false
 property_type = 6
 
 [node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/GameResolutionControl" index="0" unique_id=1854788461]
@@ -114,6 +115,7 @@ text = "[GAME RESOLUTION] "
 [node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/GameResolutionControl" index="1" unique_id=264509485]
 theme_override_fonts/font = ExtResource("2_kfwov")
 theme_override_font_sizes/font_size = 36
+disabled = true
 selected = 0
 item_count = 5
 popup/item_0/text = "(1024 x 768 (Default))"
@@ -140,6 +142,7 @@ option_section = 3
 key = "anti_aliasing"
 section = "video_settings"
 label_suffix = " "
+editable = false
 property_type = 2
 default_value = 0
 
@@ -151,6 +154,7 @@ text = "[ANTI-ALIASING] "
 [node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/AntiAliasingControl" index="1" unique_id=264509485]
 theme_override_fonts/font = ExtResource("2_kfwov")
 theme_override_font_sizes/font_size = 36
+disabled = true
 selected = 0
 item_count = 4
 popup/item_0/text = "(Disabled)"
@@ -175,6 +179,7 @@ option_section = 3
 key = "v_sync"
 section = "video_settings"
 label_suffix = " "
+editable = false
 property_type = 2
 default_value = 0
 
@@ -186,7 +191,8 @@ text = "[V-SYNC] "
 [node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/VSyncControl" index="1" unique_id=264509485]
 theme_override_fonts/font = ExtResource("2_kfwov")
 theme_override_font_sizes/font_size = 36
-selected = 0
+disabled = true
+selected = 1
 item_count = 4
 popup/item_0/text = "(Disabled)"
 popup/item_0/id = 0
@@ -208,6 +214,7 @@ option_section = 3
 key = "brightness"
 section = "video_settings"
 label_suffix = " "
+editable = false
 default_value = 0.5
 
 [node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/BrightnessControl" index="0" unique_id=1854788461]
@@ -216,6 +223,7 @@ theme_override_font_sizes/font_size = 36
 text = "[BRIGHTNESS] "
 
 [node name="HSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer/BrightnessControl" index="1" unique_id=424108384]
+editable = false
 tick_count = 0
 
 [node name="WorldSectionLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=2127631822]
@@ -232,8 +240,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 tooltip_text = "Select a screen size"
 lock_titles = true
-option_values = [Vector2i(160, 120), Vector2i(320, 240), Vector2i(640, 480), Vector2i(800, 600), Vector2i(1024, 768), Vector2i(-1, -1)]
-option_titles = Array[String](["(160 x 120)", "(320 x 240 (Default))", "(640 x 480)", "(800 x 600)", "(1024 x 768)", "(Same as game)"])
+option_values = [Vector2i(160, 120), Vector2i(320, 240), Vector2i(640, 480), Vector2i(800, 600), Vector2i(1024, 768)]
+option_titles = Array[String](["(160 x 120)", "(320 x 240 (Default))", "(640 x 480)", "(800 x 600)", "(1024 x 768)"])
 lock_config_names = true
 option_name = "[WORLD RESOLUTION]"
 option_section = 3
@@ -252,7 +260,7 @@ text = "[WORLD RESOLUTION] "
 theme_override_fonts/font = ExtResource("2_kfwov")
 theme_override_font_sizes/font_size = 36
 selected = 0
-item_count = 6
+item_count = 5
 popup/item_0/text = "(160 x 120)"
 popup/item_0/id = 0
 popup/item_1/text = "(320 x 240 (Default))"
@@ -263,8 +271,6 @@ popup/item_3/text = "(800 x 600)"
 popup/item_3/id = 3
 popup/item_4/text = "(1024 x 768)"
 popup/item_4/id = 4
-popup/item_5/text = "(Same as game)"
-popup/item_5/id = 5
 
 [node name="ColorLimitControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=262239127 instance=ExtResource("2_pq0wl")]
 unique_name_in_owner = true
@@ -276,11 +282,15 @@ option_name = "[COLOR LIMIT]"
 key = "color_limit"
 section = "video_settings"
 label_suffix = " "
+editable = false
 
 [node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/ColorLimitControl" index="0" unique_id=1854788461]
 theme_override_fonts/font = ExtResource("4_0ona8")
 theme_override_font_sizes/font_size = 36
 text = "[COLOR LIMIT] "
+
+[node name="CheckButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/ColorLimitControl" index="1" unique_id=1452268147]
+disabled = true
 
 [node name="AffineMappingControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=991908363 instance=ExtResource("2_pq0wl")]
 unique_name_in_owner = true
@@ -292,11 +302,15 @@ option_name = "[AFFINE MAPPING]"
 key = "affine_mapping"
 section = "video_settings"
 label_suffix = " "
+editable = false
 
 [node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/AffineMappingControl" index="0" unique_id=1854788461]
 theme_override_fonts/font = ExtResource("4_0ona8")
 theme_override_font_sizes/font_size = 36
 text = "[AFFINE MAPPING] "
+
+[node name="CheckButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/AffineMappingControl" index="1" unique_id=1452268147]
+disabled = true
 
 [node name="JitterControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1301186979 instance=ExtResource("8_3tiut")]
 unique_name_in_owner = true
@@ -308,6 +322,7 @@ option_name = "[JITTER]"
 key = "jitter"
 section = "video_settings"
 label_suffix = " "
+editable = false
 default_value = 0.0
 
 [node name="OptionLabel" parent="VBoxContainer/ScrollContainer/VBoxContainer/JitterControl" index="0" unique_id=1854788461]
@@ -316,6 +331,8 @@ theme_override_font_sizes/font_size = 36
 text = "[JITTER] "
 
 [node name="HSlider" parent="VBoxContainer/ScrollContainer/VBoxContainer/JitterControl" index="1" unique_id=424108384]
+value = 0.0
+editable = false
 tick_count = 10
 
 [node name="CameraShakeControl" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=846664353 instance=ExtResource("4_ye01f")]
@@ -332,6 +349,7 @@ option_section = 3
 key = "camera_shake"
 section = "video_settings"
 label_suffix = " "
+editable = false
 property_type = 3
 default_value = 1.0
 
@@ -343,6 +361,7 @@ text = "[CAMERA SHAKE] "
 [node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/CameraShakeControl" index="1" unique_id=264509485]
 theme_override_fonts/font = ExtResource("2_kfwov")
 theme_override_font_sizes/font_size = 36
+disabled = true
 selected = 0
 item_count = 4
 popup/item_0/text = "(Normal)"
@@ -368,6 +387,7 @@ option_section = 3
 key = "particles"
 section = "video_settings"
 label_suffix = " "
+editable = false
 property_type = 3
 default_value = 1.0
 
@@ -379,6 +399,7 @@ text = "[PARTICLES] "
 [node name="OptionButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/ParticlesControl" index="1" unique_id=264509485]
 theme_override_fonts/font = ExtResource("2_kfwov")
 theme_override_font_sizes/font_size = 36
+disabled = true
 selected = 0
 item_count = 4
 popup/item_0/text = "(Normal)"
@@ -394,6 +415,13 @@ popup/item_3/id = 3
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/separator = SubResource("StyleBoxEmpty_yeqsq")
+
+[connection signal="setting_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/ScreenModeControl" to="." method="_on_screen_mode_control_setting_changed"]
+[connection signal="setting_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/GameResolutionControl" to="." method="_on_game_resolution_control_setting_changed"]
+[connection signal="setting_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/AntiAliasingControl" to="." method="_on_anti_aliasing_control_setting_changed"]
+[connection signal="setting_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/VSyncControl" to="." method="_on_v_sync_control_setting_changed"]
+[connection signal="setting_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/BrightnessControl" to="." method="_on_brightness_control_setting_changed"]
+[connection signal="setting_changed" from="VBoxContainer/ScrollContainer/VBoxContainer/WorldResolutionControl" to="." method="_on_world_resolution_control_setting_changed"]
 
 [editable path="VBoxContainer/ScrollContainer/VBoxContainer/ScreenModeControl"]
 [editable path="VBoxContainer/ScrollContainer/VBoxContainer/GameResolutionControl"]

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://m24rdewx3r6a" path="res://nodes/playable-character/components/finite-state-machine/playable_character_finite_state_machine.tscn" id="2_cqyrg"]
 [ext_resource type="PackedScene" uid="uid://bhthu4ry66vhi" path="res://addons/dizzy-playable-character/example/dummy/nodes/character/dummy_character.tscn" id="2_de7hl"]
 [ext_resource type="Script" uid="uid://cegvtqpqtv3gm" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="3_532qq"]
+[ext_resource type="Texture2D" uid="uid://s67lu77dxrba" path="res://resources/images/arrow.png" id="3_ldw3u"]
 [ext_resource type="Script" uid="uid://b5s4anm11iad3" path="res://nodes/playable-character/components/camera/playable_character_camera.gd" id="3_qe8fs"]
 [ext_resource type="Script" uid="uid://dgsofm1brlcwe" path="res://addons/behaviour_toolkit/blackboard.gd" id="4_dbhgd"]
 [ext_resource type="Script" uid="uid://csu5xq4i1bhu" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_transition.gd" id="5_nk7hi"]
@@ -119,10 +120,19 @@ characters = [NodePath("DummyCharacter")]
 
 [node name="DummyCharacter" parent="PlayableCharacterCharacterContainer" index="0" unique_id=396285665 instance=ExtResource("2_de7hl")]
 
+[node name="Sprite3D" type="Sprite3D" parent="PlayableCharacterCharacterContainer" index="1" unique_id=2060595872]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, 4.7, 0)
+visible = false
+flip_v = true
+pixel_size = 0.03
+billboard = 2
+texture_filter = 0
+texture = ExtResource("3_ldw3u")
+
 [node name="PlayableCharacterCamera" parent="." index="3" unique_id=91815916]
 script = ExtResource("3_qe8fs")
-mouse_x_sensitivity = 6.0
-mouse_y_sensitivity = 6.0
+mouse_x_sensitivity = 2.0
+mouse_y_sensitivity = 2.0
 
 [node name="PlayableCharacterGameplayFiniteStateMachine" parent="." index="6" unique_id=826857320 instance=ExtResource("2_cqyrg")]
 unique_name_in_owner = true

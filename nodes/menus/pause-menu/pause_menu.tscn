@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://va75lu57j4bk" path="res://nodes/menus/pause-menu/pause_menu.gd" id="2_8t434"]
 [ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="3_188fv"]
 [ext_resource type="PackedScene" uid="uid://bbs30b4lq3gvo" path="res://nodes/menus/options-menu/options_menu.tscn" id="3_t6cuh"]
+[ext_resource type="PackedScene" uid="uid://cxocig478jbsp" path="res://nodes/menus/how-to-play-menu/how_to_play_menu.tscn" id="3_uphq5"]
 [ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="4_pgrr8"]
 [ext_resource type="PackedScene" uid="uid://xtuh0qqklh1q" path="res://nodes/menus/pause-menu/components/comfirmation-overlaid-window/pause_menu_confirmation_overlaid_window.tscn" id="5_188fv"]
 [ext_resource type="Script" uid="uid://bukxt50nph26k" path="res://nodes/menus/pause-menu/components/comfirmation-overlaid-window/quit_confirmation_overlaid_window.gd" id="7_t6cuh"]
@@ -11,6 +12,7 @@
 [node name="PauseMenu" unique_id=343706911 instance=ExtResource("1_4jcdj")]
 process_mode = 3
 script = ExtResource("2_8t434")
+how_to_play_menu_scene = ExtResource("3_uphq5")
 options_menu_scene = ExtResource("3_t6cuh")
 main_menu_scene_path = "uid://caf0nnifxcu0a"
 pauses_game = true
@@ -39,13 +41,19 @@ theme_override_fonts/font = ExtResource("3_188fv")
 theme_override_font_sizes/font_size = 36
 text = "[RESTART]"
 
-[node name="OptionsButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="2" unique_id=2145197563]
+[node name="HowToPlayButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="2" unique_id=1213774734]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_188fv")
+theme_override_font_sizes/font_size = 36
+text = "[HOW TO PLAY]"
+
+[node name="OptionsButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="3" unique_id=2145197563]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_188fv")
 theme_override_font_sizes/font_size = 36
 text = "[OPTIONS]"
 
-[node name="QuitButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="3" unique_id=260375939]
+[node name="QuitButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" index="4" unique_id=260375939]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_188fv")
 theme_override_font_sizes/font_size = 36
@@ -72,5 +80,6 @@ script = ExtResource("7_t6cuh")
 title = "[QUIT?]"
 
 [connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]
 [connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/QuitButton" to="." method="_on_quit_button_pressed"]

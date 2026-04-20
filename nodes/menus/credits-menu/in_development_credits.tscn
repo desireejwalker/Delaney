@@ -1,0 +1,302 @@
+[gd_scene format=3 uid="uid://c5vic27hrdu5u"]
+
+[ext_resource type="Texture2D" uid="uid://msed4gk4gv6r" path="res://resources/images/game_title.png" id="1_ef3k1"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="2_ef3k1"]
+[ext_resource type="Texture2D" uid="uid://d1q3vm4oa4him" path="res://resources/images/manapotion_studios.png" id="3_ef3k1"]
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="4_8joyi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8joyi"]
+
+[node name="InDevelopmentCredits" type="Control" unique_id=166559487]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1969583091]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -512.0
+offset_right = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=113100320]
+texture_filter = 1
+custom_minimum_size = Vector2(1024, 200)
+layout_mode = 2
+texture = ExtResource("1_ef3k1")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1187720389]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ef3k1")
+theme_override_font_sizes/font_size = 48
+text = "Is proudly developed by"
+horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer" unique_id=1034454036]
+texture_filter = 1
+custom_minimum_size = Vector2(1024, 100)
+layout_mode = 2
+texture = ExtResource("3_ef3k1")
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=99294521]
+layout_mode = 2
+theme_override_constants/separation = 30
+theme_override_styles/separator = SubResource("StyleBoxEmpty_8joyi")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=728176834]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=2107390612]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=284998910]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxEmpty_8joyi")
+
+[node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1221994531]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ef3k1")
+theme_override_font_sizes/font_size = 48
+text = "Original Concept"
+horizontal_alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1082922288]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+
+[node name="NamesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer4" unique_id=2004810622]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer4/NamesContainer" unique_id=1050369319]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Denise Tranglong"
+horizontal_alignment = 2
+
+[node name="RolesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer4" unique_id=2139275019]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer4/RolesContainer" unique_id=1372235457]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Creator of Delaney Bowyer-Watson"
+
+[node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=2025503477]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxEmpty_8joyi")
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1529931497]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ef3k1")
+theme_override_font_sizes/font_size = 48
+text = "Manpotion Studios Team"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1087014070]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+
+[node name="NamesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1434251540]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/NamesContainer" unique_id=189024913]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Desirée Walker (DizzyDemon)"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/NamesContainer" unique_id=693647546]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Lana Lovelace (Melonpan)"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/NamesContainer" unique_id=683372880]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Lucina Hilzinger (PantPocket)"
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/NamesContainer" unique_id=1561596624]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Not Claude (Redmond)"
+horizontal_alignment = 2
+
+[node name="RolesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer" unique_id=1261672428]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/RolesContainer" unique_id=1054993154]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Project Director, Programming & Art"
+
+[node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/RolesContainer" unique_id=1654501224]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Music & Sound Design"
+
+[node name="Label3" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/RolesContainer" unique_id=485783341]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Music & Social Media"
+
+[node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer/RolesContainer" unique_id=165054617]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Concept Art"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=478374512]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxEmpty_8joyi")
+
+[node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1050581750]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ef3k1")
+theme_override_font_sizes/font_size = 48
+text = "Plugins & Tools"
+horizontal_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1182818477]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="NamesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" unique_id=487859184]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/NamesContainer" unique_id=1317093893]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Pat (ThePat02)"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/NamesContainer" unique_id=1535171622]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Marek Belski (Maaack)"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/NamesContainer" unique_id=1151907505]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 2
+
+[node name="RolesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2" unique_id=746803793]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/RolesContainer" unique_id=2088625350]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "BehaviourToolkit"
+
+[node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/RolesContainer" unique_id=1386988776]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Maaack's Menus Template"
+
+[node name="Label3" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer2/RolesContainer" unique_id=253482348]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Maaack's Scene Loader"
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=283010269]
+layout_mode = 2
+theme_override_constants/separation = 40
+theme_override_styles/separator = SubResource("StyleBoxEmpty_8joyi")
+
+[node name="Label3" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=642016565]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ef3k1")
+theme_override_font_sizes/font_size = 48
+text = "Supporters"
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1956464146]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="NamesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3" unique_id=1645396955]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/NamesContainer" unique_id=1612644994]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.27058825, 0.22352941, 1)
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "None yet!"
+horizontal_alignment = 2
+
+[node name="RolesContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3" unique_id=647590117]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/HBoxContainer3/RolesContainer" unique_id=1094882605]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Maybe you could be the first?"
+
+[node name="Label2" type="Label" parent="VBoxContainer" unique_id=346897308]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("4_8joyi")
+theme_override_font_sizes/font_size = 36
+text = "Thank you for playing. <3"
+horizontal_alignment = 1
+vertical_alignment = 1

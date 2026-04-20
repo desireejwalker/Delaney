@@ -1,12 +1,13 @@
+res://resources/images/tutorials/
+res://addons/maaacks_menus_template/examples/scenes/windows/
+res://nodes/renderer/
 res://nodes/playable-character/states/
-res://nodes/playable-character/components/playable-character-camera/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/option_control/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/video/
 res://addons/maaacks_menus_template/examples/scenes/menus/options_menu/video/
 res://addons/maaacks_menus_template/base/nodes/menus/options_menu/audio/
 res://addons/maaacks_menus_template/examples/scenes/menus/options_menu/input/
 res://addons/maaacks_menus_template/examples/scenes/menus/options_menu/
-res://addons/maaacks_menus_template/examples/scenes/windows/
 res://nodes/menus/pause-menu/components/comfirmation-overlaid-window/
 res://nodes/menus/pause-menu/
 res://nodes/game-renderer/prefabs/gameplay/transitions/
@@ -14,7 +15,4 @@ res://nodes/game-renderer/prefabs/gameplay/states/
 res://nodes/game-renderer/components/pause-menu-controller/
 res://nodes/game-renderer/prefabs/gameplay/
 res://nodes/menus/main-menu/
-res://nodes/game-renderer/components/ui-renderer/
-res://nodes/game-renderer/components/world-ui-renderer/
-res://nodes/game-renderer/components/world-renderer/
 res://nodes/game-renderer/

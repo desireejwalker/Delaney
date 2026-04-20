@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://cvt6o3dcq6o1i"]
 
 [ext_resource type="PackedScene" uid="uid://c6k5nnpbypshi" path="res://addons/maaacks_menus_template/base/nodes/menus/main_menu/main_menu.tscn" id="1_psdyr"]
+[ext_resource type="Script" uid="uid://bv7nkvhtgpf3q" path="res://nodes/menus/main-menu/main_menu.gd" id="2_5wb8t"]
 [ext_resource type="Texture2D" uid="uid://c01as0irktbf4" path="res://resources/images/game_title_indev.png" id="2_nvqe3"]
 [ext_resource type="PackedScene" uid="uid://bbs30b4lq3gvo" path="res://nodes/menus/options-menu/options_menu.tscn" id="2_s55wt"]
 [ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="3_2b4x5"]
+[ext_resource type="PackedScene" uid="uid://dqr4eo7ykmagh" path="res://nodes/menus/credits-menu/credits_menu.tscn" id="3_bimvm"]
 [ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="3_epyc4"]
+[ext_resource type="PackedScene" uid="uid://cxocig478jbsp" path="res://nodes/menus/how-to-play-menu/how_to_play_menu.tscn" id="3_w4250"]
 
 [sub_resource type="Gradient" id="Gradient_nvqe3"]
 offsets = PackedFloat32Array(0)
@@ -15,12 +18,14 @@ gradient = SubResource("Gradient_nvqe3")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2b4x5"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5wb8t"]
+
 [node name="MainMenu" unique_id=1890447167 instance=ExtResource("1_psdyr")]
+script = ExtResource("2_5wb8t")
+how_to_play_packed_scene = ExtResource("3_w4250")
 game_scene_path = "uid://drury8mnnkgtc"
 options_packed_scene = ExtResource("2_s55wt")
-confirm_exit = null
-signal_game_start = null
-signal_game_exit = null
+credits_packed_scene = ExtResource("3_bimvm")
 
 [node name="BackgroundTextureRect" parent="." index="2" unique_id=1940176448]
 texture = SubResource("GradientTexture1D_epyc4")
@@ -68,7 +73,21 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_2b4x5")
 text = "[OPTIONS]"
 flat = true
 
-[node name="CreditsButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="2" unique_id=301223169]
+[node name="HowToPlayButton" type="Button" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="2" unique_id=643510102]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+theme_override_colors/font_focus_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.78352344, 0.7835234, 0.7835234, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_2b4x5")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5wb8t")
+text = "[HOW TO PLAY]"
+flat = true
+
+[node name="CreditsButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="3" unique_id=301223169]
 theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
 theme_override_colors/font_focus_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
@@ -80,7 +99,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_2b4x5")
 text = "[CREDITS]"
 flat = true
 
-[node name="ExitButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="3" unique_id=1750454379]
+[node name="ExitButton" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="4" unique_id=1750454379]
 theme_override_colors/font_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
 theme_override_colors/font_focus_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
@@ -135,5 +154,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("3_epyc4")
 theme_override_font_sizes/font_size = 36
-text = "*NON-PUBLIC* Manapotion Studios, 2026"
+text = "*NON-PRODUCTION* Manapotion Studios, 2026"
 horizontal_alignment = 2
+
+[connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]

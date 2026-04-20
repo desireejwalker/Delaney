@@ -1,0 +1,278 @@
+[gd_scene format=3 uid="uid://cbhfg6h655akv"]
+
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="1_rmpmu"]
+[ext_resource type="Texture2D" uid="uid://1asq1l2xvvhu" path="res://resources/images/tutorials/grounded_movement_tutorial.png" id="2_agalm"]
+[ext_resource type="Texture2D" uid="uid://c1t82nobawjb6" path="res://resources/images/tutorials/jump_tutorial.png" id="3_qi6no"]
+[ext_resource type="Texture2D" uid="uid://dwer7agfxl38c" path="res://resources/images/tutorials/run_tutorial.png" id="3_vt8kh"]
+[ext_resource type="Texture2D" uid="uid://dc5qorqlwxe78" path="res://resources/images/tutorials/wall_jump.png" id="5_6nr2l"]
+[ext_resource type="Texture2D" uid="uid://cbxkvreigvbsy" path="res://resources/images/tutorials/wall_movement_tutorial.png" id="6_571s2"]
+[ext_resource type="Texture2D" uid="uid://c2xim0qf6thac" path="res://resources/images/tutorials/wall_run_stamina_tutorial.png" id="7_uugo8"]
+[ext_resource type="Texture2D" uid="uid://ckvyt6evcaa6x" path="res://resources/images/tutorials/hammer_launch_tutorial.png" id="8_kcuw2"]
+[ext_resource type="Texture2D" uid="uid://djlbqphtbwgce" path="res://resources/images/tutorials/flow_states_tutorial.png" id="9_5o74p"]
+[ext_resource type="Texture2D" uid="uid://dlous5jrbxgy" path="res://resources/images/tutorials/launch_tutorial.png" id="10_v84sv"]
+[ext_resource type="Texture2D" uid="uid://b2t38f0wl3acl" path="res://resources/images/tutorials/arial_launch_tutorial.png" id="11_i3isj"]
+[ext_resource type="Texture2D" uid="uid://bxvmaxehcc5d2" path="res://resources/images/tutorials/ground_slam_tutorial.png" id="12_i3isj"]
+
+[node name="ScrollableHowToPlay" type="Control" unique_id=879255586]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1838945466]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1809282678]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=574330049]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(Delaney is a fast paced game with tons
+of movement-based mechanics to master.)"
+horizontal_alignment = 1
+
+[node name="WalkTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=1744528962]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("2_agalm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=120696039]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(You can move me around with W, A, S, and D.)"
+horizontal_alignment = 1
+
+[node name="RunTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=1506449209]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("3_vt8kh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label3" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=73005270]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(I'll start running if you press Shift.)"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1573900454]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If you press C while holding Shift, I'll start to slide.)"
+horizontal_alignment = 1
+
+[node name="JumpTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=864120078]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("3_qi6no")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label5" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1689989084]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(You can make me jump with Spacebar.)"
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=515633421]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If you press Spacebar while I'm sliding, I'll do a long jump.)"
+horizontal_alignment = 1
+
+[node name="Label7" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=851834978]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(Pressing C while I'm in the air will make me dive.)"
+horizontal_alignment = 1
+
+[node name="WallJumpTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=322041468]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("5_6nr2l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label8" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1234869863]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If you're pressing Spacebar when I'm on a wall, I'll do a wall jump.)"
+horizontal_alignment = 1
+
+[node name="WallRunTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=1129107072]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("6_571s2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label9" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1003865315]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(...And if you're holding Shift when I hit a wall, I'll start wall running.)"
+horizontal_alignment = 1
+
+[node name="WallRunStaminaTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=2067474997]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("7_uugo8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label10" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=266052439]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(I can run across the wall for as long as you want, but I'll lose stamina if I try and climb upwards. Watch the stamina wheel so you don't get me killed.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HammerLaunchStaminaTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=1735803366]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("8_kcuw2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label11" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=661432560]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(I'll swing my hammer if you click Left Mouse Button.)"
+horizontal_alignment = 1
+
+[node name="Label12" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1679705673]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If you hold Left Mouse Button, I'll start to spin my hammer. You can aim with W, A, S, and D.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="FlowStatesStaminaTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=2000615680]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("9_5o74p")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label13" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1870658853]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(There are four Flow States: BLUNT, DELTA, EPSILON, and LAMBDA.)"
+horizontal_alignment = 1
+
+[node name="Label14" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=703010016]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(I'll start off in the BLUNT Flow State.)"
+horizontal_alignment = 1
+
+[node name="Label15" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=733892626]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(The longer you let me spin with my hammer, the higher your combo, and more variety in my tricks, the higher of a flow state I'll reach.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label16" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=858411484]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(Flow States affect your score multiplier, the damage my hammer does, and the speed and distance that a Hammer Launch will launch me at.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LaunchingStaminaTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=1313502783]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("10_v84sv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label17" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1812339171]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(To do a Hammer Launch, let go of Left Mouse Button any time after you see the first flash.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ArialLaunchingStaminaTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=207719505]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("11_i3isj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label18" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=378562758]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If you try to do a Hammer Launch while I'm in the air, I'll do an Arial Hammer Launch instead.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label19" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=598863928]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(Instead of waiting for the right time, you can aim with W, A, S, and D, and after a second, I'll launch with my current Flow State. BLUNT included.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label20" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1795550124]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If I launch while BLUNT, though, I'm not gonna bounce off of anything.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="GroundSlamStaminaTextureRect" type="TextureRect" parent="ScrollContainer/VBoxContainer" unique_id=117526860]
+custom_minimum_size = Vector2(0, 512)
+layout_mode = 2
+texture = ExtResource("12_i3isj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label21" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=647361267]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If I end up flying too far off of the ground, you can press Right Mouse Button to make me do a Ground Slam. I'll head right back down.)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label22" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=1735577702]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_rmpmu")
+theme_override_font_sizes/font_size = 36
+text = "(If you wanna keep some of that speed after hitting the ground, you can hold Spacebar after a Ground Slam to make me do a Hammer Pogo.)"
+horizontal_alignment = 1
+autowrap_mode = 3

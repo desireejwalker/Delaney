@@ -13,7 +13,8 @@ signal initialized
 	set(value):
 		element = value
 		if element == null:
-			element_instance.queue_free()
+			if element_instance != null:
+				element_instance.queue_free()
 			return
 		_instantiate_element_when_ready()
 ## If true, the [member element] is instantiated when [method _ready] is called.
@@ -253,4 +254,4 @@ func _update_sub_viewport_properties():
 func _handle_push_input(event: InputEvent):
 	if not push_input:
 		return
-	sub_viewport.push_input(event, true)
+	sub_viewport.push_input(event, false)

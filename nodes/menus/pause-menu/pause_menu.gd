@@ -1,6 +1,7 @@
 @tool
 extends OverlaidWindow
 
+@export var how_to_play_menu_scene: PackedScene
 @export var options_menu_scene: PackedScene
 ## Path to a main menu scene.
 ## Will attempt to read from AppConfig if left empty.
@@ -85,6 +86,9 @@ func show() -> void:
 
 func _on_restart_button_pressed() -> void:
 	_show_window(restart_confirmation)
+
+func _on_how_to_play_button_pressed() -> void:
+	_load_and_show_menu(how_to_play_menu_scene)
 
 func _on_options_button_pressed() -> void:
 	_load_and_show_menu(options_menu_scene)

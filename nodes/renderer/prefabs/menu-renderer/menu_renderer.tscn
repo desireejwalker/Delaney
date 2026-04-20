@@ -1,19 +1,23 @@
 [gd_scene format=3 uid="uid://boiuoy3jpwi1b"]
 
 [ext_resource type="PackedScene" uid="uid://6pkpf3xjjbs1" path="res://addons/dizzy-variable-game-resolution/nodes/renderer/renderer.tscn" id="1_jj27r"]
+[ext_resource type="Script" uid="uid://qqfw1cvshbtq" path="res://nodes/renderer/renderer.gd" id="2_nxlol"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_1vsox"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_nxlol"]
 viewport_path = NodePath("SubViewportTextureRect/SubViewport")
 
 [node name="MenuRenderer" unique_id=1118906799 instance=ExtResource("1_jj27r")]
 process_mode = 3
+script = ExtResource("2_nxlol")
+resolution = Vector2i(1024, 768)
 transparent_bg = true
 snap_2d_transforms_to_pixel = true
 snap_2d_vertices_to_pixel = true
 physics_object_picking = true
 
 [node name="SubViewportTextureRect" parent="." index="0" unique_id=1225304059]
-texture = SubResource("ViewportTexture_1vsox")
+texture = SubResource("ViewportTexture_nxlol")
 
 [node name="SubViewport" parent="SubViewportTextureRect" index="0" unique_id=1220453205]
 physics_object_picking = true
+size = Vector2i(1024, 768)

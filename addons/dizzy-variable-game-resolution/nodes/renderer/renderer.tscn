@@ -26,6 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("ViewportTexture_tchil")
+expand_mode = 1
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportTextureRect" unique_id=1220453205]
 unique_name_in_owner = true

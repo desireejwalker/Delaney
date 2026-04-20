@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://cxocig478jbsp"]
+
+[ext_resource type="Script" uid="uid://c6pmyo50c1tqy" path="res://addons/maaacks_menus_template/base/nodes/windows/overlaid_window_scene_container.gd" id="1_20ujb"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="2_1j4aj"]
+[ext_resource type="PackedScene" uid="uid://cbhfg6h655akv" path="res://nodes/menus/how-to-play-menu/scrollable_how_to_play.tscn" id="2_fqpd2"]
+[ext_resource type="Script" uid="uid://1nf36h0gms3q" path="res://addons/maaacks_menus_template/base/nodes/utilities/capture_focus.gd" id="3_fqpd2"]
+
+[node name="HowToPlayMenu" type="PanelContainer" unique_id=1681549280]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_20ujb")
+packed_scene = ExtResource("2_fqpd2")
+update_content = true
+title = "[HOW TO PLAY]"
+metadata/_custom_type_script = "uid://c6pmyo50c1tqy"
+
+[node name="ContentContainer" type="MarginContainer" parent="." unique_id=147640168]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="BoxContainer" type="BoxContainer" parent="ContentContainer" unique_id=148786182]
+layout_mode = 2
+vertical = true
+
+[node name="TitleMargin" type="MarginContainer" parent="ContentContainer/BoxContainer" unique_id=801501005]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = -14
+theme_override_constants/margin_top = -14
+theme_override_constants/margin_right = -14
+theme_override_constants/margin_bottom = 8
+
+[node name="BoxContainer" type="BoxContainer" parent="ContentContainer/BoxContainer/TitleMargin" unique_id=1389677578]
+layout_mode = 2
+theme_override_constants/separation = 0
+vertical = true
+
+[node name="TitleLabel" type="Label" parent="ContentContainer/BoxContainer/TitleMargin/BoxContainer" unique_id=1926291166]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_1j4aj")
+theme_override_font_sizes/font_size = 48
+text = "[HOW TO PLAY]"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ContentContainer/BoxContainer/TitleMargin/BoxContainer" unique_id=1214010803]
+layout_mode = 2
+
+[node name="BodyMargin" type="MarginContainer" parent="ContentContainer/BoxContainer" unique_id=832257996]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="ContentContainer/BoxContainer/BodyMargin" unique_id=1203508308]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SceneContainer" type="MarginContainer" parent="ContentContainer/BoxContainer/BodyMargin" unique_id=1069250585]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MenuButtonsMargin" type="MarginContainer" parent="ContentContainer/BoxContainer" unique_id=1832886015]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+
+[node name="MenuButtons" type="BoxContainer" parent="ContentContainer/BoxContainer/MenuButtonsMargin" unique_id=2070291054]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+alignment = 1
+vertical = true
+script = ExtResource("3_fqpd2")
+
+[node name="CloseButton" type="Button" parent="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons" unique_id=1117908004]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_1j4aj")
+theme_override_font_sizes/font_size = 36
+text = "[CLOSE]"
+
+[connection signal="pressed" from="ContentContainer/BoxContainer/MenuButtonsMargin/MenuButtons/CloseButton" to="." method="_on_close_button_pressed"]

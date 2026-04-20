@@ -95,6 +95,7 @@ text = "[MOUSE SENSITIVITY] "
 size_flags_horizontal = 3
 min_value = 0.25
 max_value = 2.0
+value = 2.0
 tick_count = 8
 
 [node name="ControllerSensitivityControl" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer" unique_id=1859174490 instance=ExtResource("7_e7udh")]
@@ -105,6 +106,7 @@ option_section = 1
 key = "controller_sensitivity"
 section = "input_settings"
 label_suffix = " "
+editable = false
 
 [node name="OptionLabel" parent="VBoxContainer/SensitivityControlContainer/MarginContainer/VBoxContainer/ControllerSensitivityControl" index="0" unique_id=1854788461]
 custom_minimum_size = Vector2(400, 0)
@@ -117,6 +119,7 @@ text = "[CONTROLLER SENSITIVITY] "
 size_flags_horizontal = 3
 min_value = 0.25
 max_value = 2.0
+editable = false
 tick_count = 8
 
 [node name="KeyDeletionConfirmation" parent="." unique_id=1482267070 instance=ExtResource("6_ei0co")]
