@@ -60,8 +60,8 @@ func _ready() -> void:
 	if auto_initialize:
 		initialize()
 
-func _process(delta) -> void:
-	_handle_show_cursor()
+func _unhandled_input(event: InputEvent) -> void:
+	_handle_show_cursor(event)
 
 func initialize() -> void:
 	_setup_components()
@@ -109,13 +109,14 @@ func _setup_components():
 		components[component.name] = component
 		component.initialize(self)
 
-func _handle_show_cursor():
-	if Input.is_action_pressed("show_cursor"):
+func _handle_show_cursor(event: InputEvent):
+	if event.is_action_released("show_cursor"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		camera.mouse_follow = true
+	if event.is_action_pressed("show_cursor"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		camera.mouse_follow = false
 		return
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	camera.mouse_follow = true
 
 # func _on_died():
 # 	pass

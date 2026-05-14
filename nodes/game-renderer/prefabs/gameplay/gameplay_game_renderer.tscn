@@ -23,7 +23,6 @@ layout_mode = 1
 script = ExtResource("3_2ewdj")
 source = &"world_resolution"
 element = ExtResource("3_tn8rn")
-resolution = Vector2i(1024, 768)
 
 [node name="WorldUIRenderer" parent="." index="1" unique_id=1866004435 instance=ExtResource("3_3qa5s")]
 unique_name_in_owner = true

@@ -132,8 +132,8 @@ texture = ExtResource("3_ldw3u")
 [node name="PlayableCharacterCamera" parent="." index="3" unique_id=91815916]
 script = ExtResource("3_qe8fs")
 distance_from_pivot = 10.0
-mouse_x_sensitivity = 2.0
-mouse_y_sensitivity = 2.0
+mouse_x_sensitivity = 1.0
+mouse_y_sensitivity = 1.0
 min_zoom = 10.0
 
 [node name="PlayableCharacterGameplayFiniteStateMachine" parent="." index="6" unique_id=826857320 instance=ExtResource("2_cqyrg")]

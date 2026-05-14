@@ -1,10 +1,8 @@
+res://nodes/playable-character/prefabs/
 res://resources/character-data/
 res://nodes/character/prefabs/delaney/
 res://addons/dizzy-playable-character/nodes/character/
 res://nodes/ui/hud/components/
-/home/dizzydemon/Projects/Project Builds/Delaney/v1/Delaney_v1_linux/
-/home/dizzydemon/Projects/Project Builds/Delaney/v1/Delaney_v1_windows/
-/home/dizzydemon/Projects/Project Builds/Delaney/
 res://resources/images/tutorials/
 res://addons/maaacks_menus_template/examples/scenes/windows/
 res://nodes/renderer/
@@ -22,4 +20,3 @@ res://nodes/game-renderer/prefabs/gameplay/states/
 res://nodes/game-renderer/components/pause-menu-controller/
 res://nodes/game-renderer/prefabs/gameplay/
 res://nodes/menus/main-menu/
-res://nodes/game-renderer/

@@ -39,8 +39,8 @@ func _ready() -> void:
 	if auto_initialize:
 		initialize()
 
-func _process(delta) -> void:
-	_handle_show_cursor()
+func _unhandled_input(event: InputEvent) -> void:
+	_handle_show_cursor(event)
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings = []
@@ -66,16 +66,14 @@ func _setup_renderers():
 		renderers[renderer.name] = renderer
 		renderer.initialize(self)
 
-func _handle_show_cursor():
+func _handle_show_cursor(event: InputEvent):
 	if Engine.is_editor_hint():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		return
-
 	if not auto_hide_cursor:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		return
 
-	if Input.is_action_pressed(show_cursor_input_action):
+	if event.is_action_pressed(show_cursor_input_action):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		return
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if event.is_action_released(show_cursor_input_action):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
