@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsobyvrau10rb"
-path="res://.godot/imported/epsilon_flow_state.png-b19409d61bd26e327cf43a0dd15f03a1.ctex"
+uid="uid://d21b051jwbyxw"
+path="res://.godot/imported/lambda_flow_state.png-9b8480ba98f5c706fcfb236e0f898d55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/images/flow-states/epsilon_flow_state.png"
-dest_files=["res://.godot/imported/epsilon_flow_state.png-b19409d61bd26e327cf43a0dd15f03a1.ctex"]
+source_file="res://resources/images/flow-states/lambda/lambda_flow_state.png"
+dest_files=["res://.godot/imported/lambda_flow_state.png-9b8480ba98f5c706fcfb236e0f898d55.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://briutllbnyqgg"
 path.s3tc="res://.godot/imported/bidirectional_arrows.png-876a7453b15210e8528d23a11c17b372.s3tc.ctex"
+path.etc2="res://.godot/imported/bidirectional_arrows.png-876a7453b15210e8528d23a11c17b372.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://resources/images/bidirectional_arrows.png"
-dest_files=["res://.godot/imported/bidirectional_arrows.png-876a7453b15210e8528d23a11c17b372.s3tc.ctex"]
+dest_files=["res://.godot/imported/bidirectional_arrows.png-876a7453b15210e8528d23a11c17b372.s3tc.ctex", "res://.godot/imported/bidirectional_arrows.png-876a7453b15210e8528d23a11c17b372.etc2.ctex"]
 
 [params]
 

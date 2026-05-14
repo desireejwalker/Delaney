@@ -1,0 +1,201 @@
+[gd_scene format=3 uid="uid://f0a1c8lp6020"]
+
+[ext_resource type="FontFile" uid="uid://b4ekhik288cwm" path="res://resources/fonts/AtlantisInternational-jen0.ttf" id="1_6xdg1"]
+[ext_resource type="FontFile" uid="uid://c2f6rldwm140" path="res://resources/fonts/dpcomic.regular.ttf" id="1_q8pep"]
+[ext_resource type="Texture2D" uid="uid://bhhkbcqa7osvd" path="res://resources/images/flow-states/blunt/under.png" id="1_r5iju"]
+[ext_resource type="Texture2D" uid="uid://bm800rqs6aqlu" path="res://resources/images/flow-states/blunt/over.png" id="2_q8pep"]
+[ext_resource type="Texture2D" uid="uid://byun1xub6lqx4" path="res://resources/images/flow-states/blunt/progress.png" id="3_6xdg1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sv26u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nswvs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6xdg1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0t7jy"]
+
+[node name="GameplayHud" type="Control" unique_id=175929910]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1371535480]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="FlowStatePanel" type="PanelContainer" parent="MarginContainer" unique_id=1365735519]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxEmpty_sv26u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/FlowStatePanel" unique_id=1956648325]
+layout_mode = 2
+theme_override_constants/separation = -20
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/FlowStatePanel/VBoxContainer" unique_id=1515902617]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TrickLabel" type="Label" parent="MarginContainer/FlowStatePanel/VBoxContainer/HBoxContainer" unique_id=740344345]
+layout_mode = 2
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Trick 1"
+
+[node name="TrickSeparator" type="Label" parent="MarginContainer/FlowStatePanel/VBoxContainer/HBoxContainer" unique_id=1707790451]
+layout_mode = 2
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "+"
+
+[node name="TrickLabel2" type="Label" parent="MarginContainer/FlowStatePanel/VBoxContainer/HBoxContainer" unique_id=1964750210]
+layout_mode = 2
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Trick 2"
+
+[node name="TrickSeparator2" type="Label" parent="MarginContainer/FlowStatePanel/VBoxContainer/HBoxContainer" unique_id=1713914434]
+layout_mode = 2
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "+"
+
+[node name="TrickLabel3" type="Label" parent="MarginContainer/FlowStatePanel/VBoxContainer/HBoxContainer" unique_id=1139215951]
+layout_mode = 2
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Trick 3"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/FlowStatePanel/VBoxContainer" unique_id=351293545]
+layout_mode = 2
+theme_override_constants/separation = 56
+theme_override_styles/separator = SubResource("StyleBoxEmpty_nswvs")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="MarginContainer/FlowStatePanel/VBoxContainer" unique_id=1687466674]
+custom_minimum_size = Vector2(400, 130)
+layout_mode = 2
+ratio = 3.2
+
+[node name="OverallScoreLabel" type="Label" parent="MarginContainer/FlowStatePanel/VBoxContainer/AspectRatioContainer" unique_id=479783620]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_q8pep")
+theme_override_font_sizes/font_size = 36
+text = "999,999,999pts"
+horizontal_alignment = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer/FlowStatePanel/VBoxContainer/AspectRatioContainer" unique_id=1153747472]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+nine_patch_stretch = true
+texture_under = ExtResource("1_r5iju")
+texture_over = ExtResource("2_q8pep")
+texture_progress = ExtResource("3_6xdg1")
+
+[node name="ScoreMultiplierLabel" type="Label" parent="MarginContainer/FlowStatePanel/VBoxContainer" unique_id=1183535122]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_q8pep")
+theme_override_font_sizes/font_size = 48
+text = "x1"
+
+[node name="ComboPanel" type="PanelContainer" parent="MarginContainer" unique_id=1453204007]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6xdg1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ComboPanel" unique_id=1354712858]
+layout_mode = 2
+
+[node name="CompoundTrickContainer" type="Panel" parent="MarginContainer/ComboPanel/VBoxContainer" unique_id=78917586]
+clip_children = 1
+clip_contents = true
+custom_minimum_size = Vector2(360, 170)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0t7jy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ComboPanel/VBoxContainer/CompoundTrickContainer" unique_id=2000726883]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -223.0
+offset_top = -170.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="CompoundTrickLabel" type="Label" parent="MarginContainer/ComboPanel/VBoxContainer/CompoundTrickContainer/VBoxContainer" unique_id=315388106]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Super Long Compound Trick"
+
+[node name="CompoundTrickLabel2" type="Label" parent="MarginContainer/ComboPanel/VBoxContainer/CompoundTrickContainer/VBoxContainer" unique_id=27572624]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Super Long Compound Trick"
+
+[node name="CompoundTrickLabel3" type="Label" parent="MarginContainer/ComboPanel/VBoxContainer/CompoundTrickContainer/VBoxContainer" unique_id=665664784]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Super Long Compound Trick"
+
+[node name="CompoundTrickLabel4" type="Label" parent="MarginContainer/ComboPanel/VBoxContainer/CompoundTrickContainer/VBoxContainer" unique_id=1630968645]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Super Long Compound Trick"
+
+[node name="CompoundTrickLabel5" type="Label" parent="MarginContainer/ComboPanel/VBoxContainer/CompoundTrickContainer/VBoxContainer" unique_id=1609579254]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Super Long Compound Trick"
+
+[node name="CompoundTrickLabel6" type="Label" parent="MarginContainer/ComboPanel/VBoxContainer/CompoundTrickContainer/VBoxContainer" unique_id=1790406343]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_6xdg1")
+theme_override_font_sizes/font_size = 24
+text = "Super Long Compound Trick"

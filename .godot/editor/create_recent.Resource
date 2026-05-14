@@ -1,3 +1,4 @@
+res://addons/dizzy-playable-character/resources/character-data/character_data.gd
 Card
 ComboActionEntry
 HammerType

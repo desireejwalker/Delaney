@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://bkjiyc6blqia3"]
+
+[ext_resource type="Script" uid="uid://cl70n713b0r6k" path="res://addons/dizzy-playable-character/resources/character-data/character_data.gd" id="1_ksx6i"]
+
+[resource]
+script = ExtResource("1_ksx6i")
+name = "Delaney"
+internal_name = &"delaney"
+metadata/_custom_type_script = "uid://cl70n713b0r6k"

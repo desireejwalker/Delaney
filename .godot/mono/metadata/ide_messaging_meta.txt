@@ -1,2 +1,0 @@
-﻿38731
-/home/dizzydemon/Applications/Godot/Godot v4.6 Mono/Godot_v4.6-stable_mono_linux.x86_64

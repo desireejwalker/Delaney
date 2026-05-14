@@ -1,3 +1,10 @@
+res://resources/character-data/
+res://nodes/character/prefabs/delaney/
+res://addons/dizzy-playable-character/nodes/character/
+res://nodes/ui/hud/components/
+/home/dizzydemon/Projects/Project Builds/Delaney/v1/Delaney_v1_linux/
+/home/dizzydemon/Projects/Project Builds/Delaney/v1/Delaney_v1_windows/
+/home/dizzydemon/Projects/Project Builds/Delaney/
 res://resources/images/tutorials/
 res://addons/maaacks_menus_template/examples/scenes/windows/
 res://nodes/renderer/

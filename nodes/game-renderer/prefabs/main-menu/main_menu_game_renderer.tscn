@@ -10,5 +10,5 @@ main_renderer = NodePath("MenuRenderer")
 
 [node name="MenuRenderer" parent="." index="0" unique_id=1118906799 instance=ExtResource("2_yew1h")]
 layout_mode = 1
+source = &"game_resolution"
 element = ExtResource("3_k6614")
-resolution = Vector2i(1024, 768)

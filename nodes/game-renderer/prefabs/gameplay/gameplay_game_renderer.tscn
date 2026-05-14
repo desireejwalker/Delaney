@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cxrvpsuh8ql7f" path="res://nodes/test_map/test_map.tscn" id="3_tn8rn"]
 [ext_resource type="PackedScene" uid="uid://boiuoy3jpwi1b" path="res://nodes/renderer/prefabs/menu-renderer/menu_renderer.tscn" id="6_rv065"]
 [ext_resource type="Script" uid="uid://4iy200vugq5s" path="res://nodes/game-renderer/components/pause-menu-controller/pause_menu_controller.gd" id="6_tn8rn"]
+[ext_resource type="PackedScene" uid="uid://f0a1c8lp6020" path="res://nodes/ui/hud/gameplay_hud.tscn" id="7_ckgwe"]
 [ext_resource type="PackedScene" uid="uid://b2mahivklbvbe" path="res://nodes/menus/pause-menu/pause_menu.tscn" id="8_qly26"]
 
 [sub_resource type="World3D" id="World3D_2ewdj"]
@@ -22,7 +23,7 @@ layout_mode = 1
 script = ExtResource("3_2ewdj")
 source = &"world_resolution"
 element = ExtResource("3_tn8rn")
-resolution = Vector2i(320, 240)
+resolution = Vector2i(1024, 768)
 
 [node name="WorldUIRenderer" parent="." index="1" unique_id=1866004435 instance=ExtResource("3_3qa5s")]
 unique_name_in_owner = true
@@ -39,6 +40,7 @@ unique_name_in_owner = true
 layout_mode = 1
 script = ExtResource("3_2ewdj")
 source = &"game_resolution"
+element = ExtResource("7_ckgwe")
 resolution = Vector2i(1024, 768)
 push_input = false
 

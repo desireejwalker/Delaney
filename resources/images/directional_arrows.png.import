@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dvi1p6sce4jrs"
 path.s3tc="res://.godot/imported/directional_arrows.png-7c3c202c733939b923c057773989425d.s3tc.ctex"
+path.etc2="res://.godot/imported/directional_arrows.png-7c3c202c733939b923c057773989425d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://resources/images/directional_arrows.png"
-dest_files=["res://.godot/imported/directional_arrows.png-7c3c202c733939b923c057773989425d.s3tc.ctex"]
+dest_files=["res://.godot/imported/directional_arrows.png-7c3c202c733939b923c057773989425d.s3tc.ctex", "res://.godot/imported/directional_arrows.png-7c3c202c733939b923c057773989425d.etc2.ctex"]
 
 [params]
 

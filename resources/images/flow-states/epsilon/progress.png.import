@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d21b051jwbyxw"
-path="res://.godot/imported/lambda_flow_state.png-c55d3f094124ce2370db4e736dad46e1.ctex"
+uid="uid://cb04ieu4pp7rx"
+path="res://.godot/imported/progress.png-c80b6c52a16f4014d10ea1d3bc912362.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/images/flow-states/lambda_flow_state.png"
-dest_files=["res://.godot/imported/lambda_flow_state.png-c55d3f094124ce2370db4e736dad46e1.ctex"]
+source_file="res://resources/images/flow-states/epsilon/progress.png"
+dest_files=["res://.godot/imported/progress.png-c80b6c52a16f4014d10ea1d3bc912362.ctex"]
 
 [params]
 

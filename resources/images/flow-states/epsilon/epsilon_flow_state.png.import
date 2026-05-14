@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckd14t8a2ddcl"
-path="res://.godot/imported/blunt_flow_state.png-67766e40bf8e421faaeab288049cbdca.ctex"
+uid="uid://dsobyvrau10rb"
+path="res://.godot/imported/epsilon_flow_state.png-8054c779bdac4fa80d6ada3cd9b8b091.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/images/flow-states/blunt_flow_state.png"
-dest_files=["res://.godot/imported/blunt_flow_state.png-67766e40bf8e421faaeab288049cbdca.ctex"]
+source_file="res://resources/images/flow-states/epsilon/epsilon_flow_state.png"
+dest_files=["res://.godot/imported/epsilon_flow_state.png-8054c779bdac4fa80d6ada3cd9b8b091.ctex"]
 
 [params]
 
