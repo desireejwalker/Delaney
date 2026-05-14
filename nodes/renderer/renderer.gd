@@ -13,4 +13,4 @@ func _on_player_config_config_set():
 	_update_resolution()
 
 func _update_resolution():
-	resolution = PlayerConfig.get_config(AppSettings.VIDEO_SECTION, source, get_window())
+	resolution = PlayerConfig.get_config(AppSettings.VIDEO_SECTION, source, get_window().size)
